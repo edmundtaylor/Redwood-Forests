@@ -40,7 +40,7 @@ public class ModConfiguredFeatures {
                 BlockStateProvider.simple(ModBlocks.REDWOOD_LOG.get()),
                 // Use GiantTrunkPlacer to make a 2x2 base
                 // Use a height of 32 blocks, and use a randomness of 4 and 3
-                new ModFenceTrunkPlacer( 13, 1, 2, ModBlocks.REDWOOD_FENCE, 0.25F),
+                new ModFenceTrunkPlacer( 13, 1, 2, ModBlocks.REDWOOD_FENCE, ModBlocks.REDWOOD_ORIGIN_BLOCK, 0.25F, 0),
                 // The block that acts as the leaves in the tree
                 BlockStateProvider.simple(ModBlocks.REDWOOD_LEAVES.get()),
                 // Use MegaPineFoliagePlacer to create a cone leaf shape

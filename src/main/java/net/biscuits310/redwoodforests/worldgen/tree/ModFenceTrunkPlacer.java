@@ -4,6 +4,8 @@ import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.biscuits310.redwoodforests.block.ModBlockStateProperties;
+import net.biscuits310.redwoodforests.block.custom.RedwoodOriginBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.util.RandomSource;
@@ -22,22 +24,30 @@ import java.util.function.Supplier;
 public class ModFenceTrunkPlacer extends TrunkPlacer {
     public static final MapCodec<ModFenceTrunkPlacer> CODEC = RecordCodecBuilder.mapCodec(i -> trunkPlacerParts(i)
             .and(BuiltInRegistries.BLOCK.byNameCodec().fieldOf("fence_block").forGetter(p -> p.fenceBlock.get()))
+            .and(BuiltInRegistries.BLOCK.byNameCodec().fieldOf("origin_block").forGetter(p -> p.originBlock.get()))
             .and(Codec.floatRange(0F, 1F).fieldOf("fenceProportion").forGetter(p -> p.fenceProportion))
-            .apply(i, (baseHeight, heightRandA, heightRandB, fenceBlock, fenceProportion) ->
+            .and(Codec.intRange(0, 3).fieldOf("growth_stage").forGetter(p -> p.growthStage))
+            .apply(i, (baseHeight, heightRandA, heightRandB, fenceBlock, originBlock, fenceProportion, growthStage) ->
                     new ModFenceTrunkPlacer(
                             baseHeight,
                             heightRandA,
                             heightRandB,
                             () -> fenceBlock,
-                            fenceProportion)));
+                            () -> originBlock,
+                            fenceProportion,
+                            growthStage)));
 
     private final float fenceProportion;
+    private final int growthStage;
     private final Supplier<Block> fenceBlock;
+    private final Supplier<Block> originBlock;
 
-    public ModFenceTrunkPlacer(int baseHeight, int heightRandA, int heightRandB, Supplier<Block> fenceBlock, float fenceProportion){
+    public ModFenceTrunkPlacer(int baseHeight, int heightRandA, int heightRandB, Supplier<Block> fenceBlock, Supplier<Block> originBlock, float fenceProportion, int growthStage){
         super(baseHeight, heightRandA, heightRandB);
         this.fenceBlock = fenceBlock;
+        this.originBlock = originBlock;
         this.fenceProportion = fenceProportion;
+        this.growthStage = growthStage;
     }
 
     @Override
@@ -53,9 +63,16 @@ public class ModFenceTrunkPlacer extends TrunkPlacer {
         BiConsumer<BlockPos, BlockState> fenceSetter =
                 (blockPos, state) -> trunkSetter.accept(blockPos, this.fenceBlock.get().defaultBlockState());
 
+        BiConsumer<BlockPos, BlockState> originBlockSetter =
+                (blockPos, state) -> trunkSetter.accept(blockPos, this.originBlock.get().defaultBlockState()
+                        .setValue(ModBlockStateProperties.GROWTH_STAGE, this.growthStage + 1));
+
         for (int hh = 0; hh < treeHeight; hh++){
             trunkPos.setWithOffset(origin, 0, hh, 0);
-            if (hh < treeHeight * (1-this.fenceProportion)) {
+            if (hh == 0){
+                this.placeLog(level, originBlockSetter, random, trunkPos, config);
+            }
+            else if (hh < treeHeight * (1-this.fenceProportion)) {
                 this.placeLog(level, trunkSetter, random, trunkPos, config);
             }
             else {
