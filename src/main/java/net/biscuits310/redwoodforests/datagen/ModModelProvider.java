@@ -39,6 +39,7 @@ public class ModModelProvider extends ModelProvider
         // Create a variated log block using the custom modBlockModels function
         // 3 different side textures, so 3 is passed in as numSides
         modBlockModels.createHorizontalVariatedLogBlock(ModBlocks.REDWOOD_LOG.get(), 3);
+        modBlockModels.createHorizontalVariatedLogBlock(ModBlocks.REDWOOD_ORIGIN_BLOCK.get(), 3);
         modBlockModels.createVariatedWoodBlock(ModBlocks.REDWOOD_WOOD.get(), ModBlocks.REDWOOD_LOG.get(), 3);
 
         // Create a non-variated log block using blockModels methods

@@ -54,6 +54,14 @@ public class ModBlocks
                     .sound(SoundType.WOOD)
                     .ignitedByLava()));
 
+    public static final DeferredBlock<Block> REDWOOD_ORIGIN_BLOCK = registerBlock("redwood_origin_block",
+            properties -> new RedwoodOriginBlock(5, 5, ModBlocks.STRIPPED_REDWOOD_LOG, ModTreeGrowers.REDWOOD, properties
+                    .mapColor(state -> state.getValue(StrippableFlammableRotatedPillarBlock.AXIS) == Direction.Axis.Y ? MapColor.WOOD : MapColor.PODZOL)
+                    .instrument(NoteBlockInstrument.BASS)
+                    .strength(2.0F)
+                    .sound(SoundType.WOOD)
+                    .ignitedByLava()));
+
     // Creates the redwood wood block as a DeferredBlock
     public static final DeferredBlock<Block> REDWOOD_WOOD = registerBlock("redwood_wood",
             // Sets the properties for a wood block, and creates it using the StrippableFlammableRotatedPillarBlock class
