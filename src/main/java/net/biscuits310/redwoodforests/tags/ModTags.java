@@ -12,6 +12,9 @@ import net.minecraft.world.level.block.Block;
 public class ModTags {
     // A subclass for creating block tags
     public static class Blocks {
+        public static final TagKey<Block> REDWOOD_GROWERS = createTag("redwood_growers");
+        public static final TagKey<Block> REDWOOD_FOLIAGE_REMOVABLE = createTag("redwood_foliage_removable");
+        public static final TagKey<Block> REDWOOD_TRUNK_REMOVABLE = createTag("redwood_trunk_removable");
 
         // Creates a block tag using the given name and the mod id
         private static TagKey<Block> createTag(String name){

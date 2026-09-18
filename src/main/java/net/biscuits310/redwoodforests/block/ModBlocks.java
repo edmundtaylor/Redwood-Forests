@@ -55,7 +55,7 @@ public class ModBlocks
                     .ignitedByLava()));
 
     public static final DeferredBlock<Block> REDWOOD_ORIGIN_BLOCK = registerBlock("redwood_origin_block",
-            properties -> new RedwoodOriginBlock(5, 5, ModBlocks.STRIPPED_REDWOOD_LOG, ModTreeGrowers.REDWOOD, properties
+            properties -> new RedwoodOriginBlock(5, 5, ModBlocks.STRIPPED_REDWOOD_LOG, ModTreeGrowers.REDWOOD_1, properties
                     .mapColor(state -> state.getValue(StrippableFlammableRotatedPillarBlock.AXIS) == Direction.Axis.Y ? MapColor.WOOD : MapColor.PODZOL)
                     .instrument(NoteBlockInstrument.BASS)
                     .strength(2.0F)

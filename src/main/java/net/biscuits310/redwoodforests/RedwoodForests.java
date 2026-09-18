@@ -4,6 +4,7 @@ import net.biscuits310.redwoodforests.block.ModBlocks;
 import net.biscuits310.redwoodforests.creativemodetab.ModCreativeModeTabs;
 import net.biscuits310.redwoodforests.datagen.ModDataPackProvider;
 import net.biscuits310.redwoodforests.item.ModItems;
+import net.biscuits310.redwoodforests.worldgen.ModFeatures;
 import net.biscuits310.redwoodforests.worldgen.tree.ModFoliagePlacerType;
 import net.biscuits310.redwoodforests.worldgen.tree.ModTrunkPlacerType;
 import net.minecraft.data.DataGenerator;
@@ -62,6 +63,8 @@ public class RedwoodForests {
         ModTrunkPlacerType.TRUNK_PLACER_TYPES.register(modEventBus);
         ModFoliagePlacerType.FOLIAGE_PLACER_TYPES.register(modEventBus);
 
+        ModFeatures.FEATURES.register(modEventBus);
+
 
 
         // Register ourselves for server and other game events we are interested in.
@@ -74,6 +77,8 @@ public class RedwoodForests {
 
         // Register our mod's ModConfigSpec so that FML can create and load the config file for us
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
+
+
     }
 
     // UNUSED commonsetup

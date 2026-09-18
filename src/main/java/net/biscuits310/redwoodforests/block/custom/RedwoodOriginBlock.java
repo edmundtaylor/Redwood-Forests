@@ -39,16 +39,15 @@ public class RedwoodOriginBlock extends RedwoodLogBlock{
     protected void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         if (!level.isAreaLoaded(pos, 1)) return;
         if (random.nextInt(7) == 0) {
-            this.advanceTree(level, pos, state, random);
+            this.advanceTree(level, pos, state);
         }
     }
 
-    protected void advanceTree(ServerLevel level, BlockPos pos, BlockState state, RandomSource random){
+    protected void advanceTree(ServerLevel level, BlockPos pos, BlockState state){
         if (state.getValue(STAGE) == 0){
             level.setBlock(pos, state.cycle(STAGE), 260);
         } else {
-            RandomSource growthRandom = RandomSource.create(level.getSeed() ^ pos.asLong());
-            this.treeGrower.growTree(level, level.getChunkSource().getGenerator(), pos, state, growthRandom);
+            this.treeGrower.growTree(level, level.getChunkSource().getGenerator(), pos, state, RandomSource.create());
         }
     }
 

@@ -29,5 +29,13 @@ public class ModTreeGrowers {
             Optional.empty(),
             Optional.empty());
 
-
+    public static final TreeGrower REDWOOD_1 = new TreeGrower(
+            RedwoodForests.MODID + "redwood_1",
+            0.0F,
+            Optional.empty(),
+            Optional.empty(),
+            Optional.of(ModConfiguredFeatures.REDWOOD_1_KEY),
+            Optional.empty(),
+            Optional.empty(),
+            Optional.empty());
 }

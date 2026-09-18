@@ -37,10 +37,10 @@ public class ModFenceTrunkPlacer extends TrunkPlacer {
                             fenceProportion,
                             growthStage)));
 
-    private final float fenceProportion;
-    private final int growthStage;
-    private final Supplier<Block> fenceBlock;
-    private final Supplier<Block> originBlock;
+    protected final float fenceProportion;
+    protected final int growthStage;
+    protected final Supplier<Block> fenceBlock;
+    protected final Supplier<Block> originBlock;
 
     public ModFenceTrunkPlacer(int baseHeight, int heightRandA, int heightRandB, Supplier<Block> fenceBlock, Supplier<Block> originBlock, float fenceProportion, int growthStage){
         super(baseHeight, heightRandA, heightRandB);
@@ -48,6 +48,10 @@ public class ModFenceTrunkPlacer extends TrunkPlacer {
         this.originBlock = originBlock;
         this.fenceProportion = fenceProportion;
         this.growthStage = growthStage;
+    }
+
+    public int getGrowthStage(){
+        return this.growthStage;
     }
 
     @Override

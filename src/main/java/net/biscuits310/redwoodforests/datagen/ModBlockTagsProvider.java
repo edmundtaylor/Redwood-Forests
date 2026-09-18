@@ -2,6 +2,7 @@ package net.biscuits310.redwoodforests.datagen;
 
 import net.biscuits310.redwoodforests.RedwoodForests;
 import net.biscuits310.redwoodforests.block.ModBlocks;
+import net.biscuits310.redwoodforests.tags.ModTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
@@ -160,6 +161,19 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
 
         // Marks the block as a wooden fence for other mods
         tag(Tags.Blocks.FENCES_WOODEN)
+                .add(ModBlocks.REDWOOD_FENCE.get());
+
+        tag(ModTags.Blocks.REDWOOD_GROWERS)
+                .add(ModBlocks.REDWOOD_SAPLING.get())
+                .add(ModBlocks.REDWOOD_ORIGIN_BLOCK.get());
+
+        tag(ModTags.Blocks.REDWOOD_FOLIAGE_REMOVABLE)
+                .add(ModBlocks.REDWOOD_LEAVES.get())
+                .add(ModBlocks.DEEP_REDWOOD_LEAVES.get())
+                .add(ModBlocks.REDWOOD_FENCE.get());
+
+        tag(ModTags.Blocks.REDWOOD_TRUNK_REMOVABLE)
+                .add(ModBlocks.REDWOOD_LOG.get())
                 .add(ModBlocks.REDWOOD_FENCE.get());
     }
 }

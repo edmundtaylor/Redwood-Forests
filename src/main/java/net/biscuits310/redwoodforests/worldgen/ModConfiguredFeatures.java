@@ -30,6 +30,7 @@ public class ModConfiguredFeatures {
 
     // Register the redwood key
     public static final ResourceKey<ConfiguredFeature<?, ?>> REDWOOD_KEY = registerKey("redwood_key");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> REDWOOD_1_KEY = registerKey("redwood_1_key");
 
     // Actions to be executed
     public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context){
@@ -40,14 +41,21 @@ public class ModConfiguredFeatures {
                 BlockStateProvider.simple(ModBlocks.REDWOOD_LOG.get()),
                 // Use GiantTrunkPlacer to make a 2x2 base
                 // Use a height of 32 blocks, and use a randomness of 4 and 3
-                new ModFenceTrunkPlacer( 13, 1, 2, ModBlocks.REDWOOD_FENCE, ModBlocks.REDWOOD_ORIGIN_BLOCK, 0.25F, 0),
+                new ModFenceTrunkPlacer( 7, 1, 2, ModBlocks.REDWOOD_FENCE, ModBlocks.REDWOOD_ORIGIN_BLOCK, 0.4F, 0),
                 // The block that acts as the leaves in the tree
                 BlockStateProvider.simple(ModBlocks.REDWOOD_LEAVES.get()),
                 // Use MegaPineFoliagePlacer to create a cone leaf shape
                 // Use the default value for radius, no offset, and have a height of 3-7
-                new ModConeFoliagePlacer(ConstantInt.of(3), ConstantInt.of(1), ConstantInt.of(12), ModBlocks.DEEP_REDWOOD_LEAVES, ModBlocks.REDWOOD_FENCE),
+                new ModConeFoliagePlacer(ConstantInt.of(2), ConstantInt.of(1), ConstantInt.of(7), ModBlocks.DEEP_REDWOOD_LEAVES, ModBlocks.REDWOOD_FENCE),
                 // Used to change thickness at specific points
                 new TwoLayersFeatureSize(1, 1 , 2)).build());
+
+        register(context, REDWOOD_1_KEY, ModFeatures.MOD_TREE_UPGRADE.get(), new TreeConfiguration.TreeConfigurationBuilder(
+                BlockStateProvider.simple(ModBlocks.REDWOOD_LOG.get()),
+                new ModFenceTrunkPlacer(13, 1, 2, ModBlocks.REDWOOD_FENCE, ModBlocks.REDWOOD_ORIGIN_BLOCK, 0.25F, 1),
+                BlockStateProvider.simple(ModBlocks.REDWOOD_LEAVES.get()),
+                new ModConeFoliagePlacer(ConstantInt.of(3), ConstantInt.of(1), ConstantInt.of(12), ModBlocks.DEEP_REDWOOD_LEAVES, ModBlocks.REDWOOD_FENCE),
+                new TwoLayersFeatureSize(1, 1, 2)).build());
     }
 
     // Register a configured feature key
