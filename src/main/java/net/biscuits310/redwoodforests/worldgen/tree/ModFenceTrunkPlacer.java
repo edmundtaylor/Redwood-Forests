@@ -69,7 +69,8 @@ public class ModFenceTrunkPlacer extends TrunkPlacer {
 
         BiConsumer<BlockPos, BlockState> originBlockSetter =
                 (blockPos, state) -> trunkSetter.accept(blockPos, this.originBlock.get().defaultBlockState()
-                        .setValue(ModBlockStateProperties.GROWTH_STAGE, this.growthStage + 1));
+                        .setValue(ModBlockStateProperties.GROWTH_STAGE, this.growthStage + 1)
+                        .setValue(ModBlockStateProperties.TREE_HEIGHT, treeHeight));
 
         for (int hh = 0; hh < treeHeight; hh++){
             trunkPos.setWithOffset(origin, 0, hh, 0);

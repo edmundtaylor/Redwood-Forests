@@ -134,7 +134,8 @@ public class ModConeFoliagePlacer extends FoliagePlacer {
         if (skipChance > 1){skipChance = 1;}
         if (skipChance < 0){skipChance = 0;}
         if (branchChance > 1){branchChance = 1;}
-        if (skipChance < 0){branchChance = 0;}
+        if (branchChance < 0){branchChance = 0;}
+
 
         if (random.nextFloat() < skipChance){
             return 0;

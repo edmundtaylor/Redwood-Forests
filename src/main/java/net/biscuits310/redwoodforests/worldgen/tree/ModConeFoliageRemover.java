@@ -10,12 +10,41 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.function.Supplier;
 
 public class ModConeFoliageRemover extends ModConeFoliagePlacer {
     public ModConeFoliageRemover(IntProvider radius, IntProvider offset, IntProvider crownHeight, Supplier<Block> deepFoliageBlock, Supplier<Block> fenceBlock) {
         super(radius, offset, crownHeight, deepFoliageBlock, fenceBlock);
+    }
+
+    private final Set<BlockPos> trunkMap = new HashSet<>();
+
+    @Override
+    protected void createFoliage(WorldGenLevel level, FoliageSetter foliageSetter, RandomSource random, TreeConfiguration config, int treeHeight, FoliageAttachment foliageAttachment, int foliageHeight, int leafRadius, int offset) {
+        trunkMap.clear();
+        BlockPos foliagePos = foliageAttachment.pos();
+        BlockPos.MutableBlockPos tempTrunkPos = new BlockPos.MutableBlockPos();
+        for (int h = 0; h < treeHeight; h++){
+            tempTrunkPos.setWithOffset(foliagePos, 0, -h, 0);
+            System.out.println(tempTrunkPos);
+            trunkMap.add(tempTrunkPos.immutable());
+        }
+        int currentRadius;
+        Set<BlockPos> leafBlocks = new HashSet<>();
+
+        for (int depth = 1; depth <= foliageHeight; depth++){
+            currentRadius = Math.round(depth * leafRadius / (float)foliageHeight);
+            if (depth == foliageHeight) {currentRadius /= 2;}
+            this.placeLeavesRow(level, foliageSetter, random, config, foliagePos, currentRadius, -depth+offset, foliageAttachment.doubleTrunk(), leafBlocks);
+        }
+
+        for (int height = 0; height <=2; height++){
+            tryPlaceLeaf(level, foliageSetter, random, config, foliageAttachment.pos().offset(0, height, 0));
+        }
     }
 
     @Override
@@ -30,7 +59,7 @@ public class ModConeFoliageRemover extends ModConeFoliagePlacer {
 
     protected boolean tryUpgradeLeaf(WorldGenLevel level, FoliageSetter foliageSetter, RandomSource random, TreeConfiguration config, BlockPos pos){
         boolean isPersistent = level.isStateAtPosition(pos, state -> state.getValueOrElse(BlockStateProperties.PERSISTENT, false));
-        if (!isPersistent && ModTreeUpgrade.validFoliageUpgradePos(level, pos)) {
+        if (!isPersistent && ModTreeUpgrade.validFoliageUpgradePos(level, pos) && !trunkMap.contains(pos)) {
             BlockState foliageState = Blocks.AIR.defaultBlockState();
             foliageSetter.set(pos, foliageState);
             return true;

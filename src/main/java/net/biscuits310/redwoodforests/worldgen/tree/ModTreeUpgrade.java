@@ -4,7 +4,9 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.mojang.serialization.Codec;
+import net.biscuits310.redwoodforests.block.ModBlockStateProperties;
 import net.biscuits310.redwoodforests.block.ModBlocks;
+import net.biscuits310.redwoodforests.block.custom.RedwoodOriginBlock;
 import net.biscuits310.redwoodforests.tags.ModTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -49,6 +51,46 @@ public class ModTreeUpgrade extends TreeFeature {
         return level.ensureCanWrite(origin) ? this.upgrade(new FeaturePlaceContext<>(Optional.empty(), level, chunkGenerator, random, origin, config)) : false;
     }
 
+
+    private boolean doPlace(
+            WorldGenLevel level,
+            RandomSource random,
+            BlockPos origin,
+            BiConsumer<BlockPos, BlockState> rootSetter,
+            BiConsumer<BlockPos, BlockState> trunkSetter,
+            FoliagePlacer.FoliageSetter foliageSetter,
+            TreeConfiguration config
+    ) {
+        int treeHeight = config.trunkPlacer.getTreeHeight(random);
+        int foliageHeight = config.foliagePlacer.foliageHeight(random, treeHeight, config);
+        int trunkHeight = treeHeight - foliageHeight;
+        int leafRadius = config.foliagePlacer.foliageRadius(random, trunkHeight);
+        BlockPos trunkOrigin = config.rootPlacer.<BlockPos>map(rootPlacer -> rootPlacer.getTrunkOrigin(origin, random)).orElse(origin);
+        int minY = Math.min(origin.getY(), trunkOrigin.getY());
+        int maxY = Math.max(origin.getY(), trunkOrigin.getY()) + treeHeight + 1;
+        if (minY >= level.getMinY() + 1 && maxY <= level.getMaxY() + 1) {
+            OptionalInt minClippedHeight = config.minimumSize.minClippedHeight();
+            int clippedTreeHeight = this.getMaxFreeTreeHeight(level, treeHeight, trunkOrigin, config);
+            if (clippedTreeHeight >= treeHeight || !minClippedHeight.isEmpty() && clippedTreeHeight >= minClippedHeight.getAsInt()) {
+                if (config.rootPlacer.isPresent() && !config.rootPlacer.get().placeRoots(level, rootSetter, random, origin, trunkOrigin, config)) {
+                    return false;
+                } else {
+                    List<FoliagePlacer.FoliageAttachment> foliageAttachments = config.trunkPlacer
+                            .placeTrunk(level, trunkSetter, random, clippedTreeHeight, trunkOrigin, config);
+                    foliageAttachments.forEach(
+                            foliageAttachment -> config.foliagePlacer
+                                    .createFoliage(level, foliageSetter, random, config, clippedTreeHeight, foliageAttachment, foliageHeight, leafRadius)
+                    );
+                    return true;
+                }
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
     private boolean doUpgrade(
             WorldGenLevel level,
             RandomSource random,
@@ -80,16 +122,17 @@ public class ModTreeUpgrade extends TreeFeature {
         if (minY >= level.getMinY() + 1 && maxY <= level.getMaxY() + 1) {
             OptionalInt minClippedHeight = config.minimumSize.minClippedHeight();
             int clippedTreeHeight = this.getMaxFreeTreeHeight(level, treeHeight, trunkOrigin, removerConfig);
+            int clippedTreeHeightDestructor = ModTreeGrowthData.TEMPORARY_TREE_HEIGHTS.remove(origin);
 
             if (clippedTreeHeight >= treeHeight || !minClippedHeight.isEmpty() && clippedTreeHeight >= minClippedHeight.getAsInt()) {
                 if (removerConfig.rootPlacer.isPresent() && !removerConfig.rootPlacer.get().placeRoots(level, rootDestructor, destructorRandom, origin, trunkOriginDestructor, removerConfig)){
                     return  false;
                 } else {
                     List<FoliagePlacer.FoliageAttachment> foliageRemoveAttachments = removerConfig.trunkPlacer
-                            .placeTrunk(level, trunkDestructor, destructorRandom, treeHeightDestructor, trunkOriginDestructor, removerConfig);
+                            .placeTrunk(level, trunkDestructor, destructorRandom, clippedTreeHeightDestructor, trunkOriginDestructor, removerConfig);
                     foliageRemoveAttachments.forEach(
                             foliageRemoveAttachment -> removerConfig.foliagePlacer
-                                    .createFoliage(level, foliageDestructor, destructorRandom, removerConfig, treeHeightDestructor, foliageRemoveAttachment, foliageHeightDestructor, leafRadiusDestructor)
+                                    .createFoliage(level, foliageDestructor, destructorRandom, removerConfig, clippedTreeHeightDestructor, foliageRemoveAttachment, foliageHeightDestructor, leafRadiusDestructor)
                     );
                 }
 
@@ -135,6 +178,8 @@ public class ModTreeUpgrade extends TreeFeature {
         if (!(config.trunkPlacer instanceof ModFenceTrunkPlacer modFenceTrunkPlacer)) return config;
         int growthStage = modFenceTrunkPlacer.getGrowthStage();
         switch (growthStage) {
+            case 0:
+                return null;
             case 1:
                 return new TreeConfiguration.TreeConfigurationBuilder(
                         BlockStateProvider.simple(ModBlocks.REDWOOD_LOG.get()),
@@ -184,7 +229,7 @@ public class ModTreeUpgrade extends TreeFeature {
 
             @Override
             public void set(BlockPos pos, BlockState state) {
-                foliage.add(pos.immutable());
+                removedFoliage.add(pos.immutable());
                 level.setBlock(pos, state, 19);
             }
 
@@ -224,8 +269,12 @@ public class ModTreeUpgrade extends TreeFeature {
             }
         };
 
+        boolean result = false;
         TreeConfiguration removerConfig = removerConfigPicker(config);
-        boolean result = this.doUpgrade(level, random, destructorRandom, origin, rootSetter, trunkSetter, foliageSetter, config, rootDestructor, trunkDestructor, foliageDestructor, removerConfig);
+        if (removerConfig == null)
+            result = this.doPlace(level, random, origin, rootSetter, trunkSetter, foliageSetter, config);
+        else
+            result = this.doUpgrade(level, random, destructorRandom, origin, rootSetter, trunkSetter, foliageSetter, config, rootDestructor, trunkDestructor, foliageDestructor, removerConfig);
         if (result && (!trunks.isEmpty() || !foliage.isEmpty())) {
             if (!config.decorators.isEmpty()) {
                 TreeDecorator.Context decoratorContext = new TreeDecorator.Context(level, decorationSetter, random, trunks, foliage, rootPositions);

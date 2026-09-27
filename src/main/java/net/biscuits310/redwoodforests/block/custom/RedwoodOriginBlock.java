@@ -17,6 +17,7 @@ import java.util.function.Supplier;
 public class RedwoodOriginBlock extends RedwoodLogBlock{
     public static final IntegerProperty GROWTH_STAGE = ModBlockStateProperties.GROWTH_STAGE;
     public static final IntegerProperty STAGE = BlockStateProperties.STAGE;
+    public static final IntegerProperty TREE_HEIGHT = ModBlockStateProperties.TREE_HEIGHT;
     protected final TreeGrower treeGrower;
 
     public RedwoodOriginBlock(int flammability, int fireSpreadSpeed, Supplier<Block> strippedBlock, TreeGrower treeGrower, Properties properties) {
@@ -27,7 +28,8 @@ public class RedwoodOriginBlock extends RedwoodLogBlock{
                 .setValue(NATURAL_LOG, true)
                 .setValue(AXIS, Direction.Axis.Y)
                 .setValue(GROWTH_STAGE, 0)
-                .setValue(STAGE, 0));
+                .setValue(STAGE, 0)
+                .setValue(TREE_HEIGHT, 0));
     }
 
     @Override
@@ -53,7 +55,7 @@ public class RedwoodOriginBlock extends RedwoodLogBlock{
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(STAGE).add(GROWTH_STAGE);
+        builder.add(STAGE).add(GROWTH_STAGE).add(TREE_HEIGHT);
         super.createBlockStateDefinition(builder);
     }
 }

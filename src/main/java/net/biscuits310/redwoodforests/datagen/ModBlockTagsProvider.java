@@ -174,6 +174,7 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
 
         tag(ModTags.Blocks.REDWOOD_TRUNK_REMOVABLE)
                 .add(ModBlocks.REDWOOD_LOG.get())
-                .add(ModBlocks.REDWOOD_FENCE.get());
+                .add(ModBlocks.REDWOOD_FENCE.get())
+                .add(ModBlocks.REDWOOD_ORIGIN_BLOCK.get());
     }
 }

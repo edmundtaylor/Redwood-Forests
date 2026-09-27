@@ -36,7 +36,7 @@ public class ModConfiguredFeatures {
     public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context){
         // Create the redwood tree configured feature
         // Use the TreeConfigurationBuilder to create a tree
-        register(context, REDWOOD_KEY, Feature.TREE, new TreeConfiguration.TreeConfigurationBuilder(
+        register(context, REDWOOD_KEY, ModFeatures.MOD_TREE_UPGRADE.get(), new TreeConfiguration.TreeConfigurationBuilder(
                 // The block that acts as the log in the tree
                 BlockStateProvider.simple(ModBlocks.REDWOOD_LOG.get()),
                 // Use GiantTrunkPlacer to make a 2x2 base
