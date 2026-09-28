@@ -79,7 +79,7 @@ public class ModBlockModelGenerators extends BlockModelGenerators {
 
     // Creates a variated wood block model
     public void createVariatedWoodBlock(Block block, Block logBlock, int numSides){
-        // Initialises an arary of horizontal variants that is the length of the number of variated sides
+        // Initialises an array of horizontal variants that is the length of the number of variated sides
         Variant[] variants = new Variant[numSides];
         // Executes the number of variated textures inputted
         for (int i = 1; i <= numSides; i++){
