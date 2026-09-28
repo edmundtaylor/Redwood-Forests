@@ -3,6 +3,7 @@ package net.biscuits310.redwoodforests.block.custom;
 import net.biscuits310.redwoodforests.block.ModBlockStateProperties;
 import net.biscuits310.redwoodforests.block.ModBlocks;
 import net.biscuits310.redwoodforests.event.LeafDecayEvent;
+import net.biscuits310.redwoodforests.tags.ModTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -46,7 +47,7 @@ public class RedwoodLogBlock extends StrippableFlammableRotatedPillarBlock{
             neighbourPos.setWithOffset(rootPos, direction);
             BlockState neighbourState = level.getBlockState(neighbourPos);
 
-            if (!checkedBlocks.contains(neighbourPos) && neighbourState.is(ModBlocks.REDWOOD_LOG)) {
+            if (!checkedBlocks.contains(neighbourPos) && (neighbourState.is(ModTags.Blocks.REWDWOOD_LOGS))) {
                 checkedBlocks.add(neighbourPos);
                 if (neighbourState.getValue(NATURAL_LOG) && neighbourState.getValue(PREVENTS_NEARBY_LEAF_DECAY)){
                     level.setBlock(neighbourPos, neighbourState.setValue(PREVENTS_NEARBY_LEAF_DECAY, false), 3);

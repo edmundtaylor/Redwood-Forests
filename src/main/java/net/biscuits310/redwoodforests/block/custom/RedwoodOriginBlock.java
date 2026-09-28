@@ -34,7 +34,7 @@ public class RedwoodOriginBlock extends RedwoodLogBlock{
 
     @Override
     protected boolean isRandomlyTicking(BlockState state) {
-        return true;
+        return state.getValue(PREVENTS_NEARBY_LEAF_DECAY);
     }
 
     @Override

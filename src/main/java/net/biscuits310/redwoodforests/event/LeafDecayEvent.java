@@ -4,6 +4,7 @@ import net.biscuits310.redwoodforests.RedwoodForests;
 import net.biscuits310.redwoodforests.block.ModBlocks;
 import net.biscuits310.redwoodforests.block.custom.RedwoodFenceBlock;
 import net.biscuits310.redwoodforests.block.custom.RedwoodLeavesBlock;
+import net.biscuits310.redwoodforests.tags.ModTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
@@ -37,26 +38,18 @@ public class LeafDecayEvent {
 
     @SubscribeEvent
     public static void onBreak(BlockEvent.BreakEvent event){
-        if (!(event.getLevel() instanceof ServerLevel level)){
-            return;
-        }
+        if (!(event.getLevel() instanceof ServerLevel level)) return;
 
-        if (!(event.getState().is(BlockTags.PREVENTS_NEARBY_LEAF_DECAY))){
-            return;
-        }
+        if (!(event.getState().is(BlockTags.PREVENTS_NEARBY_LEAF_DECAY))) return;
 
         tickDiagonalRedwoodLeavesAndFences(level, event.getPos());
     }
 
     @SubscribeEvent
     public static void onNeighbourUpdates(BlockEvent.NeighborNotifyEvent event){
-        if (!(event.getLevel() instanceof ServerLevel level)){
-            return;
-        }
+        if (!(event.getLevel() instanceof ServerLevel level)) return;
 
-        if (!((event.getState().is(BlockTags.LEAVES)) || (event.getState().is(ModBlocks.REDWOOD_FENCE)))){
-            return;
-        }
+        if (!((event.getState().is(BlockTags.LEAVES)) || (event.getState().is(ModBlocks.REDWOOD_FENCE)) || (event.getState().is(ModTags.Blocks.REWDWOOD_LOGS)))) return;
 
         tickDiagonalRedwoodLeavesAndFences(level, event.getPos());
     }
