@@ -24,23 +24,22 @@ import java.util.Set;
 import java.util.function.Supplier;
 
 public class ModConeFoliagePlacer extends FoliagePlacer {
-    public static final MapCodec<ModConeFoliagePlacer> CODEC = RecordCodecBuilder.mapCodec(
-            i -> foliagePlacerParts(i)
-                    .and(IntProviders.codec(0, 24).fieldOf("crown_height").forGetter(p -> p.crownHeight))
-                    .and(BuiltInRegistries.BLOCK.byNameCodec().fieldOf("deep_foliage_block").forGetter(p -> p.deepFoliageBlock.get()))
-                    .and(BuiltInRegistries.BLOCK.byNameCodec().fieldOf("fence_block").forGetter(p -> p.fenceBlock.get()))
-                    .apply(i, (radius, offset, crownHeight, deepFoliageBlock, fenceBlock) ->
-                            new ModConeFoliagePlacer(
-                                    radius,
-                                    offset,
-                                    crownHeight,
-                                    () -> deepFoliageBlock,
-                                    () -> fenceBlock
-                            )));
+    public static final MapCodec<ModConeFoliagePlacer> CODEC = RecordCodecBuilder.mapCodec(i -> foliagePlacerParts(i)
+            .and(IntProviders.codec(0, 24).fieldOf("crown_height").forGetter(p -> p.crownHeight))
+            .and(BuiltInRegistries.BLOCK.byNameCodec().fieldOf("deep_foliage_block").forGetter(p -> p.deepFoliageBlock.get()))
+            .and(BuiltInRegistries.BLOCK.byNameCodec().fieldOf("fence_block").forGetter(p -> p.fenceBlock.get()))
+            .apply(i, (radius, offset, crownHeight, deepFoliageBlock, fenceBlock) ->
+                    new ModConeFoliagePlacer(
+                    radius,
+                    offset,
+                    crownHeight,
+                    () -> deepFoliageBlock,
+                    () -> fenceBlock
+                    )));
 
-    private final IntProvider crownHeight;
-    private final Supplier<net.minecraft.world.level.block.Block> deepFoliageBlock;
-    private final Supplier<net.minecraft.world.level.block.Block> fenceBlock;
+    protected final IntProvider crownHeight;
+    protected final Supplier<net.minecraft.world.level.block.Block> deepFoliageBlock;
+    protected final Supplier<net.minecraft.world.level.block.Block> fenceBlock;
 
     public ModConeFoliagePlacer(IntProvider radius, IntProvider offset, IntProvider crownHeight, Supplier<Block> deepFoliageBlock, Supplier<Block> fenceBlock){
         super(radius, offset);
@@ -73,7 +72,7 @@ public class ModConeFoliagePlacer extends FoliagePlacer {
         for (int depth = 1; depth <= foliageHeight; depth++){
             currentRadius = Math.round(depth * leafRadius / (float)foliageHeight);
             if (depth == foliageHeight) {currentRadius /= 2;}
-            this.placeLeavesRow(level, foliageSetter, random, config, foliagePos, currentRadius, -depth+offset, foliageAttachment.doubleTrunk(), leafBlocks);
+            this.placeLeavesRow(level, foliageSetter, random, config, foliagePos, currentRadius, -depth+offset, true, leafBlocks);
         }
 
         for (int height = 0; height <=2; height++){
@@ -90,8 +89,8 @@ public class ModConeFoliagePlacer extends FoliagePlacer {
         int offset = doubleTrunk ? 1 : 0;
         BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
 
-        for (int dx = -currentRadius; dx <= currentRadius + offset; dx++) {
-            for (int dz = -currentRadius; dz <= currentRadius + offset; dz++) {
+        for (int dx = -currentRadius - 5; dx <= currentRadius + 5 + offset; dx++) {
+            for (int dz = -currentRadius - 5; dz <= currentRadius + 5 + offset; dz++) {
                 BlockPos rootPos = origin.offset(dx, 0, dz).atY(y);
 
                 if (!this.shouldSkipLocationSigned(random, dx, y, dz, currentRadius, doubleTrunk))
@@ -127,9 +126,9 @@ public class ModConeFoliagePlacer extends FoliagePlacer {
         branchChance -= distance/currentRadius * 0.2;
 
 
-        if (leafBlocks.contains(rootPos.west())) {skipChance+=0.25;}
-        if (leafBlocks.contains(rootPos.above())) {skipChance+=0.4;}
-        if (leafBlocks.contains(rootPos.north())) {skipChance+=0.25;}
+        if (leafBlocks.contains(rootPos.west())) {skipChance+=0.3;}
+        if (leafBlocks.contains(rootPos.above())) {skipChance+=0.37;}
+        if (leafBlocks.contains(rootPos.north())) {skipChance+=0.3;}
 
         if (skipChance > 1){skipChance = 1;}
         if (skipChance < 0){skipChance = 0;}
