@@ -17,8 +17,8 @@ import java.util.Set;
 import java.util.function.Supplier;
 
 public class ModConeFoliageRemover extends ModConeFoliagePlacer {
-    public ModConeFoliageRemover(IntProvider radius, IntProvider offset, IntProvider crownHeight, Supplier<Block> deepFoliageBlock, Supplier<Block> fenceBlock) {
-        super(radius, offset, crownHeight, deepFoliageBlock, fenceBlock);
+    public ModConeFoliageRemover(IntProvider radius, IntProvider offset, IntProvider crownHeight, Supplier<Block> deepFoliageBlock, Supplier<Block> fenceBlock, IntProvider tipHeight) {
+        super(radius, offset, crownHeight, deepFoliageBlock, fenceBlock, tipHeight);
     }
 
     private final Set<BlockPos> trunkMap = new HashSet<>();
@@ -41,8 +41,14 @@ public class ModConeFoliageRemover extends ModConeFoliagePlacer {
             this.placeLeavesRow(level, foliageSetter, random, config, foliagePos, currentRadius, -depth+offset, foliageAttachment.doubleTrunk(), leafBlocks);
         }
 
-        for (int height = 0; height <=2; height++){
-            tryPlaceLeaf(level, foliageSetter, random, config, foliageAttachment.pos().offset(0, height, 0));
+
+        for (int height = 0; height <= tipHeight(random); height++){
+            BlockPos currentPos = foliageAttachment.pos().offset(0, height, 0);
+            if (random.nextFloat() < 0.25){
+                tryPlaceFenceBlock(level, foliageSetter, random, config, currentPos);
+                continue;
+            }
+            tryPlaceLeaf(level, foliageSetter, random, config, currentPos);
         }
     }
 

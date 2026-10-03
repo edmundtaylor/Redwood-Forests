@@ -112,7 +112,7 @@ public class ModGiantFenceTrunkPlacer extends TrunkPlacer {
         for (int i = 0; i < this.treeVectors.length; i++){
             trunkPos.setWithOffset(treePos, this.treeVectors[i].offset(0, y, 0));
             if (originLevel){
-                if (i == 0){
+                if (i == 0 && random.nextFloat() < 0.75){
                     this.placeLogIfFree(level, originBlockSetter, random, trunkPos, config);
                     continue;
                 }

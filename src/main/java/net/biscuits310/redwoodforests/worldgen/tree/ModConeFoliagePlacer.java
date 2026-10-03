@@ -28,24 +28,28 @@ public class ModConeFoliagePlacer extends FoliagePlacer {
             .and(IntProviders.codec(0, 24).fieldOf("crown_height").forGetter(p -> p.crownHeight))
             .and(BuiltInRegistries.BLOCK.byNameCodec().fieldOf("deep_foliage_block").forGetter(p -> p.deepFoliageBlock.get()))
             .and(BuiltInRegistries.BLOCK.byNameCodec().fieldOf("fence_block").forGetter(p -> p.fenceBlock.get()))
-            .apply(i, (radius, offset, crownHeight, deepFoliageBlock, fenceBlock) ->
+            .and(IntProviders.codec(0, 10).fieldOf("tip_height").forGetter(p -> p.tipHeight))
+            .apply(i, (radius, offset, crownHeight, deepFoliageBlock, fenceBlock, tipHeight) ->
                     new ModConeFoliagePlacer(
                     radius,
                     offset,
                     crownHeight,
                     () -> deepFoliageBlock,
-                    () -> fenceBlock
+                    () -> fenceBlock,
+                    tipHeight
                     )));
 
     protected final IntProvider crownHeight;
+    protected final IntProvider tipHeight;
     protected final Supplier<net.minecraft.world.level.block.Block> deepFoliageBlock;
     protected final Supplier<net.minecraft.world.level.block.Block> fenceBlock;
 
-    public ModConeFoliagePlacer(IntProvider radius, IntProvider offset, IntProvider crownHeight, Supplier<Block> deepFoliageBlock, Supplier<Block> fenceBlock){
+    public ModConeFoliagePlacer(IntProvider radius, IntProvider offset, IntProvider crownHeight, Supplier<Block> deepFoliageBlock, Supplier<Block> fenceBlock, IntProvider tipHeight){
         super(radius, offset);
         this.crownHeight = crownHeight;
         this.deepFoliageBlock = deepFoliageBlock;
         this.fenceBlock = fenceBlock;
+        this.tipHeight = tipHeight;
     }
 
     @Override
@@ -75,9 +79,18 @@ public class ModConeFoliagePlacer extends FoliagePlacer {
             this.placeLeavesRow(level, foliageSetter, random, config, foliagePos, currentRadius, -depth+offset, foliageAttachment.doubleTrunk(), leafBlocks);
         }
 
-        for (int height = 0; height <=2; height++){
-            tryPlaceLeaf(level, foliageSetter, random, config, foliageAttachment.pos().offset(0, height, 0));
+        for (int height = 0; height <= tipHeight(random); height++){
+            BlockPos currentPos = foliageAttachment.pos().offset(0, height, 0);
+            if (random.nextFloat() < 0.25){
+                tryPlaceFenceBlock(level, foliageSetter, random, config, currentPos);
+                continue;
+            }
+            tryPlaceLeaf(level, foliageSetter, random, config, currentPos);
         }
+    }
+
+    public int tipHeight(RandomSource random){
+        return this.tipHeight.sample(random);
     }
 
     @Override

@@ -76,7 +76,11 @@ public class ModFenceTrunkPlacer extends TrunkPlacer {
         for (int hh = 0; hh < treeHeight; hh++){
             trunkPos.setWithOffset(origin, 0, hh, 0);
             if (hh == 0){
-                this.placeLog(level, originBlockSetter, random, trunkPos, config);
+                if (random.nextFloat() < 0.75){
+                    this.placeLog(level, originBlockSetter, random, trunkPos, config);
+                    continue;
+                }
+                this.placeLog(level, trunkSetter, random, trunkPos, config);
             }
             else if (hh < treeHeight * (1-this.fenceProportion)) {
                 this.placeLog(level, trunkSetter, random, trunkPos, config);
