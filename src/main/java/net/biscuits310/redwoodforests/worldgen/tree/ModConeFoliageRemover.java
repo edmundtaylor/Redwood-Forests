@@ -30,7 +30,6 @@ public class ModConeFoliageRemover extends ModConeFoliagePlacer {
         BlockPos.MutableBlockPos tempTrunkPos = new BlockPos.MutableBlockPos();
         for (int h = 0; h < treeHeight; h++){
             tempTrunkPos.setWithOffset(foliagePos, 0, -h, 0);
-            System.out.println(tempTrunkPos);
             trunkMap.add(tempTrunkPos.immutable());
         }
         int currentRadius;

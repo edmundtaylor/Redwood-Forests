@@ -11,6 +11,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.grower.TreeGrower;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
@@ -20,6 +21,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
+import java.util.HashMap;
 import java.util.function.Function;
 
 // Creates DeferredBlocks, and combines them into a Deferredregister
@@ -55,7 +57,7 @@ public class ModBlocks
                     .ignitedByLava()));
 
     public static final DeferredBlock<Block> REDWOOD_ORIGIN_BLOCK = registerBlock("redwood_origin_block",
-            properties -> new RedwoodOriginBlock(5, 5, ModBlocks.STRIPPED_REDWOOD_LOG, ModTreeGrowers.REDWOOD_1, properties
+            properties -> new RedwoodOriginBlock(5, 5, ModBlocks.STRIPPED_REDWOOD_LOG, properties
                     .mapColor(state -> state.getValue(StrippableFlammableRotatedPillarBlock.AXIS) == Direction.Axis.Y ? MapColor.WOOD : MapColor.PODZOL)
                     .instrument(NoteBlockInstrument.BASS)
                     .strength(2.0F)
@@ -160,7 +162,7 @@ public class ModBlocks
     public static final DeferredBlock<Block> REDWOOD_SAPLING = registerBlock("redwood_sapling",
             // Sets the properties of a sapling block, and creates it using the SaplingBlock class
             // Also inputs the redwood tree grower, which assigns the type of tree to be grown when the sapling grows into a tree
-            properties -> new SaplingBlock(ModTreeGrowers.REDWOOD_2, properties
+            properties -> new SaplingBlock(ModTreeGrowers.REDWOOD, properties
                     .mapColor(MapColor.PLANT)
                     .noCollision()
                     .randomTicks()

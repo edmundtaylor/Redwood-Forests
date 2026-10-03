@@ -1,6 +1,7 @@
 package net.biscuits310.redwoodforests.block.custom;
 
 import net.biscuits310.redwoodforests.block.ModBlockStateProperties;
+import net.biscuits310.redwoodforests.worldgen.tree.ModTreeGrowers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -12,17 +13,17 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 
+import java.util.HashMap;
 import java.util.function.Supplier;
 
 public class RedwoodOriginBlock extends RedwoodLogBlock{
     public static final IntegerProperty GROWTH_STAGE = ModBlockStateProperties.GROWTH_STAGE;
     public static final IntegerProperty STAGE = BlockStateProperties.STAGE;
     public static final IntegerProperty TREE_HEIGHT = ModBlockStateProperties.TREE_HEIGHT;
-    protected final TreeGrower treeGrower;
+    protected final HashMap<Integer, TreeGrower> treeGrowerMap = HashMap.newHashMap(3);
 
-    public RedwoodOriginBlock(int flammability, int fireSpreadSpeed, Supplier<Block> strippedBlock, TreeGrower treeGrower, Properties properties) {
+    public RedwoodOriginBlock(int flammability, int fireSpreadSpeed, Supplier<Block> strippedBlock, Properties properties) {
         super(flammability, fireSpreadSpeed, strippedBlock, properties.randomTicks());
-        this.treeGrower = treeGrower;
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(PREVENTS_NEARBY_LEAF_DECAY, true)
                 .setValue(NATURAL_LOG, true)
@@ -30,6 +31,10 @@ public class RedwoodOriginBlock extends RedwoodLogBlock{
                 .setValue(GROWTH_STAGE, 0)
                 .setValue(STAGE, 0)
                 .setValue(TREE_HEIGHT, 0));
+
+        this.treeGrowerMap.put(0, ModTreeGrowers.REDWOOD);
+        this.treeGrowerMap.put(1, ModTreeGrowers.REDWOOD_1);
+        this.treeGrowerMap.put(2, ModTreeGrowers.REDWOOD_2);
     }
 
     @Override
@@ -49,7 +54,7 @@ public class RedwoodOriginBlock extends RedwoodLogBlock{
         if (state.getValue(STAGE) == 0){
             level.setBlock(pos, state.cycle(STAGE), 260);
         } else {
-            this.treeGrower.growTree(level, level.getChunkSource().getGenerator(), pos, state, RandomSource.create());
+            this.treeGrowerMap.get(state.getValue(GROWTH_STAGE)).growTree(level, level.getChunkSource().getGenerator(), pos, state, RandomSource.create());
         }
     }
 

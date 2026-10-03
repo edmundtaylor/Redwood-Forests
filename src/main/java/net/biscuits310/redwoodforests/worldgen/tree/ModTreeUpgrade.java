@@ -29,6 +29,7 @@ import net.minecraft.world.level.levelgen.feature.featuresize.TwoLayersFeatureSi
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecorator;
+import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacer;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraft.world.phys.shapes.BitSetDiscreteVoxelShape;
@@ -175,8 +176,14 @@ public class ModTreeUpgrade extends TreeFeature {
     }
 
     private TreeConfiguration removerConfigPicker(TreeConfiguration config){
-        if (!(config.trunkPlacer instanceof ModFenceTrunkPlacer modFenceTrunkPlacer)) return config;
-        int growthStage = modFenceTrunkPlacer.getGrowthStage();
+        TrunkPlacer trunkPlacer = config.trunkPlacer;
+        int growthStage;
+        if (trunkPlacer instanceof ModFenceTrunkPlacer fenceTrunkPlacer)
+            growthStage = fenceTrunkPlacer.getGrowthStage();
+        else if (trunkPlacer instanceof  ModGiantFenceTrunkPlacer giantFenceTrunkPlacer)
+            growthStage = giantFenceTrunkPlacer.getGrowthStage();
+        else
+            return config;
         switch (growthStage) {
             case 0:
                 return null;

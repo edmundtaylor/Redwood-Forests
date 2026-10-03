@@ -46,16 +46,16 @@ public class ModConfiguredFeatures {
 
         register(context, REDWOOD_1_KEY, ModFeatures.MOD_TREE_UPGRADE.get(), new TreeConfiguration.TreeConfigurationBuilder(
                 BlockStateProvider.simple(ModBlocks.REDWOOD_LOG.get()),
-                new ModFenceTrunkPlacer(13, 1, 2, ModBlocks.REDWOOD_FENCE, ModBlocks.REDWOOD_LOG, 0.25F, 1),
+                new ModFenceTrunkPlacer(13, 1, 2, ModBlocks.REDWOOD_FENCE, ModBlocks.REDWOOD_ORIGIN_BLOCK, 0.25F, 1),
                 BlockStateProvider.simple(ModBlocks.REDWOOD_LEAVES.get()),
                 new ModConeFoliagePlacer(ConstantInt.of(3), ConstantInt.of(1), ConstantInt.of(12), ModBlocks.DEEP_REDWOOD_LEAVES, ModBlocks.REDWOOD_FENCE),
                 new TwoLayersFeatureSize(1, 1, 2)).build());
 
-        register (context, REDWOOD_2_KEY, Feature.TREE, new TreeConfiguration.TreeConfigurationBuilder(
+        register (context, REDWOOD_2_KEY, ModFeatures.MOD_TREE_UPGRADE.get(), new TreeConfiguration.TreeConfigurationBuilder(
                 BlockStateProvider.simple(ModBlocks.REDWOOD_LOG.get()),
-                new ModGiantFenceTrunkPlacer(16, 1, 2, ModBlocks.REDWOOD_FENCE, ModBlocks.REDWOOD_LOG, 0.30F, 0.5F, 2),
+                new ModGiantFenceTrunkPlacer(18, 1, 2, ModBlocks.REDWOOD_FENCE, ModBlocks.REDWOOD_LOG, 0.25F, 0.60F, 2),
                 BlockStateProvider.simple(ModBlocks.REDWOOD_LEAVES.get()),
-                new ModConeFoliagePlacer(ConstantInt.of(4), ConstantInt.of(6), ConstantInt.of(18), ModBlocks.DEEP_REDWOOD_LEAVES, ModBlocks.REDWOOD_FENCE),
+                new ModConeFoliagePlacer(ConstantInt.of(4), ConstantInt.of(4), ConstantInt.of(18), ModBlocks.DEEP_REDWOOD_LEAVES, ModBlocks.REDWOOD_FENCE),
                 new TwoLayersFeatureSize(1, 1, 2)).build());
     }
 

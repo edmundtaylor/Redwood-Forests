@@ -72,7 +72,7 @@ public class ModConeFoliagePlacer extends FoliagePlacer {
         for (int depth = 1; depth <= foliageHeight; depth++){
             currentRadius = Math.round(depth * leafRadius / (float)foliageHeight);
             if (depth == foliageHeight) {currentRadius /= 2;}
-            this.placeLeavesRow(level, foliageSetter, random, config, foliagePos, currentRadius, -depth+offset, true, leafBlocks);
+            this.placeLeavesRow(level, foliageSetter, random, config, foliagePos, currentRadius, -depth+offset, foliageAttachment.doubleTrunk(), leafBlocks);
         }
 
         for (int height = 0; height <=2; height++){
@@ -89,8 +89,8 @@ public class ModConeFoliagePlacer extends FoliagePlacer {
         int offset = doubleTrunk ? 1 : 0;
         BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
 
-        for (int dx = -currentRadius - 5; dx <= currentRadius + 5 + offset; dx++) {
-            for (int dz = -currentRadius - 5; dz <= currentRadius + 5 + offset; dz++) {
+        for (int dx = -currentRadius; dx <= currentRadius + offset; dx++) {
+            for (int dz = -currentRadius; dz <= currentRadius + offset; dz++) {
                 BlockPos rootPos = origin.offset(dx, 0, dz).atY(y);
 
                 if (!this.shouldSkipLocationSigned(random, dx, y, dz, currentRadius, doubleTrunk))

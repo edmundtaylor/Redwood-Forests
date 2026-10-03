@@ -45,7 +45,8 @@ public class ModGiantFenceTrunkPlacer extends TrunkPlacer {
     protected final Supplier<Block> fenceBlock;
     protected final Supplier<Block> originBlock;
 
-    protected final Vec3i[] treeVectors = {new Vec3i(0, 0, 0), new Vec3i(0, 0, 1), new Vec3i(1, 0, 0), new Vec3i(1, 0, 1)};
+    protected final Vec3i[] treeVectors = {new Vec3i(0, 0, 0), new Vec3i(0, 0, 1), new Vec3i(1, 0, 0), new Vec3i(1, 0, 1),
+    new Vec3i(0, 0, -1), new Vec3i(1, 0, -1), new Vec3i(-1, 0, 0), new Vec3i(2, 0, 0), new Vec3i(-1, 0, 1), new Vec3i(2, 0, 1), new Vec3i(0, 0, 2), new Vec3i(1, 0, 2)};
 
     public ModGiantFenceTrunkPlacer(int baseHeight, int heightRandA, int heightRandB, Supplier<Block> fenceBlock, Supplier<Block> originBlock, float fenceProportion, float progressChance, int growthStage) {
         super(baseHeight, heightRandA, heightRandB);
@@ -80,20 +81,18 @@ public class ModGiantFenceTrunkPlacer extends TrunkPlacer {
                         .trySetValue(ModBlockStateProperties.GROWTH_STAGE, this.growthStage + 1)
                         .trySetValue(ModBlockStateProperties.TREE_HEIGHT, treeHeight));
 
-        boolean[] fenceState = {false, false, false, false};
+        int[] progressState = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
         int fencePos = -1;
 
-        for (int hh = 0; hh < treeHeight + 5; hh++){
+        for (int hh = 0; hh < treeHeight; hh++){
             if (hh == 0)
-                this.giantTrunkPlacer(level, trunkSetter, originBlockSetter, fenceSetter, random, trunkPos, config, origin, hh, 0F, true, fenceState, -2);
+                this.giantTrunkPlacer(level, trunkSetter, originBlockSetter, fenceSetter, random, trunkPos, config, origin, hh, 0F, true, progressState);
             else if (hh < treeHeight * (1-this.fenceProportion))
-                this.giantTrunkPlacer(level, trunkSetter, originBlockSetter, fenceSetter, random, trunkPos, config, origin, hh, 0F, false, fenceState, -2);
+                this.giantTrunkPlacer(level, trunkSetter, originBlockSetter, fenceSetter, random, trunkPos, config, origin, hh, 0F, false, progressState);
             else if (hh < treeHeight)
-                this.giantTrunkPlacer(level, trunkSetter, originBlockSetter, fenceSetter, random, trunkPos, config, origin, hh, this.progressChance, false, fenceState, -2);
-            else
-                this.giantTrunkPlacer(level, trunkSetter, originBlockSetter, fenceSetter, random, trunkPos, config, origin, hh, 0F, false, fenceState, fencePos);
+                this.giantTrunkPlacer(level, trunkSetter, originBlockSetter, fenceSetter, random, trunkPos, config, origin, hh, this.progressChance, false, progressState);
         }
-        return ImmutableList.of(new FoliagePlacer.FoliageAttachment(origin.above(treeHeight), 0, false));
+        return ImmutableList.of(new FoliagePlacer.FoliageAttachment(origin.above(treeHeight), 0, true));
     }
 
     private void giantTrunkPlacer(
@@ -108,34 +107,48 @@ public class ModGiantFenceTrunkPlacer extends TrunkPlacer {
             int y,
             float progressChance,
             boolean originLevel,
-            boolean[] fenceState,
-            int fencePos
+            int[] progressState
     ){
         for (int i = 0; i < this.treeVectors.length; i++){
             trunkPos.setWithOffset(treePos, this.treeVectors[i].offset(0, y, 0));
-            if (fencePos == -1)
-                fencePos = random.nextIntBetweenInclusive(0, 3);
-            if (i == fencePos){
-                this.placeLogIfFree(level, fenceSetter, random, trunkPos, config);
+            if (originLevel){
+                if (i == 0){
+                    this.placeLogIfFree(level, originBlockSetter, random, trunkPos, config);
+                    continue;
+                }
+                this.placeLogIfFree(level, trunkSetter, random, trunkPos, config);
                 continue;
             }
-            if (fencePos != -2)
-                continue;
-            if (originLevel && i == 0){
-                this.placeLogIfFree(level, originBlockSetter, random, trunkPos, config);
+            if (i > 3){
+                if (progressState[i] != 1){
+                    if (random.nextFloat() < 0.5){
+                        progressState[i]++;
+                        continue;
+                    }
+                    this.placeLogIfFree(level, trunkSetter, random, trunkPos, config);
+                }
                 continue;
             }
-            if (fenceState[i]){
+            if (progressState[i] == 2)
+                continue;
+            if (progressState[i] == 1){
                 this.placeLogIfFree(level, fenceSetter, random, trunkPos, config );
-                continue;
             }
             if (random.nextFloat() < progressChance) {
-                fenceState[i] = true;
+                progressState[i]++;
+                if (progressState[i] == 2)
+                    continue;
                 this.placeLogIfFree(level, fenceSetter, random, trunkPos, config);
             }
-            else {
-                this.placeLogIfFree(level, trunkSetter, random, trunkPos, config);
-            }
+            this.placeLogIfFree(level, trunkSetter, random, trunkPos, config);
+        }
+    }
+
+    @Override
+    protected void placeLogIfFree(WorldGenLevel level, BiConsumer<BlockPos, BlockState> trunkSetter, RandomSource random, BlockPos.MutableBlockPos pos, TreeConfiguration config) {
+        if (this.isFree(level, pos)) {
+            this.placeLog(level, trunkSetter, random, pos, config);
+            level.updateNeighborsAt(pos, level.getBlockState(pos).getBlock());
         }
     }
 }
