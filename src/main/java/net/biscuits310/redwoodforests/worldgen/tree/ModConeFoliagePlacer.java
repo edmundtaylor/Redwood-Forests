@@ -29,27 +29,31 @@ public class ModConeFoliagePlacer extends FoliagePlacer {
             .and(BuiltInRegistries.BLOCK.byNameCodec().fieldOf("deep_foliage_block").forGetter(p -> p.deepFoliageBlock.get()))
             .and(BuiltInRegistries.BLOCK.byNameCodec().fieldOf("fence_block").forGetter(p -> p.fenceBlock.get()))
             .and(IntProviders.codec(0, 10).fieldOf("tip_height").forGetter(p -> p.tipHeight))
-            .apply(i, (radius, offset, crownHeight, deepFoliageBlock, fenceBlock, tipHeight) ->
+            .and(IntProviders.codec(0, 1).fieldOf("mega_feature").forGetter(p -> p.megaFeature))
+            .apply(i, (radius, offset, crownHeight, deepFoliageBlock, fenceBlock, tipHeight, megaFeature) ->
                     new ModConeFoliagePlacer(
                     radius,
                     offset,
                     crownHeight,
                     () -> deepFoliageBlock,
                     () -> fenceBlock,
-                    tipHeight
+                    tipHeight,
+                    megaFeature
                     )));
 
+    protected final IntProvider megaFeature;
     protected final IntProvider crownHeight;
     protected final IntProvider tipHeight;
     protected final Supplier<net.minecraft.world.level.block.Block> deepFoliageBlock;
     protected final Supplier<net.minecraft.world.level.block.Block> fenceBlock;
 
-    public ModConeFoliagePlacer(IntProvider radius, IntProvider offset, IntProvider crownHeight, Supplier<Block> deepFoliageBlock, Supplier<Block> fenceBlock, IntProvider tipHeight){
+    public ModConeFoliagePlacer(IntProvider radius, IntProvider offset, IntProvider crownHeight, Supplier<Block> deepFoliageBlock, Supplier<Block> fenceBlock, IntProvider tipHeight, IntProvider megaFeature){
         super(radius, offset);
         this.crownHeight = crownHeight;
         this.deepFoliageBlock = deepFoliageBlock;
         this.fenceBlock = fenceBlock;
         this.tipHeight = tipHeight;
+        this.megaFeature = megaFeature;
     }
 
     @Override
@@ -72,11 +76,12 @@ public class ModConeFoliagePlacer extends FoliagePlacer {
         BlockPos foliagePos = foliageAttachment.pos();
         int currentRadius;
         Set<BlockPos> leafBlocks = new HashSet<>();
+        boolean megaFeature = this.megaFeature.sample(random) == 1;
 
         for (int depth = 1; depth <= foliageHeight; depth++){
             currentRadius = Math.round(depth * leafRadius / (float)foliageHeight);
             if (depth == foliageHeight) {currentRadius /= 2;}
-            this.placeLeavesRow(level, foliageSetter, random, config, foliagePos, currentRadius, -depth+offset, foliageAttachment.doubleTrunk(), leafBlocks);
+            this.placeLeavesRow(level, foliageSetter, random, config, foliagePos, currentRadius, -depth+offset, foliageAttachment.doubleTrunk(), megaFeature, leafBlocks);
         }
 
         for (int height = 0; height <= tipHeight(random); height++){
@@ -98,8 +103,10 @@ public class ModConeFoliagePlacer extends FoliagePlacer {
         return this.crownHeight.sample(random);
     }
 
-    protected void placeLeavesRow(WorldGenLevel level, FoliageSetter foliageSetter, RandomSource random, TreeConfiguration config, BlockPos origin, int currentRadius, int y, boolean doubleTrunk, Set<BlockPos> leafBlocks) {
+    protected void placeLeavesRow(WorldGenLevel level, FoliageSetter foliageSetter, RandomSource random, TreeConfiguration config, BlockPos origin, int currentRadius, int y, boolean doubleTrunk, boolean megaTrunk, Set<BlockPos> leafBlocks) {
         int offset = doubleTrunk ? 1 : 0;
+        offset = megaTrunk ? 2 : offset;
+
         BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
 
         for (int dx = -currentRadius; dx <= currentRadius + offset; dx++) {

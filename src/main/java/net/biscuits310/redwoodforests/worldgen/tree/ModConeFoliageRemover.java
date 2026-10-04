@@ -17,8 +17,8 @@ import java.util.Set;
 import java.util.function.Supplier;
 
 public class ModConeFoliageRemover extends ModConeFoliagePlacer {
-    public ModConeFoliageRemover(IntProvider radius, IntProvider offset, IntProvider crownHeight, Supplier<Block> deepFoliageBlock, Supplier<Block> fenceBlock, IntProvider tipHeight) {
-        super(radius, offset, crownHeight, deepFoliageBlock, fenceBlock, tipHeight);
+    public ModConeFoliageRemover(IntProvider radius, IntProvider offset, IntProvider crownHeight, Supplier<Block> deepFoliageBlock, Supplier<Block> fenceBlock, IntProvider tipHeight, IntProvider megaFeature) {
+        super(radius, offset, crownHeight, deepFoliageBlock, fenceBlock, tipHeight, megaFeature);
     }
 
     private final Set<BlockPos> trunkMap = new HashSet<>();
@@ -34,11 +34,16 @@ public class ModConeFoliageRemover extends ModConeFoliagePlacer {
         }
         int currentRadius;
         Set<BlockPos> leafBlocks = new HashSet<>();
+        boolean megaFeature = this.megaFeature.sample(random) == 1;
 
         for (int depth = 1; depth <= foliageHeight; depth++){
             currentRadius = Math.round(depth * leafRadius / (float)foliageHeight);
             if (depth == foliageHeight) {currentRadius /= 2;}
-            this.placeLeavesRow(level, foliageSetter, random, config, foliagePos, currentRadius, -depth+offset, foliageAttachment.doubleTrunk(), leafBlocks);
+
+            if (megaFeature)
+                this.placeLeavesRow(level, foliageSetter, random, config, foliagePos.offset(-1, 0, -1), currentRadius, -depth+offset, foliageAttachment.doubleTrunk(), true, leafBlocks);
+            else
+                this.placeLeavesRow(level, foliageSetter, random, config, foliagePos, currentRadius, -depth+offset, foliageAttachment.doubleTrunk(), false, leafBlocks);
         }
 
 
@@ -74,8 +79,10 @@ public class ModConeFoliageRemover extends ModConeFoliagePlacer {
     }
 
     @Override
-    protected void placeLeavesRow(WorldGenLevel level, FoliageSetter foliageSetter, RandomSource random, TreeConfiguration config, BlockPos origin, int currentRadius, int y, boolean doubleTrunk, Set<BlockPos> leafBlocks) {
+    protected void placeLeavesRow(WorldGenLevel level, FoliageSetter foliageSetter, RandomSource random, TreeConfiguration config, BlockPos origin, int currentRadius, int y, boolean doubleTrunk, boolean megaTrunk, Set<BlockPos> leafBlocks) {
         int offset = doubleTrunk ? 1 : 0;
+        offset = megaTrunk ? 2 : offset;
+
         BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
 
         for (int dx = -currentRadius; dx <= currentRadius + offset; dx++) {

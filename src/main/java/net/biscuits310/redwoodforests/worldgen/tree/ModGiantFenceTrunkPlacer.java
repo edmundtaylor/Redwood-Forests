@@ -45,7 +45,7 @@ public class ModGiantFenceTrunkPlacer extends TrunkPlacer {
     protected final Supplier<Block> fenceBlock;
     protected final Supplier<Block> originBlock;
 
-    protected final Vec3i[] treeVectors = {new Vec3i(0, 0, 0), new Vec3i(0, 0, 1), new Vec3i(1, 0, 0), new Vec3i(1, 0, 1),
+    protected Vec3i[] treeVectors = {new Vec3i(0, 0, 0), new Vec3i(0, 0, 1), new Vec3i(1, 0, 0), new Vec3i(1, 0, 1),
     new Vec3i(0, 0, -1), new Vec3i(1, 0, -1), new Vec3i(-1, 0, 0), new Vec3i(2, 0, 0), new Vec3i(-1, 0, 1), new Vec3i(2, 0, 1), new Vec3i(0, 0, 2), new Vec3i(1, 0, 2)};
 
     public ModGiantFenceTrunkPlacer(int baseHeight, int heightRandA, int heightRandB, Supplier<Block> fenceBlock, Supplier<Block> originBlock, float fenceProportion, float progressChance, int growthStage) {
@@ -57,7 +57,17 @@ public class ModGiantFenceTrunkPlacer extends TrunkPlacer {
         this.growthStage = growthStage;
     }
 
+    protected Vec3i[] getTreeVectors() {return  this.treeVectors;}
+
     public int getGrowthStage() {return this.growthStage;}
+
+    public int getNumBaseTrunkBlocks() {return 4;}
+
+    public void placeBelowTrunkBlocks(WorldGenLevel level, BiConsumer<BlockPos, BlockState> trunkSetter, RandomSource random, BlockPos origin, TreeConfiguration config){
+        BlockPos below = origin.below();
+        for (Vec3i currentOffset : getTreeVectors())
+            placeBelowTrunkBlock(level, trunkSetter, random, below.offset(currentOffset), config);
+    }
 
     @Override
     protected TrunkPlacerType<?> type() {
@@ -66,11 +76,7 @@ public class ModGiantFenceTrunkPlacer extends TrunkPlacer {
 
     @Override
     public List<FoliagePlacer.FoliageAttachment> placeTrunk(WorldGenLevel level, BiConsumer<BlockPos, BlockState> trunkSetter, RandomSource random, int treeHeight, BlockPos origin, TreeConfiguration config) {
-        BlockPos below = origin.below();
-        placeBelowTrunkBlock(level, trunkSetter, random, below, config);
-        placeBelowTrunkBlock(level, trunkSetter, random, below.east(), config);
-        placeBelowTrunkBlock(level, trunkSetter, random, below.south(), config);
-        placeBelowTrunkBlock(level, trunkSetter, random, below.south().east(), config);
+        placeBelowTrunkBlock(level, trunkSetter, random, origin, config);
         BlockPos.MutableBlockPos trunkPos = new BlockPos.MutableBlockPos();
 
         BiConsumer<BlockPos, BlockState> fenceSetter =
@@ -81,21 +87,20 @@ public class ModGiantFenceTrunkPlacer extends TrunkPlacer {
                         .trySetValue(ModBlockStateProperties.GROWTH_STAGE, this.growthStage + 1)
                         .trySetValue(ModBlockStateProperties.TREE_HEIGHT, treeHeight));
 
-        int[] progressState = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-        int fencePos = -1;
+        int[] progressState = new int[21];
 
         for (int hh = 0; hh < treeHeight; hh++){
             if (hh == 0)
                 this.giantTrunkPlacer(level, trunkSetter, originBlockSetter, fenceSetter, random, trunkPos, config, origin, hh, 0F, true, progressState);
             else if (hh < treeHeight * (1-this.fenceProportion))
                 this.giantTrunkPlacer(level, trunkSetter, originBlockSetter, fenceSetter, random, trunkPos, config, origin, hh, 0F, false, progressState);
-            else if (hh < treeHeight)
+            else
                 this.giantTrunkPlacer(level, trunkSetter, originBlockSetter, fenceSetter, random, trunkPos, config, origin, hh, this.progressChance, false, progressState);
         }
         return ImmutableList.of(new FoliagePlacer.FoliageAttachment(origin.above(treeHeight), 0, true));
     }
 
-    private void giantTrunkPlacer(
+    protected void giantTrunkPlacer(
             WorldGenLevel level,
             BiConsumer<BlockPos, BlockState> trunkSetter,
             BiConsumer<BlockPos, BlockState> originBlockSetter,
@@ -109,8 +114,12 @@ public class ModGiantFenceTrunkPlacer extends TrunkPlacer {
             boolean originLevel,
             int[] progressState
     ){
-        for (int i = 0; i < this.treeVectors.length; i++){
-            trunkPos.setWithOffset(treePos, this.treeVectors[i].offset(0, y, 0));
+        Vec3i[] treeVectors = this.getTreeVectors();
+        boolean megaTree = treeVectors.length > 12;
+        for (int i = 0; i < treeVectors.length; i++){
+            if (megaTree && i <= 9 && i > 1)
+                progressChance *= 1.5F;
+            trunkPos.setWithOffset(treePos, treeVectors[i].offset(0, y, 0));
             if (originLevel){
                 if (i == 0 && random.nextFloat() < 0.75){
                     this.placeLogIfFree(level, originBlockSetter, random, trunkPos, config);
@@ -119,7 +128,7 @@ public class ModGiantFenceTrunkPlacer extends TrunkPlacer {
                 this.placeLogIfFree(level, trunkSetter, random, trunkPos, config);
                 continue;
             }
-            if (i > 3){
+            if (i > this.getNumBaseTrunkBlocks() - 1){
                 if (progressState[i] != 1){
                     if (random.nextFloat() < 0.5){
                         progressState[i]++;

@@ -17,4 +17,7 @@ public class ModTrunkPlacerType{
 
     public static final DeferredHolder<TrunkPlacerType<?>, TrunkPlacerType<ModGiantFenceTrunkPlacer>> GIANT_FENCE_TRUNK_PLACER
             = TRUNK_PLACER_TYPES.register("giant_fence_trunk_placer", () -> new TrunkPlacerType<>(ModGiantFenceTrunkPlacer.CODEC));
+
+    public static final DeferredHolder<TrunkPlacerType<?>, TrunkPlacerType<ModMegaFenceTrunkPlacer>> MEGA_FENCE_TRUNK_PLACER
+            = TRUNK_PLACER_TYPES.register("mega_fence_trunk_placer", () -> new TrunkPlacerType<>(ModMegaFenceTrunkPlacer.CODEC));
 }
