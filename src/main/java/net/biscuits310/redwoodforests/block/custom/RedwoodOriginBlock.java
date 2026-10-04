@@ -35,6 +35,7 @@ public class RedwoodOriginBlock extends RedwoodLogBlock{
         this.treeGrowerMap.put(0, ModTreeGrowers.REDWOOD);
         this.treeGrowerMap.put(1, ModTreeGrowers.REDWOOD_1);
         this.treeGrowerMap.put(2, ModTreeGrowers.REDWOOD_2);
+        this.treeGrowerMap.put(3, ModTreeGrowers.REDWOOD_3);
     }
 
     @Override

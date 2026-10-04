@@ -162,7 +162,7 @@ public class ModBlocks
     public static final DeferredBlock<Block> REDWOOD_SAPLING = registerBlock("redwood_sapling",
             // Sets the properties of a sapling block, and creates it using the SaplingBlock class
             // Also inputs the redwood tree grower, which assigns the type of tree to be grown when the sapling grows into a tree
-            properties -> new SaplingBlock(ModTreeGrowers.REDWOOD_3, properties
+            properties -> new SaplingBlock(ModTreeGrowers.REDWOOD, properties
                     .mapColor(MapColor.PLANT)
                     .noCollision()
                     .randomTicks()

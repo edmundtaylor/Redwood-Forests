@@ -49,10 +49,6 @@ public class ModConeFoliageRemover extends ModConeFoliagePlacer {
 
         for (int height = 0; height <= tipHeight(random); height++){
             BlockPos currentPos = foliageAttachment.pos().offset(0, height, 0);
-            if (random.nextFloat() < 0.25){
-                tryPlaceFenceBlock(level, foliageSetter, random, config, currentPos);
-                continue;
-            }
             tryPlaceLeaf(level, foliageSetter, random, config, currentPos);
         }
     }

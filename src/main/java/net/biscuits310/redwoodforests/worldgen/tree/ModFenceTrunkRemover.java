@@ -20,8 +20,6 @@ public class ModFenceTrunkRemover extends ModFenceTrunkPlacer{
         super(baseHeight, heightRandA, heightRandB, fenceBlock, originBlock, fenceProportion, growthStage);
     }
 
-    private static int removerCalls = 0;
-
     @Override
     public List<FoliagePlacer.FoliageAttachment> placeTrunk(WorldGenLevel level, BiConsumer<BlockPos, BlockState> trunkSetter, RandomSource random, int treeHeight, BlockPos origin, TreeConfiguration config) {
         BlockPos.MutableBlockPos trunkPos = new BlockPos.MutableBlockPos();
@@ -32,8 +30,6 @@ public class ModFenceTrunkRemover extends ModFenceTrunkPlacer{
         }
         return ImmutableList.of(new FoliagePlacer.FoliageAttachment(origin.above(treeHeight), 0, false));
     }
-
-
 
     @Override
     protected boolean validTreePos(WorldGenLevel level, BlockPos pos) {

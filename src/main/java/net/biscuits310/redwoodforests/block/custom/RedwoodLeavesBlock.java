@@ -2,6 +2,7 @@ package net.biscuits310.redwoodforests.block.custom;
 
 import net.biscuits310.redwoodforests.block.ModBlockStateProperties;
 import net.biscuits310.redwoodforests.block.ModBlocks;
+import net.biscuits310.redwoodforests.event.LeafDecayEvent;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleOptions;
@@ -9,12 +10,16 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 
 import java.util.OptionalInt;
+
+import static net.biscuits310.redwoodforests.block.custom.RedwoodFenceBlock.UNBOUND_DISTANCE;
+import static net.minecraft.world.level.block.state.properties.BlockStateProperties.DISTANCE;
 
 public class RedwoodLeavesBlock extends FlammableUntintedParticleLeavesBlock {
 
@@ -27,6 +32,12 @@ public class RedwoodLeavesBlock extends FlammableUntintedParticleLeavesBlock {
     protected void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random){
         // Set the new blockstate using the updateDistanceWithDiagonal function. Use 3 update flags, meaning that consecutive blocks should be updated.
         level.setBlock(pos,updateDistanceWithDiagonal(state, level, pos), 3);
+    }
+
+    @Override
+    protected void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean movedByPiston) {
+        LeafDecayEvent.tickDiagonalRedwoodLeavesAndFences(level.getServer().getLevel(level.dimension()), pos);
+        super.onPlace(state, level, pos, oldState, movedByPiston);
     }
 
     // This returns a blockstate, which defines how far away a leaf is from a log block which stops leaf decay.
@@ -78,7 +89,11 @@ public class RedwoodLeavesBlock extends FlammableUntintedParticleLeavesBlock {
             // If the log does not have the prevents leaf decay blockstate
             else {
                 // Return the distance of the block if it has the distance property. If it does not, return empty.
-                return state.hasProperty(DISTANCE) ? OptionalInt.of(state.getValue(DISTANCE)) : OptionalInt.empty();
+                if (state.hasProperty(DISTANCE))
+                    return OptionalInt.of(state.getValue(DISTANCE));
+                if (state.hasProperty(UNBOUND_DISTANCE))
+                    return OptionalInt.of(state.getValue(UNBOUND_DISTANCE));
+                return OptionalInt.empty();
             }
         }
         // If the block being checked is not a redwood log
@@ -91,7 +106,11 @@ public class RedwoodLeavesBlock extends FlammableUntintedParticleLeavesBlock {
             // If the block being checked does not have the leaf decay property
             else {
                 // Return the distance of the block if it has the distance property. If it does not, return empty.
-                return state.hasProperty(DISTANCE) ? OptionalInt.of(state.getValue(DISTANCE)) : OptionalInt.empty();
+                if (state.hasProperty(DISTANCE))
+                    return OptionalInt.of(state.getValue(DISTANCE));
+                if (state.hasProperty(UNBOUND_DISTANCE))
+                    return OptionalInt.of(state.getValue(UNBOUND_DISTANCE));
+                return OptionalInt.empty();
             }
         }
     }

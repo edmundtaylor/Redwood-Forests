@@ -76,7 +76,7 @@ public class ModGiantFenceTrunkPlacer extends TrunkPlacer {
 
     @Override
     public List<FoliagePlacer.FoliageAttachment> placeTrunk(WorldGenLevel level, BiConsumer<BlockPos, BlockState> trunkSetter, RandomSource random, int treeHeight, BlockPos origin, TreeConfiguration config) {
-        placeBelowTrunkBlock(level, trunkSetter, random, origin, config);
+        placeBelowTrunkBlocks(level, trunkSetter, random, origin, config);
         BlockPos.MutableBlockPos trunkPos = new BlockPos.MutableBlockPos();
 
         BiConsumer<BlockPos, BlockState> fenceSetter =

@@ -9,6 +9,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -41,6 +42,12 @@ public class RedwoodLogBlock extends StrippableFlammableRotatedPillarBlock{
         builder.add(PREVENTS_NEARBY_LEAF_DECAY).add(NATURAL_LOG);
     }
 
+    @Override
+    protected void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean movedByPiston) {
+        LeafDecayEvent.tickDiagonalRedwoodLeavesAndFences(level.getServer().getLevel(level.dimension()), pos);
+        super.onPlace(state, level, pos, oldState, movedByPiston);
+    }
+
     private static void updateConnectedLeafDecay(ServerLevel level, BlockPos rootPos, Set<BlockPos> checkedBlocks){
         BlockPos.MutableBlockPos neighbourPos = new BlockPos.MutableBlockPos();
         for (Direction direction : Direction.values()){
@@ -58,13 +65,4 @@ public class RedwoodLogBlock extends StrippableFlammableRotatedPillarBlock{
         }
     }
 
-    @Override
-    protected void affectNeighborsAfterRemoval(BlockState state, ServerLevel level, BlockPos pos, boolean movedByPiston) {
-        if (!state.getValue(NATURAL_LOG) || movedByPiston) {return;}
-
-        Set<BlockPos> checkedBlocks = new HashSet<>();
-        updateConnectedLeafDecay(level, pos, checkedBlocks);
-
-        super.affectNeighborsAfterRemoval(state, level, pos, movedByPiston);
-    }
 }

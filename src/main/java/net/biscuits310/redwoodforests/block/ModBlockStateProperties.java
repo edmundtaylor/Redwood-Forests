@@ -8,4 +8,5 @@ public class ModBlockStateProperties {
     public static final BooleanProperty NATURAL_LOG = BooleanProperty.create("natural_log");
     public static final IntegerProperty GROWTH_STAGE = IntegerProperty.create("growth_stage", 0, 3);
     public static final IntegerProperty TREE_HEIGHT = IntegerProperty.create("tree_height", 0, 25);
+    public static final IntegerProperty UNBOUND_DISANCE = IntegerProperty.create("unbound_distance", 0, 7);
 }

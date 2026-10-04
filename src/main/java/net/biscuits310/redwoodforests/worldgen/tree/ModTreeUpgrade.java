@@ -192,14 +192,21 @@ public class ModTreeUpgrade extends TreeFeature {
                         BlockStateProvider.simple(ModBlocks.REDWOOD_LOG.get()),
                         new ModFenceTrunkRemover( 7, 1, 2, ModBlocks.REDWOOD_FENCE, ModBlocks.REDWOOD_ORIGIN_BLOCK, 0.4F, 0),
                         BlockStateProvider.simple(ModBlocks.REDWOOD_LEAVES.get()),
-                        new ModConeFoliageRemover(ConstantInt.of(2), ConstantInt.of(1), ConstantInt.of(7), ModBlocks.DEEP_REDWOOD_LEAVES, ModBlocks.REDWOOD_FENCE, ConstantInt.of(3), ConstantInt.of(0)),
+                        new ModConeFoliageRemover(ConstantInt.of(2), ConstantInt.of(1), ConstantInt.of(7), ModBlocks.DEEP_REDWOOD_LEAVES, ModBlocks.REDWOOD_FENCE, ConstantInt.of(1), ConstantInt.of(0)),
                         new TwoLayersFeatureSize(1, 1 , 2)).build();
             case 2:
                 return new TreeConfiguration.TreeConfigurationBuilder(
                         BlockStateProvider.simple(ModBlocks.REDWOOD_LOG.get()),
                         new ModFenceTrunkRemover(13, 1, 2, ModBlocks.REDWOOD_FENCE, ModBlocks.REDWOOD_ORIGIN_BLOCK, 0.25F, 1),
                         BlockStateProvider.simple(ModBlocks.REDWOOD_LEAVES.get()),
-                        new ModConeFoliageRemover(ConstantInt.of(3), ConstantInt.of(1), ConstantInt.of(12), ModBlocks.DEEP_REDWOOD_LEAVES, ModBlocks.REDWOOD_FENCE, ConstantInt.of(3), ConstantInt.of(0)),
+                        new ModConeFoliageRemover(ConstantInt.of(3), ConstantInt.of(1), ConstantInt.of(12), ModBlocks.DEEP_REDWOOD_LEAVES, ModBlocks.REDWOOD_FENCE, ConstantInt.of(2), ConstantInt.of(0)),
+                        new TwoLayersFeatureSize(1, 1, 2)).build();
+            case 3:
+                return new TreeConfiguration.TreeConfigurationBuilder(
+                        BlockStateProvider.simple(ModBlocks.REDWOOD_LOG.get()),
+                        new ModGiantFenceTrunkRemover(18, 1, 2, ModBlocks.REDWOOD_FENCE, ModBlocks.REDWOOD_ORIGIN_BLOCK, 0.25F, 0.30F, 2),
+                        BlockStateProvider.simple(ModBlocks.REDWOOD_LEAVES.get()),
+                        new ModConeFoliageRemover(ConstantInt.of(4), ConstantInt.of(4), ConstantInt.of(18), ModBlocks.DEEP_REDWOOD_LEAVES, ModBlocks.REDWOOD_FENCE, ConstantInt.of(3), ConstantInt.of(0)),
                         new TwoLayersFeatureSize(1, 1, 2)).build();
             default:
                 return config;
