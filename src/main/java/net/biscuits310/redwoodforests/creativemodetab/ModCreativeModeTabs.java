@@ -43,6 +43,7 @@ public class ModCreativeModeTabs
                         output.accept(ModBlocks.REDWOOD_LEAVES);
                         output.accept(ModBlocks.REDWOOD_SAPLING);
                         output.accept(ModBlocks.DEEP_REDWOOD_LEAVES);
+                        output.accept(ModItems.BANANA_SLUG_SPAWN_EGG);
                     })
                     .build());
 

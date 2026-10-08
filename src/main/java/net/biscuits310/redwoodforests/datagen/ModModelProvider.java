@@ -35,6 +35,7 @@ public class ModModelProvider extends ModelProvider
         // Create a flat item for items without a corresponding block
         itemModels.generateFlatItem(ModItems.REDWOOD_BARK.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ModItems.CHARRED_REDWOOD_BARK.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ModItems.BANANA_SLUG_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
 
         // Create a variated log block using the custom modBlockModels function
         // 3 different side textures, so 3 is passed in as numSides

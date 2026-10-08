@@ -1,12 +1,18 @@
 package net.biscuits310.redwoodforests;
 
+import net.biscuits310.redwoodforests.entity.ModEntities;
+import net.biscuits310.redwoodforests.entity.client.BananaSlugModel;
+import net.biscuits310.redwoodforests.entity.client.BananaSlugRenderer;
+import net.biscuits310.redwoodforests.entity.client.ModModelLayerLocations;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 
@@ -24,8 +30,13 @@ public class RedwoodForestsClient {
 
     @SubscribeEvent
     static void onClientSetup(FMLClientSetupEvent event) {
-        // Some client setup code
+        EntityRenderers.register(ModEntities.BANANA_SLUG.get(), BananaSlugRenderer::new);
         RedwoodForests.LOGGER.info("HELLO FROM CLIENT SETUP");
         RedwoodForests.LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
+    }
+
+    @SubscribeEvent
+    public static void registerLayers(EntityRenderersEvent.RegisterLayerDefinitions event){
+        event.registerLayerDefinition(ModModelLayerLocations.BANANA_SLUG, BananaSlugModel::createBodyLayer);
     }
 }

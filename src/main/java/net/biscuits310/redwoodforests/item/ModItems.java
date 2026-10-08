@@ -1,7 +1,9 @@
 package net.biscuits310.redwoodforests.item;
 
 import net.biscuits310.redwoodforests.RedwoodForests;
+import net.biscuits310.redwoodforests.entity.ModEntities;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.SpawnEggItem;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -11,6 +13,9 @@ public class  ModItems
 {
     // Combined DeferredItems into a DeferredRegister
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(RedwoodForests.MODID);
+
+    public static final DeferredItem<Item> BANANA_SLUG_SPAWN_EGG = ITEMS.registerItem("banana_slug_spawn_egg",
+            properties -> new SpawnEggItem(properties.spawnEgg(ModEntities.BANANA_SLUG.get())));
 
     // Creates redwood bark as a simple item, defining the id
     public static final DeferredItem<Item> REDWOOD_BARK = ITEMS.registerSimpleItem("redwood_bark");
