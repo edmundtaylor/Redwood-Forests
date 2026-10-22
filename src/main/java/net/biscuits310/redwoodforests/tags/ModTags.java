@@ -15,7 +15,7 @@ public class ModTags {
         public static final TagKey<Block> REDWOOD_GROWERS = createTag("redwood_growers");
         public static final TagKey<Block> REDWOOD_FOLIAGE_REMOVABLE = createTag("redwood_foliage_removable");
         public static final TagKey<Block> REDWOOD_TRUNK_REMOVABLE = createTag("redwood_trunk_removable");
-        public static final TagKey<Block> REWDWOOD_LOGS = createTag("redwood_logs");
+        public static final TagKey<Block> REDWOOD_LOGS = createTag("redwood_logs");
 
         // Creates a block tag using the given name and the mod id
         private static TagKey<Block> createTag(String name){
@@ -26,11 +26,11 @@ public class ModTags {
     // A subclass for creating item tags
     public static class Items{
         // Create an item tag called "redwood_logs" for the redwood planks recipe
-        public static final TagKey<Item> REDWOOD_LOGS = createTag("redwood_logs");
+        public static final TagKey<Item> REDWOOD_LOGS = createTag();
 
         // Creates an item tag using the given name and the mod id
-        private static TagKey<Item> createTag(String name){
-            return ItemTags.create(Identifier.fromNamespaceAndPath(RedwoodForests.MODID, name));
+        private static TagKey<Item> createTag(){
+            return ItemTags.create(Identifier.fromNamespaceAndPath(RedwoodForests.MODID, "redwood_logs"));
         }
     }
 }

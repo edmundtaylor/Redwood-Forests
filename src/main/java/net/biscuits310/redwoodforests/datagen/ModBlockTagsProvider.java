@@ -6,8 +6,10 @@ import net.biscuits310.redwoodforests.tags.ModTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
+import org.jspecify.annotations.NonNull;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -21,7 +23,7 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
 
     // Overrides addTags to add blocktags to mod blocks
     @Override
-    protected void addTags(HolderLookup.Provider provider) {
+    protected void addTags(HolderLookup.@NonNull Provider provider) {
 
         // Allows goats the drop their horn when running into a block
         tag(BlockTags.SNAPS_GOAT_HORN)
@@ -177,7 +179,7 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
                 .add(ModBlocks.REDWOOD_FENCE.get())
                 .add(ModBlocks.REDWOOD_ORIGIN_BLOCK.get());
 
-        tag(ModTags.Blocks.REWDWOOD_LOGS)
+        tag(ModTags.Blocks.REDWOOD_LOGS)
                 .add(ModBlocks.REDWOOD_LOG.get())
                 .add(ModBlocks.REDWOOD_ORIGIN_BLOCK.get());
     }

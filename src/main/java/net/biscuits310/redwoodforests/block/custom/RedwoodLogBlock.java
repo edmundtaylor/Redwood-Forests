@@ -54,7 +54,7 @@ public class RedwoodLogBlock extends StrippableFlammableRotatedPillarBlock{
             neighbourPos.setWithOffset(rootPos, direction);
             BlockState neighbourState = level.getBlockState(neighbourPos);
 
-            if (!checkedBlocks.contains(neighbourPos) && (neighbourState.is(ModTags.Blocks.REWDWOOD_LOGS))) {
+            if (!checkedBlocks.contains(neighbourPos) && (neighbourState.is(ModTags.Blocks.REDWOOD_LOGS))) {
                 checkedBlocks.add(neighbourPos);
                 if (neighbourState.getValue(NATURAL_LOG) && neighbourState.getValue(PREVENTS_NEARBY_LEAF_DECAY)){
                     level.setBlock(neighbourPos, neighbourState.setValue(PREVENTS_NEARBY_LEAF_DECAY, false), 3);

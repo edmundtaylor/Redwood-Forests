@@ -48,7 +48,7 @@ public class LeafDecayEvent {
             neighbourPos.setWithOffset(rootPos, direction);
             BlockState neighbourState = level.getBlockState(neighbourPos);
 
-            if (!checkedBlocks.contains(neighbourPos) && (neighbourState.is(ModTags.Blocks.REWDWOOD_LOGS))) {
+            if (!checkedBlocks.contains(neighbourPos) && (neighbourState.is(ModTags.Blocks.REDWOOD_LOGS))) {
                 checkedBlocks.add(neighbourPos);
                 if (neighbourState.getValue(NATURAL_LOG) && neighbourState.getValue(PREVENTS_NEARBY_LEAF_DECAY)){
                     level.setBlock(neighbourPos, neighbourState.setValue(PREVENTS_NEARBY_LEAF_DECAY, false), 3);
@@ -72,7 +72,7 @@ public class LeafDecayEvent {
 
         BlockState state = event.getState();
         if (!(state.is(BlockTags.PREVENTS_NEARBY_LEAF_DECAY))) return;
-        if (state.is(ModTags.Blocks.REWDWOOD_LOGS))
+        if (state.is(ModTags.Blocks.REDWOOD_LOGS))
             destructUpdate(state, level, event.getPos());
 
         tickDiagonalRedwoodLeavesAndFences(level, event.getPos());
@@ -82,7 +82,7 @@ public class LeafDecayEvent {
     public static void onNeighbourUpdates(BlockEvent.NeighborNotifyEvent event){
         if (!(event.getLevel() instanceof ServerLevel level)) return;
 
-        if (!((event.getState().is(BlockTags.LEAVES)) || (event.getState().is(ModBlocks.REDWOOD_FENCE)) || (event.getState().is(ModTags.Blocks.REWDWOOD_LOGS)))) return;
+        if (!((event.getState().is(BlockTags.LEAVES)) || (event.getState().is(ModBlocks.REDWOOD_FENCE)) || (event.getState().is(ModTags.Blocks.REDWOOD_LOGS)))) return;
 
         tickDiagonalRedwoodLeavesAndFences(level, event.getPos());
     }

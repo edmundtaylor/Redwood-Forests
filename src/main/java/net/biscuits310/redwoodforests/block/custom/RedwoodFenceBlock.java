@@ -84,7 +84,7 @@ public class RedwoodFenceBlock extends FlammableFenceBlock{
     // This returns an optinalint, which can be empty or an integer. If found empty, the wrapper sets to 7.
     public static OptionalInt getOptionalDistanceBlockstate(BlockState state){
         // If the block being checked is a redwood log
-        if (state.is(ModTags.Blocks.REWDWOOD_LOGS)){
+        if (state.is(ModTags.Blocks.REDWOOD_LOGS)){
             // if the blockstate the block prevents nearby leaf decay is true (note that this is specifically my custom blockstate which can be disabled)
             if (state.getValue(ModBlockStateProperties.PREVENTS_NEARBY_LEAF_DECAY)){
                 // Return the distance of 0, which means that consecutive leaves will have a distance of 1.
