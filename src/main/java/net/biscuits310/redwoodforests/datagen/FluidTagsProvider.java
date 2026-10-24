@@ -16,8 +16,8 @@ public class FluidTagsProvider extends net.minecraft.data.tags.FluidTagsProvider
     @Override
     protected void addTags(HolderLookup.Provider registries) {
 
-//        tag(FluidTags.WATER)
-//                .add(Fluids.HYDROGEL.get())
-//                .add(Fluids.FLOWING_HYDROGEL.get());
+        tag(FluidTags.WATER)
+                .add(Fluids.HYDROGEL.get())
+                .add(Fluids.FLOWING_HYDROGEL.get());
     }
 }
