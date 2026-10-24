@@ -36,5 +36,6 @@ public class RedwoodForestsDataGen
         generator.addProvider(true, new ModRecipeProvider.Runner(packOutput,lookupProvider));
         generator.addProvider(true, new ModItemTagsProvider(packOutput, lookupProvider));
         generator.addProvider(true, new ModDataPackProvider(packOutput, lookupProvider));
+        generator.addProvider(true, new FluidTagsProvider(packOutput, lookupProvider));
     }
 }

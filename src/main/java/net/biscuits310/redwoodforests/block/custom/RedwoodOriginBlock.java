@@ -1,6 +1,6 @@
 package net.biscuits310.redwoodforests.block.custom;
 
-import net.biscuits310.redwoodforests.block.ModBlockStateProperties;
+import net.biscuits310.redwoodforests.block.BlockStateProperties;
 import net.biscuits310.redwoodforests.worldgen.tree.ModTreeGrowers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -10,16 +10,15 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.grower.TreeGrower;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 
 import java.util.HashMap;
 import java.util.function.Supplier;
 
 public class RedwoodOriginBlock extends RedwoodLogBlock{
-    public static final IntegerProperty GROWTH_STAGE = ModBlockStateProperties.GROWTH_STAGE;
-    public static final IntegerProperty STAGE = BlockStateProperties.STAGE;
-    public static final IntegerProperty TREE_HEIGHT = ModBlockStateProperties.TREE_HEIGHT;
+    public static final IntegerProperty GROWTH_STAGE = BlockStateProperties.GROWTH_STAGE;
+    public static final IntegerProperty STAGE = net.minecraft.world.level.block.state.properties.BlockStateProperties.STAGE;
+    public static final IntegerProperty TREE_HEIGHT = BlockStateProperties.TREE_HEIGHT;
     protected final HashMap<Integer, TreeGrower> treeGrowerMap = HashMap.newHashMap(3);
 
     public RedwoodOriginBlock(int flammability, int fireSpreadSpeed, Supplier<Block> strippedBlock, Properties properties) {

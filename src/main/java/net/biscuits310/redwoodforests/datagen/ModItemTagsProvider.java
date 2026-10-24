@@ -1,8 +1,7 @@
 package net.biscuits310.redwoodforests.datagen;
 
 import net.biscuits310.redwoodforests.RedwoodForests;
-import net.biscuits310.redwoodforests.block.ModBlocks;
-import net.biscuits310.redwoodforests.item.ModItems;
+import net.biscuits310.redwoodforests.block.Blocks;
 import net.biscuits310.redwoodforests.tags.ModTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
@@ -25,82 +24,82 @@ public class ModItemTagsProvider extends ItemTagsProvider {
     protected void addTags(HolderLookup.Provider provider) {
         // Marks a block as planks for crafting recipes
         tag(ItemTags.PLANKS)
-                .add(ModBlocks.REDWOOD_PLANKS.asItem());
+                .add(Blocks.REDWOOD_PLANKS.asItem());
 
         // Marks a block as wood that can make wooden tools for crafting recipes
         tag(ItemTags.WOODEN_TOOL_MATERIALS)
-                .add(ModBlocks.REDWOOD_PLANKS.asItem());
+                .add(Blocks.REDWOOD_PLANKS.asItem());
 
         // Allows an item to finish the tutorial by picking it up
         tag(ItemTags.COMPLETES_FIND_TREE_TUTORIAL)
-                .add(ModBlocks.REDWOOD_LOG.asItem())
-                .add(ModBlocks.STRIPPED_REDWOOD_LOG.asItem())
-                .add(ModBlocks.STRIPPED_REDWOOD_WOOD.asItem())
-                .add(ModBlocks.REDWOOD_LEAVES.asItem())
-                .add(ModBlocks.DEEP_REDWOOD_LEAVES.asItem());
+                .add(Blocks.REDWOOD_LOG.asItem())
+                .add(Blocks.STRIPPED_REDWOOD_LOG.asItem())
+                .add(Blocks.STRIPPED_REDWOOD_WOOD.asItem())
+                .add(Blocks.REDWOOD_LEAVES.asItem())
+                .add(Blocks.DEEP_REDWOOD_LEAVES.asItem());
 
         // Marks an item as a log for crafting recipes
         tag(ItemTags.LOGS)
-                .add(ModBlocks.REDWOOD_LOG.asItem())
-                .add(ModBlocks.STRIPPED_REDWOOD_LOG.asItem())
-                .add(ModBlocks.STRIPPED_REDWOOD_WOOD.asItem());
+                .add(Blocks.REDWOOD_LOG.asItem())
+                .add(Blocks.STRIPPED_REDWOOD_LOG.asItem())
+                .add(Blocks.STRIPPED_REDWOOD_WOOD.asItem());
 
         // Marks an item as a flammable log for smelting recipes
         tag(ItemTags.LOGS_THAT_BURN)
-                .add(ModBlocks.REDWOOD_LOG.asItem())
-                .add(ModBlocks.STRIPPED_REDWOOD_LOG.asItem())
-                .add(ModBlocks.STRIPPED_REDWOOD_WOOD.asItem());
+                .add(Blocks.REDWOOD_LOG.asItem())
+                .add(Blocks.STRIPPED_REDWOOD_LOG.asItem())
+                .add(Blocks.STRIPPED_REDWOOD_WOOD.asItem());
 
         // Marks an item as a stair for crafting recipes
         tag(ItemTags.STAIRS)
-                .add(ModBlocks.REDWOOD_STAIRS.asItem());
+                .add(Blocks.REDWOOD_STAIRS.asItem());
 
         // Marks an item as wooden stairs for crafting recipes
         tag(ItemTags.WOODEN_STAIRS)
-                .add(ModBlocks.REDWOOD_STAIRS.asItem());
+                .add(Blocks.REDWOOD_STAIRS.asItem());
 
         // Marks an item as a slab for crafting recipes
         tag(ItemTags.SLABS)
-                .add(ModBlocks.REDWOOD_SLAB.asItem());
+                .add(Blocks.REDWOOD_SLAB.asItem());
 
         // Marks an item as a wooden slab for crafting recipes
         tag(ItemTags.WOODEN_SLABS)
-                .add(ModBlocks.REDWOOD_SLAB.asItem());
+                .add(Blocks.REDWOOD_SLAB.asItem());
 
         // Marks an item as a fence for crafting recipes
         tag(ItemTags.FENCES)
-                .add(ModBlocks.REDWOOD_FENCE.asItem());
+                .add(Blocks.REDWOOD_FENCE.asItem());
 
         // Marks an item as a wooden fence for crafting recipes
         tag(ItemTags.WOODEN_FENCES)
-                .add(ModBlocks.REDWOOD_FENCE.asItem());
+                .add(Blocks.REDWOOD_FENCE.asItem());
 
         // Marks an item as leaves for crafting recipes
         tag(ItemTags.LEAVES)
-                .add(ModBlocks.REDWOOD_LEAVES.asItem())
-                .add(ModBlocks.DEEP_REDWOOD_LEAVES.asItem());
+                .add(Blocks.REDWOOD_LEAVES.asItem())
+                .add(Blocks.DEEP_REDWOOD_LEAVES.asItem());
 
         // Marks an item as a stripped log for crafting recipes for other mods
         tag(Tags.Items.STRIPPED_LOGS)
-                .add(ModBlocks.STRIPPED_REDWOOD_LOG.asItem());
+                .add(Blocks.STRIPPED_REDWOOD_LOG.asItem());
 
         // Marks an item as a stripped wood for crafting recipes for other mods
         tag(Tags.Items.STRIPPED_WOODS)
-                .add(ModBlocks.STRIPPED_REDWOOD_WOOD.asItem());
+                .add(Blocks.STRIPPED_REDWOOD_WOOD.asItem());
 
         // Marks an item as a fence for crafting recipes for other mods
         tag(Tags.Items.FENCES)
-                .add(ModBlocks.REDWOOD_FENCE.asItem());
+                .add(Blocks.REDWOOD_FENCE.asItem());
 
         // Marks an item as a wooden fence for crafting recipes for other mods
         tag(Tags.Items.FENCES_WOODEN)
-                .add(ModBlocks.REDWOOD_FENCE.asItem());
+                .add(Blocks.REDWOOD_FENCE.asItem());
 
         // Marks an item as a redwood log for the redwood planks recipe
         tag(ModTags.Items.REDWOOD_LOGS)
-                .add(ModBlocks.STRIPPED_REDWOOD_LOG.asItem())
-                .add(ModBlocks.REDWOOD_LOG.asItem())
-                .add(ModBlocks.STRIPPED_REDWOOD_WOOD.asItem())
-                .add(ModBlocks.REDWOOD_WOOD.asItem());
+                .add(Blocks.STRIPPED_REDWOOD_LOG.asItem())
+                .add(Blocks.REDWOOD_LOG.asItem())
+                .add(Blocks.STRIPPED_REDWOOD_WOOD.asItem())
+                .add(Blocks.REDWOOD_WOOD.asItem());
     }
 }

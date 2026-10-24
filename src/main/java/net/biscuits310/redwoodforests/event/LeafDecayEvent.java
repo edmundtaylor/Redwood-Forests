@@ -1,7 +1,7 @@
 package net.biscuits310.redwoodforests.event;
 
 import net.biscuits310.redwoodforests.RedwoodForests;
-import net.biscuits310.redwoodforests.block.ModBlocks;
+import net.biscuits310.redwoodforests.block.Blocks;
 import net.biscuits310.redwoodforests.block.custom.RedwoodFenceBlock;
 import net.biscuits310.redwoodforests.block.custom.RedwoodLeavesBlock;
 import net.biscuits310.redwoodforests.tags.ModTags;
@@ -82,7 +82,7 @@ public class LeafDecayEvent {
     public static void onNeighbourUpdates(BlockEvent.NeighborNotifyEvent event){
         if (!(event.getLevel() instanceof ServerLevel level)) return;
 
-        if (!((event.getState().is(BlockTags.LEAVES)) || (event.getState().is(ModBlocks.REDWOOD_FENCE)) || (event.getState().is(ModTags.Blocks.REDWOOD_LOGS)))) return;
+        if (!((event.getState().is(BlockTags.LEAVES)) || (event.getState().is(Blocks.REDWOOD_FENCE)) || (event.getState().is(ModTags.Blocks.REDWOOD_LOGS)))) return;
 
         tickDiagonalRedwoodLeavesAndFences(level, event.getPos());
     }

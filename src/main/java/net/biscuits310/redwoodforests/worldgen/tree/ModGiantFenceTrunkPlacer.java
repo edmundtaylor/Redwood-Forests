@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.biscuits310.redwoodforests.block.ModBlockStateProperties;
+import net.biscuits310.redwoodforests.block.BlockStateProperties;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -84,8 +84,8 @@ public class ModGiantFenceTrunkPlacer extends TrunkPlacer {
 
         BiConsumer<BlockPos, BlockState> originBlockSetter =
                 (blockPos, state) -> trunkSetter.accept(blockPos, this.originBlock.get().defaultBlockState()
-                        .trySetValue(ModBlockStateProperties.GROWTH_STAGE, this.growthStage + 1)
-                        .trySetValue(ModBlockStateProperties.TREE_HEIGHT, treeHeight));
+                        .trySetValue(BlockStateProperties.GROWTH_STAGE, this.growthStage + 1)
+                        .trySetValue(BlockStateProperties.TREE_HEIGHT, treeHeight));
 
         int[] progressState = new int[21];
 

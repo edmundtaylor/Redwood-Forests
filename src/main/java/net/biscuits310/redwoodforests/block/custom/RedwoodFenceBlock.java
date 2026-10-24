@@ -1,7 +1,6 @@
 package net.biscuits310.redwoodforests.block.custom;
 
-import net.biscuits310.redwoodforests.block.ModBlockStateProperties;
-import net.biscuits310.redwoodforests.block.ModBlocks;
+import net.biscuits310.redwoodforests.block.BlockStateProperties;
 import net.biscuits310.redwoodforests.event.LeafDecayEvent;
 import net.biscuits310.redwoodforests.tags.ModTags;
 import net.minecraft.core.BlockPos;
@@ -13,11 +12,9 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
@@ -28,7 +25,7 @@ import static net.minecraft.world.level.block.state.properties.BlockStatePropert
 
 public class RedwoodFenceBlock extends FlammableFenceBlock{
 
-    public static final IntegerProperty UNBOUND_DISTANCE = ModBlockStateProperties.UNBOUND_DISANCE;
+    public static final IntegerProperty UNBOUND_DISTANCE = BlockStateProperties.UNBOUND_DISTANCE;
 
     public RedwoodFenceBlock(int flammability, int fireSpreadSpeed, Properties properties) {
         super(flammability, fireSpreadSpeed, properties);
@@ -86,7 +83,7 @@ public class RedwoodFenceBlock extends FlammableFenceBlock{
         // If the block being checked is a redwood log
         if (state.is(ModTags.Blocks.REDWOOD_LOGS)){
             // if the blockstate the block prevents nearby leaf decay is true (note that this is specifically my custom blockstate which can be disabled)
-            if (state.getValue(ModBlockStateProperties.PREVENTS_NEARBY_LEAF_DECAY)){
+            if (state.getValue(BlockStateProperties.PREVENTS_NEARBY_LEAF_DECAY)){
                 // Return the distance of 0, which means that consecutive leaves will have a distance of 1.
                 return OptionalInt.of(0);
             }

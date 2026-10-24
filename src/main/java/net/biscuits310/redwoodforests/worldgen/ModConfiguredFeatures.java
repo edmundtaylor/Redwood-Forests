@@ -1,7 +1,7 @@
 package net.biscuits310.redwoodforests.worldgen;
 
 import net.biscuits310.redwoodforests.RedwoodForests;
-import net.biscuits310.redwoodforests.block.ModBlocks;
+import net.biscuits310.redwoodforests.block.Blocks;
 import net.biscuits310.redwoodforests.worldgen.tree.ModConeFoliagePlacer;
 import net.biscuits310.redwoodforests.worldgen.tree.ModFenceTrunkPlacer;
 import net.biscuits310.redwoodforests.worldgen.tree.ModGiantFenceTrunkPlacer;
@@ -13,7 +13,6 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.TreeFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
 import net.minecraft.world.level.levelgen.feature.featuresize.TwoLayersFeatureSize;
@@ -35,37 +34,37 @@ public class ModConfiguredFeatures {
         // Use the TreeConfigurationBuilder to create a tree
         register(context, REDWOOD_KEY, ModFeatures.MOD_TREE_UPGRADE.get(), new TreeConfiguration.TreeConfigurationBuilder(
                 // The block that acts as the log in the tree
-                BlockStateProvider.simple(ModBlocks.REDWOOD_LOG.get()),
+                BlockStateProvider.simple(Blocks.REDWOOD_LOG.get()),
                 // Use GiantTrunkPlacer to make a 2x2 base
                 // Use a height of 32 blocks, and use a randomness of 4 and 3
-                new ModFenceTrunkPlacer( 7, 1, 2, ModBlocks.REDWOOD_FENCE, ModBlocks.REDWOOD_ORIGIN_BLOCK, 0.4F, 0),
+                new ModFenceTrunkPlacer( 7, 1, 2, Blocks.REDWOOD_FENCE, Blocks.REDWOOD_ORIGIN_BLOCK, 0.4F, 0),
                 // The block that acts as the leaves in the tree
-                BlockStateProvider.simple(ModBlocks.REDWOOD_LEAVES.get()),
+                BlockStateProvider.simple(Blocks.REDWOOD_LEAVES.get()),
                 // Use MegaPineFoliagePlacer to create a cone leaf shape
                 // Use the default value for radius, no offset, and have a height of 3-7
-                new ModConeFoliagePlacer(ConstantInt.of(2), ConstantInt.of(1), ConstantInt.of(7), ModBlocks.DEEP_REDWOOD_LEAVES, ModBlocks.REDWOOD_FENCE, ConstantInt.of(1), ConstantInt.of(0)),
+                new ModConeFoliagePlacer(ConstantInt.of(2), ConstantInt.of(1), ConstantInt.of(7), Blocks.DEEP_REDWOOD_LEAVES, Blocks.REDWOOD_FENCE, ConstantInt.of(1), ConstantInt.of(0)),
                 // Used to change thickness at specific points
                 new TwoLayersFeatureSize(1, 1 , 2)).build());
 
         register(context, REDWOOD_1_KEY, ModFeatures.MOD_TREE_UPGRADE.get(), new TreeConfiguration.TreeConfigurationBuilder(
-                BlockStateProvider.simple(ModBlocks.REDWOOD_LOG.get()),
-                new ModFenceTrunkPlacer(13, 1, 2, ModBlocks.REDWOOD_FENCE, ModBlocks.REDWOOD_ORIGIN_BLOCK, 0.25F, 1),
-                BlockStateProvider.simple(ModBlocks.REDWOOD_LEAVES.get()),
-                new ModConeFoliagePlacer(ConstantInt.of(3), ConstantInt.of(1), ConstantInt.of(12), ModBlocks.DEEP_REDWOOD_LEAVES, ModBlocks.REDWOOD_FENCE, ConstantInt.of(2), ConstantInt.of(0)),
+                BlockStateProvider.simple(Blocks.REDWOOD_LOG.get()),
+                new ModFenceTrunkPlacer(13, 1, 2, Blocks.REDWOOD_FENCE, Blocks.REDWOOD_ORIGIN_BLOCK, 0.25F, 1),
+                BlockStateProvider.simple(Blocks.REDWOOD_LEAVES.get()),
+                new ModConeFoliagePlacer(ConstantInt.of(3), ConstantInt.of(1), ConstantInt.of(12), Blocks.DEEP_REDWOOD_LEAVES, Blocks.REDWOOD_FENCE, ConstantInt.of(2), ConstantInt.of(0)),
                 new TwoLayersFeatureSize(1, 1, 2)).build());
 
         register (context, REDWOOD_2_KEY, ModFeatures.MOD_TREE_UPGRADE.get(), new TreeConfiguration.TreeConfigurationBuilder(
-                BlockStateProvider.simple(ModBlocks.REDWOOD_LOG.get()),
-                new ModGiantFenceTrunkPlacer(18, 1, 2, ModBlocks.REDWOOD_FENCE, ModBlocks.REDWOOD_ORIGIN_BLOCK, 0.25F, 0.30F, 2),
-                BlockStateProvider.simple(ModBlocks.REDWOOD_LEAVES.get()),
-                new ModConeFoliagePlacer(ConstantInt.of(4), ConstantInt.of(4), ConstantInt.of(18), ModBlocks.DEEP_REDWOOD_LEAVES, ModBlocks.REDWOOD_FENCE, ConstantInt.of(3), ConstantInt.of(0)),
+                BlockStateProvider.simple(Blocks.REDWOOD_LOG.get()),
+                new ModGiantFenceTrunkPlacer(18, 1, 2, Blocks.REDWOOD_FENCE, Blocks.REDWOOD_ORIGIN_BLOCK, 0.25F, 0.30F, 2),
+                BlockStateProvider.simple(Blocks.REDWOOD_LEAVES.get()),
+                new ModConeFoliagePlacer(ConstantInt.of(4), ConstantInt.of(4), ConstantInt.of(18), Blocks.DEEP_REDWOOD_LEAVES, Blocks.REDWOOD_FENCE, ConstantInt.of(3), ConstantInt.of(0)),
                 new TwoLayersFeatureSize(1, 1, 2)).build());
 
         register(context, REDWOOD_3_KEY, ModFeatures.MOD_TREE_UPGRADE.get(), new TreeConfiguration.TreeConfigurationBuilder(
-                BlockStateProvider.simple(ModBlocks.REDWOOD_LOG.get()),
-                new ModMegaFenceTrunkPlacer(30, 1, 2, ModBlocks.REDWOOD_FENCE, ModBlocks.REDWOOD_LOG, 0.40F, 0.60F, 3),
-                BlockStateProvider.simple(ModBlocks.REDWOOD_LEAVES.get()),
-                new ModConeFoliagePlacer(ConstantInt.of(5), ConstantInt.of(0), ConstantInt.of( 24), ModBlocks.DEEP_REDWOOD_LEAVES, ModBlocks.REDWOOD_FENCE, ConstantInt.of(0), ConstantInt.of(1)),
+                BlockStateProvider.simple(Blocks.REDWOOD_LOG.get()),
+                new ModMegaFenceTrunkPlacer(30, 1, 2, Blocks.REDWOOD_FENCE, Blocks.REDWOOD_LOG, 0.40F, 0.60F, 3),
+                BlockStateProvider.simple(Blocks.REDWOOD_LEAVES.get()),
+                new ModConeFoliagePlacer(ConstantInt.of(5), ConstantInt.of(0), ConstantInt.of( 24), Blocks.DEEP_REDWOOD_LEAVES, Blocks.REDWOOD_FENCE, ConstantInt.of(0), ConstantInt.of(1)),
                 new TwoLayersFeatureSize(1, 1, 2)).build());
     }
 

@@ -1,10 +1,9 @@
 package net.biscuits310.redwoodforests.block.custom;
 
-import net.biscuits310.redwoodforests.block.ModBlockStateProperties;
-import net.biscuits310.redwoodforests.block.ModBlocks;
+import net.biscuits310.redwoodforests.block.BlockStateProperties;
+import net.biscuits310.redwoodforests.block.Blocks;
 import net.biscuits310.redwoodforests.event.LeafDecayEvent;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
@@ -19,7 +18,6 @@ import net.minecraft.world.level.material.Fluids;
 import java.util.OptionalInt;
 
 import static net.biscuits310.redwoodforests.block.custom.RedwoodFenceBlock.UNBOUND_DISTANCE;
-import static net.minecraft.world.level.block.state.properties.BlockStateProperties.DISTANCE;
 
 public class RedwoodLeavesBlock extends FlammableUntintedParticleLeavesBlock {
 
@@ -80,9 +78,9 @@ public class RedwoodLeavesBlock extends FlammableUntintedParticleLeavesBlock {
     // This returns an optinalint, which can be empty or an integer. If found empty, the wrapper sets to 7.
     public static OptionalInt getOptionalDistanceBlockstate(BlockState state){
         // If the block being checked is a redwood log
-        if (state.is(ModBlocks.REDWOOD_LOG)){
+        if (state.is(Blocks.REDWOOD_LOG)){
             // if the blockstate the block prevents nearby leaf decay is true (note that this is specifically my custom blockstate which can be disabled)
-            if (state.getValue(ModBlockStateProperties.PREVENTS_NEARBY_LEAF_DECAY)){
+            if (state.getValue(BlockStateProperties.PREVENTS_NEARBY_LEAF_DECAY)){
                 // Return the distance of 0, which means that consecutive leaves will have a distance of 1.
                 return OptionalInt.of(0);
             }

@@ -2,7 +2,6 @@ package net.biscuits310.redwoodforests.worldgen.tree;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.biscuits310.redwoodforests.block.ModBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.util.Mth;

@@ -4,9 +4,7 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.mojang.serialization.Codec;
-import net.biscuits310.redwoodforests.block.ModBlockStateProperties;
-import net.biscuits310.redwoodforests.block.ModBlocks;
-import net.biscuits310.redwoodforests.block.custom.RedwoodOriginBlock;
+import net.biscuits310.redwoodforests.block.Blocks;
 import net.biscuits310.redwoodforests.tags.ModTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -16,12 +14,10 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelSimulatedReader;
 import net.minecraft.world.level.LevelWriter;
 import net.minecraft.world.level.WorldGenLevel;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.chunk.ChunkGenerator;
-import net.minecraft.world.level.levelgen.RandomSupport;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.TreeFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
@@ -189,24 +185,24 @@ public class ModTreeUpgrade extends TreeFeature {
                 return null;
             case 1:
                 return new TreeConfiguration.TreeConfigurationBuilder(
-                        BlockStateProvider.simple(ModBlocks.REDWOOD_LOG.get()),
-                        new ModFenceTrunkRemover( 7, 1, 2, ModBlocks.REDWOOD_FENCE, ModBlocks.REDWOOD_ORIGIN_BLOCK, 0.4F, 0),
-                        BlockStateProvider.simple(ModBlocks.REDWOOD_LEAVES.get()),
-                        new ModConeFoliageRemover(ConstantInt.of(2), ConstantInt.of(1), ConstantInt.of(7), ModBlocks.DEEP_REDWOOD_LEAVES, ModBlocks.REDWOOD_FENCE, ConstantInt.of(1), ConstantInt.of(0)),
+                        BlockStateProvider.simple(Blocks.REDWOOD_LOG.get()),
+                        new ModFenceTrunkRemover( 7, 1, 2, Blocks.REDWOOD_FENCE, Blocks.REDWOOD_ORIGIN_BLOCK, 0.4F, 0),
+                        BlockStateProvider.simple(Blocks.REDWOOD_LEAVES.get()),
+                        new ModConeFoliageRemover(ConstantInt.of(2), ConstantInt.of(1), ConstantInt.of(7), Blocks.DEEP_REDWOOD_LEAVES, Blocks.REDWOOD_FENCE, ConstantInt.of(1), ConstantInt.of(0)),
                         new TwoLayersFeatureSize(1, 1 , 2)).build();
             case 2:
                 return new TreeConfiguration.TreeConfigurationBuilder(
-                        BlockStateProvider.simple(ModBlocks.REDWOOD_LOG.get()),
-                        new ModFenceTrunkRemover(13, 1, 2, ModBlocks.REDWOOD_FENCE, ModBlocks.REDWOOD_ORIGIN_BLOCK, 0.25F, 1),
-                        BlockStateProvider.simple(ModBlocks.REDWOOD_LEAVES.get()),
-                        new ModConeFoliageRemover(ConstantInt.of(3), ConstantInt.of(1), ConstantInt.of(12), ModBlocks.DEEP_REDWOOD_LEAVES, ModBlocks.REDWOOD_FENCE, ConstantInt.of(2), ConstantInt.of(0)),
+                        BlockStateProvider.simple(Blocks.REDWOOD_LOG.get()),
+                        new ModFenceTrunkRemover(13, 1, 2, Blocks.REDWOOD_FENCE, Blocks.REDWOOD_ORIGIN_BLOCK, 0.25F, 1),
+                        BlockStateProvider.simple(Blocks.REDWOOD_LEAVES.get()),
+                        new ModConeFoliageRemover(ConstantInt.of(3), ConstantInt.of(1), ConstantInt.of(12), Blocks.DEEP_REDWOOD_LEAVES, Blocks.REDWOOD_FENCE, ConstantInt.of(2), ConstantInt.of(0)),
                         new TwoLayersFeatureSize(1, 1, 2)).build();
             case 3:
                 return new TreeConfiguration.TreeConfigurationBuilder(
-                        BlockStateProvider.simple(ModBlocks.REDWOOD_LOG.get()),
-                        new ModGiantFenceTrunkRemover(18, 1, 2, ModBlocks.REDWOOD_FENCE, ModBlocks.REDWOOD_ORIGIN_BLOCK, 0.25F, 0.30F, 2),
-                        BlockStateProvider.simple(ModBlocks.REDWOOD_LEAVES.get()),
-                        new ModConeFoliageRemover(ConstantInt.of(4), ConstantInt.of(4), ConstantInt.of(18), ModBlocks.DEEP_REDWOOD_LEAVES, ModBlocks.REDWOOD_FENCE, ConstantInt.of(3), ConstantInt.of(0)),
+                        BlockStateProvider.simple(Blocks.REDWOOD_LOG.get()),
+                        new ModGiantFenceTrunkRemover(18, 1, 2, Blocks.REDWOOD_FENCE, Blocks.REDWOOD_ORIGIN_BLOCK, 0.25F, 0.30F, 2),
+                        BlockStateProvider.simple(Blocks.REDWOOD_LEAVES.get()),
+                        new ModConeFoliageRemover(ConstantInt.of(4), ConstantInt.of(4), ConstantInt.of(18), Blocks.DEEP_REDWOOD_LEAVES, Blocks.REDWOOD_FENCE, ConstantInt.of(3), ConstantInt.of(0)),
                         new TwoLayersFeatureSize(1, 1, 2)).build();
             default:
                 return config;
@@ -260,12 +256,12 @@ public class ModTreeUpgrade extends TreeFeature {
         BiConsumer<BlockPos, BlockState> rootDestructor = (pos, state) -> {
             removedFoliage.add(pos.immutable());
             BlockState rootReplacement = level.getBlockState(pos.above()).isAir()
-                    ? Blocks.GRASS_BLOCK.defaultBlockState()
-                    : Blocks.DIRT.defaultBlockState();
+                    ? net.minecraft.world.level.block.Blocks.GRASS_BLOCK.defaultBlockState()
+                    : net.minecraft.world.level.block.Blocks.DIRT.defaultBlockState();
             level.setBlock(pos, rootReplacement, 19);
         };
         BiConsumer<BlockPos, BlockState> trunkDestructor = (pos, state) -> {
-            level.setBlock(pos, Blocks.AIR.defaultBlockState(), 19);
+            level.setBlock(pos, net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(), 19);
         };
         FoliagePlacer.FoliageSetter foliageDestructor = new FoliagePlacer.FoliageSetter() {
             {
@@ -274,7 +270,7 @@ public class ModTreeUpgrade extends TreeFeature {
 
             @Override
             public void set(BlockPos pos, BlockState state) {
-                level.setBlock(pos, Blocks.AIR.defaultBlockState(), 19);
+                level.setBlock(pos, net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(), 19);
             }
 
             @Override

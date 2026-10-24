@@ -1,30 +1,24 @@
 package net.biscuits310.redwoodforests.block.custom;
 
-import net.biscuits310.redwoodforests.block.ModBlockStateProperties;
-import net.biscuits310.redwoodforests.block.ModBlocks;
+import net.biscuits310.redwoodforests.block.BlockStateProperties;
 import net.biscuits310.redwoodforests.event.LeafDecayEvent;
 import net.biscuits310.redwoodforests.tags.ModTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 
-import java.util.ArrayDeque;
-import java.util.HashSet;
-import java.util.Queue;
 import java.util.Set;
 import java.util.function.Supplier;
 
 public class RedwoodLogBlock extends StrippableFlammableRotatedPillarBlock{
-    public static final BooleanProperty PREVENTS_NEARBY_LEAF_DECAY = ModBlockStateProperties.PREVENTS_NEARBY_LEAF_DECAY;
-    public static final BooleanProperty NATURAL_LOG = ModBlockStateProperties.NATURAL_LOG;
+    public static final BooleanProperty PREVENTS_NEARBY_LEAF_DECAY = BlockStateProperties.PREVENTS_NEARBY_LEAF_DECAY;
+    public static final BooleanProperty NATURAL_LOG = BlockStateProperties.NATURAL_LOG;
 
     public RedwoodLogBlock(int flammability, int fireSpreadSpeed, Supplier<Block> strippedBlock, Properties properties) {
         super(flammability, fireSpreadSpeed, strippedBlock, properties);

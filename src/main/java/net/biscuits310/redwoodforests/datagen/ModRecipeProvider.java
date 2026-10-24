@@ -1,7 +1,6 @@
 package net.biscuits310.redwoodforests.datagen;
 
-import net.biscuits310.redwoodforests.block.ModBlocks;
-import net.biscuits310.redwoodforests.item.ModItems;
+import net.biscuits310.redwoodforests.block.Blocks;
 import net.biscuits310.redwoodforests.tags.ModTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
@@ -48,11 +47,11 @@ public class ModRecipeProvider extends RecipeProvider {
         // Keep in the recipe book category building blocks
         // Give 4 redwood planks
         // The recipe can be in any shape
-        shapeless(RecipeCategory.BUILDING_BLOCKS, ModBlocks.REDWOOD_PLANKS.get(),4)
+        shapeless(RecipeCategory.BUILDING_BLOCKS, Blocks.REDWOOD_PLANKS.get(),4)
                 // Requires any item with the redwood logs tag (redwood log, redwood wood, stripped, redwood log etc)
                 .requires(ModTags.Items.REDWOOD_LOGS)
                 // Unlocked in the recipe book like this
-                .unlockedBy(getHasName(ModBlocks.REDWOOD_LOG.get()), has(ModTags.Items.REDWOOD_LOGS))
+                .unlockedBy(getHasName(Blocks.REDWOOD_LOG.get()), has(ModTags.Items.REDWOOD_LOGS))
                 // Keep in the redwood planks group
                 .group("redwood_planks")
                 .save(output);
@@ -61,14 +60,14 @@ public class ModRecipeProvider extends RecipeProvider {
         // Keep in the recipe book category building blocks
         // Give 3 redwood wood
         // The recipe must be shaped
-        shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.REDWOOD_WOOD.get(), 3)
+        shaped(RecipeCategory.BUILDING_BLOCKS, Blocks.REDWOOD_WOOD.get(), 3)
                 // The character 'A' represents the redwood log item
-                .define('A', ModBlocks.REDWOOD_LOG.asItem())
+                .define('A', Blocks.REDWOOD_LOG.asItem())
                 // The crafting table pattern required to craft the redwood log
                 .pattern("AA")
                 .pattern("AA")
                 // Unlocked in the recipe book like this
-                .unlockedBy(getHasName(ModBlocks.REDWOOD_LOG.get()), has(ModBlocks.REDWOOD_LOG))
+                .unlockedBy(getHasName(Blocks.REDWOOD_LOG.get()), has(Blocks.REDWOOD_LOG))
                 // Keep in the redwood wood group
                 .group("redwood_wood")
                 .save(output);
@@ -77,14 +76,14 @@ public class ModRecipeProvider extends RecipeProvider {
         // Keep in the recipe book category building blocks
         // Give 3 stripped redwood wood
         // The recipe must be shaped
-        shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.STRIPPED_REDWOOD_WOOD.get(), 3)
+        shaped(RecipeCategory.BUILDING_BLOCKS, Blocks.STRIPPED_REDWOOD_WOOD.get(), 3)
                 // The character 'A' represents the stripped redwood log item
-                .define('A', ModBlocks.STRIPPED_REDWOOD_LOG.asItem())
+                .define('A', Blocks.STRIPPED_REDWOOD_LOG.asItem())
                 // The crafting table pattern required to craft the redwood log
                 .pattern("AA")
                 .pattern("AA")
                 // Unlocked in the recipe book like this
-                .unlockedBy(getHasName(ModBlocks.STRIPPED_REDWOOD_LOG.get()), has(ModBlocks.STRIPPED_REDWOOD_LOG))
+                .unlockedBy(getHasName(Blocks.STRIPPED_REDWOOD_LOG.get()), has(Blocks.STRIPPED_REDWOOD_LOG))
                 // Keep in the stripped redwood wood group
                 .group("stripped_redwood_wood")
                 .save(output);
@@ -93,27 +92,27 @@ public class ModRecipeProvider extends RecipeProvider {
         // stairBuilder automatically gives the shape and mirrored variants for stairs
         // Give redwood stairs
         // Use the redwood planks item as the ingredient
-        stairBuilder(ModBlocks.REDWOOD_STAIRS.get(), Ingredient.of(ModBlocks.REDWOOD_PLANKS))
+        stairBuilder(Blocks.REDWOOD_STAIRS.get(), Ingredient.of(Blocks.REDWOOD_PLANKS))
                 // Unlock in the recipe book like this
-                .unlockedBy(getHasName(ModBlocks.REDWOOD_PLANKS.get()), has(ModBlocks.REDWOOD_PLANKS))
+                .unlockedBy(getHasName(Blocks.REDWOOD_PLANKS.get()), has(Blocks.REDWOOD_PLANKS))
                 .save(output);
 
         // Create a recipe for a redwood slab
         // slabBuilder automatically gives the shape for a slab
         // Give redwood slabs
         // Use the redwood planks item as the ingredient
-        slabBuilder(RecipeCategory.BUILDING_BLOCKS, ModBlocks.REDWOOD_SLAB.get(), Ingredient.of(ModBlocks.REDWOOD_PLANKS))
+        slabBuilder(RecipeCategory.BUILDING_BLOCKS, Blocks.REDWOOD_SLAB.get(), Ingredient.of(Blocks.REDWOOD_PLANKS))
                 // Unlock in the recipe book like this
-                .unlockedBy(getHasName(ModBlocks.REDWOOD_PLANKS.get()), has(ModBlocks.REDWOOD_PLANKS))
+                .unlockedBy(getHasName(Blocks.REDWOOD_PLANKS.get()), has(Blocks.REDWOOD_PLANKS))
                 .save(output);
 
         // Create a recipe for a redwood fence
         // fenceBuilder automatically gives the shape for a fence
         // Give redwood fence
         // Use the redwood planks ingredient as the ingredient
-        fenceBuilder(ModBlocks.REDWOOD_FENCE.get(), Ingredient.of(ModBlocks.REDWOOD_PLANKS))
+        fenceBuilder(Blocks.REDWOOD_FENCE.get(), Ingredient.of(Blocks.REDWOOD_PLANKS))
                 // Unlock in the recipe book like this
-                .unlockedBy(getHasName(ModBlocks.REDWOOD_PLANKS.get()), has(ModBlocks.REDWOOD_PLANKS))
+                .unlockedBy(getHasName(Blocks.REDWOOD_PLANKS.get()), has(Blocks.REDWOOD_PLANKS))
                 .save(output);
     }
 }

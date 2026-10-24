@@ -2,16 +2,18 @@ package net.biscuits310.redwoodforests.block;
 
 import net.biscuits310.redwoodforests.RedwoodForests;
 import net.biscuits310.redwoodforests.block.custom.*;
-import net.biscuits310.redwoodforests.item.ModItems;
+import net.biscuits310.redwoodforests.fluid.Fluids;
+import net.biscuits310.redwoodforests.item.Items;
 import net.biscuits310.redwoodforests.worldgen.tree.ModTreeGrowers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ColorParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
-import net.minecraft.world.level.block.grower.TreeGrower;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
@@ -20,12 +22,12 @@ import net.minecraft.world.level.material.PushReaction;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import org.jspecify.annotations.Nullable;
 
-import java.util.HashMap;
 import java.util.function.Function;
 
 // Creates DeferredBlocks, and combines them into a Deferredregister
-public class ModBlocks
+public class Blocks
 {
     // Combines DeferredBlocks into a DeferredRegister
     public static final DeferredRegister.Blocks BLOCKS =
@@ -49,7 +51,7 @@ public class ModBlocks
     // Creates the redwood log block as a DeferredBlock
     public static final DeferredBlock<Block> REDWOOD_LOG = registerBlock("redwood_log",
             // Sets the properties for a log block, and creates it using the StrippableFlammableRotatedPillarBlock class
-            properties -> new RedwoodLogBlock(5, 5, ModBlocks.STRIPPED_REDWOOD_LOG, properties
+            properties -> new RedwoodLogBlock(5, 5, Blocks.STRIPPED_REDWOOD_LOG, properties
                     .mapColor(state -> state.getValue(StrippableFlammableRotatedPillarBlock.AXIS) == Direction.Axis.Y ? MapColor.WOOD : MapColor.PODZOL)
                     .instrument(NoteBlockInstrument.BASS)
                     .strength(2.0F)
@@ -57,7 +59,7 @@ public class ModBlocks
                     .ignitedByLava()));
 
     public static final DeferredBlock<Block> REDWOOD_ORIGIN_BLOCK = registerBlock("redwood_origin_block",
-            properties -> new RedwoodOriginBlock(5, 5, ModBlocks.STRIPPED_REDWOOD_LOG, properties
+            properties -> new RedwoodOriginBlock(5, 5, Blocks.STRIPPED_REDWOOD_LOG, properties
                     .mapColor(state -> state.getValue(StrippableFlammableRotatedPillarBlock.AXIS) == Direction.Axis.Y ? MapColor.WOOD : MapColor.PODZOL)
                     .instrument(NoteBlockInstrument.BASS)
                     .strength(2.0F)
@@ -67,7 +69,7 @@ public class ModBlocks
     // Creates the redwood wood block as a DeferredBlock
     public static final DeferredBlock<Block> REDWOOD_WOOD = registerBlock("redwood_wood",
             // Sets the properties for a wood block, and creates it using the StrippableFlammableRotatedPillarBlock class
-            properties -> new StrippableFlammableRotatedPillarBlock(5, 5, ModBlocks.STRIPPED_REDWOOD_WOOD, properties
+            properties -> new StrippableFlammableRotatedPillarBlock(5, 5, Blocks.STRIPPED_REDWOOD_WOOD, properties
                     .mapColor(MapColor.PODZOL)
                     .instrument(NoteBlockInstrument.BASS)
                     .strength(2.0F)
@@ -100,7 +102,7 @@ public class ModBlocks
     public static final DeferredBlock<Block> REDWOOD_STAIRS = registerBlock("redwood_stairs",
             // Sets the properties of a wooden stair block, and creates it using the StairBlock class
             // Also inputs redwood planks, to define further properties
-            properties -> new FlammableStairBlock(ModBlocks.REDWOOD_PLANKS.get().defaultBlockState(), 5, 20, properties
+            properties -> new FlammableStairBlock(Blocks.REDWOOD_PLANKS.get().defaultBlockState(), 5, 20, properties
                     .mapColor(MapColor.WOOD)
                     .instrument(NoteBlockInstrument.BASS)
                     .strength(2.0F, 3.0F)
@@ -137,12 +139,12 @@ public class ModBlocks
                     .randomTicks()
                     .sound(SoundType.GRASS)
                     .noOcclusion()
-                    .isValidSpawn(Blocks::ocelotOrParrot)
-                    .isSuffocating(ModBlocks::never)
-                    .isViewBlocking(ModBlocks::never)
+                    .isValidSpawn(net.minecraft.world.level.block.Blocks::ocelotOrParrot)
+                    .isSuffocating(Blocks::never)
+                    .isViewBlocking(Blocks::never)
                     .ignitedByLava()
                     .pushReaction(PushReaction.DESTROY)
-                    .isRedstoneConductor(ModBlocks::never)));
+                    .isRedstoneConductor(Blocks::never)));
 
     public static final DeferredBlock<Block> DEEP_REDWOOD_LEAVES = registerBlock("deep_redwood_leaves",
             properties -> new RedwoodLeavesBlock(0.01F, ColorParticleOption.create(ParticleTypes.TINTED_LEAVES, -9399763), 30, 60, properties
@@ -151,12 +153,12 @@ public class ModBlocks
                     .randomTicks()
                     .sound(SoundType.GRASS)
                     .noOcclusion()
-                    .isValidSpawn(Blocks::ocelotOrParrot)
-                    .isSuffocating(ModBlocks::never)
-                    .isViewBlocking(ModBlocks::never)
+                    .isValidSpawn(net.minecraft.world.level.block.Blocks::ocelotOrParrot)
+                    .isSuffocating(Blocks::never)
+                    .isViewBlocking(Blocks::never)
                     .ignitedByLava()
                     .pushReaction(PushReaction.DESTROY)
-                    .isRedstoneConductor(ModBlocks::never)));
+                    .isRedstoneConductor(Blocks::never)));
 
     // Creates a redwood sapling block as a DeferredBlock
     public static final DeferredBlock<Block> REDWOOD_SAPLING = registerBlock("redwood_sapling",
@@ -172,10 +174,25 @@ public class ModBlocks
     // Creates a potted redwood sapling block for use in a flower pot
     public static final DeferredBlock<Block> POTTED_REDWOOD_SAPLING = registerBlock("potted_redwood_sapling",
             // Sets the properties of a potted plant block, and creates it using the FlowerPotBlock class
-            properties -> new FlowerPotBlock(ModBlocks.REDWOOD_SAPLING.get(), properties
+            properties -> new FlowerPotBlock(() -> (FlowerPotBlock) net.minecraft.world.level.block.Blocks.FLOWER_POT, Blocks.REDWOOD_SAPLING, properties
                     .instabreak()
                     .noOcclusion()
                     .pushReaction(PushReaction.DESTROY)));
+
+    public static final DeferredBlock<LiquidBlock> HYDROGEL = registerBlock("hydrogel",
+            properties -> new LiquidBlock(Fluids.HYDROGEL.get(), properties
+                    .liquid()
+                    .noLootTable()
+                    .noCollision()
+                    .replaceable()
+                    .pushReaction(PushReaction.DESTROY)
+                    .sound(SoundType.EMPTY)
+                    .strength(100)){
+                @Override
+                public @Nullable BlockState getStateForPlacement(BlockPlaceContext context) {
+                    return super.getStateForPlacement(context);
+                }
+            });
 
     // Creates a DeferredBlock and its corresponding item using the given parameters
     private static <T extends Block> DeferredBlock<T> registerBlock(String name, Function<BlockBehaviour.Properties, T> function)
@@ -190,7 +207,7 @@ public class ModBlocks
     // Registers an item using the given parameters
     private static <T extends Block> void registerBlockItem(String name, DeferredBlock<T> block)
     {
-        ModItems.ITEMS.registerItem(name, properties -> new BlockItem(block.get(), properties.useBlockDescriptionPrefix()));
+        Items.ITEMS.registerItem(name, properties -> new BlockItem(block.get(), properties.useBlockDescriptionPrefix()));
     }
 
     // Registers the BLOCKS DeferredRegister using the event bus

@@ -4,8 +4,13 @@ import net.biscuits310.redwoodforests.entity.ModEntities;
 import net.biscuits310.redwoodforests.entity.client.BananaSlugModel;
 import net.biscuits310.redwoodforests.entity.client.BananaSlugRenderer;
 import net.biscuits310.redwoodforests.entity.client.ModModelLayerLocations;
+import net.biscuits310.redwoodforests.fluid.Fluids;
+import net.biscuits310.redwoodforests.fluid.HydrogelTintSource;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.block.FluidModel;
 import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.client.resources.model.sprite.Material;
+import net.minecraft.resources.Identifier;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
@@ -13,6 +18,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.client.event.RegisterFluidModelsEvent;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 
@@ -38,5 +44,17 @@ public class RedwoodForestsClient {
     @SubscribeEvent
     public static void registerLayers(EntityRenderersEvent.RegisterLayerDefinitions event){
         event.registerLayerDefinition(ModModelLayerLocations.BANANA_SLUG, BananaSlugModel::createBodyLayer);
+    }
+
+    @SubscribeEvent
+    private static void registerFluidModels(RegisterFluidModelsEvent event) {
+        event.register(new FluidModel.Unbaked(
+                new Material(Identifier.fromNamespaceAndPath(RedwoodForests.MODID, "block/hydrogel_still")),
+                new Material(Identifier.fromNamespaceAndPath(RedwoodForests.MODID, "block/hydrogel_flowing")),
+                new Material(Identifier.fromNamespaceAndPath(RedwoodForests.MODID, "block/hydrogel_overlay")),
+                        HydrogelTintSource.INSTANCE,
+                null),
+                Fluids.HYDROGEL,
+                Fluids.FLOWING_HYDROGEL);
     }
 }

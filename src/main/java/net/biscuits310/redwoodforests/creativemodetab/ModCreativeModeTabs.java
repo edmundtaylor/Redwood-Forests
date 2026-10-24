@@ -1,8 +1,8 @@
 package net.biscuits310.redwoodforests.creativemodetab;
 
 import net.biscuits310.redwoodforests.RedwoodForests;
-import net.biscuits310.redwoodforests.block.ModBlocks;
-import net.biscuits310.redwoodforests.item.ModItems;
+import net.biscuits310.redwoodforests.block.Blocks;
+import net.biscuits310.redwoodforests.item.Items;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
@@ -23,27 +23,27 @@ public class ModCreativeModeTabs
     // Creates a creative mode tab supplier for a redwood forests tab
     public static final Supplier<CreativeModeTab> REDWOOD_FORESTS_TAB = CREATIVE_MODE_TABS.register("redwood_forests_tab",
             // Set the creative mode tab icon as the texture of redwood bark
-            () -> CreativeModeTab.builder().icon(() -> new ItemStack(ModItems.REDWOOD_BARK.get()))
+            () -> CreativeModeTab.builder().icon(() -> new ItemStack(Items.REDWOOD_BARK.get()))
                     // Set the title as Redwood Forests
                     .title(Component.translatable("creativetab.redwoodforests.redwood_forests"))
                     // Create the tab to the right of the redstone blocks tab
                     .withTabsBefore(CreativeModeTabs.REDSTONE_BLOCKS)
                     // Applies all the items and blocks that should be inside the redwood forests tab
                     .displayItems((itemDisplayParameters, output) -> {
-                        output.accept(ModItems.REDWOOD_BARK);
-                        output.accept(ModItems.CHARRED_REDWOOD_BARK);
-                        output.accept(ModBlocks.REDWOOD_PLANKS);
-                        output.accept(ModBlocks.REDWOOD_LOG);
-                        output.accept(ModBlocks.STRIPPED_REDWOOD_LOG);
-                        output.accept(ModBlocks.REDWOOD_WOOD);
-                        output.accept(ModBlocks.STRIPPED_REDWOOD_WOOD);
-                        output.accept(ModBlocks.REDWOOD_STAIRS);
-                        output.accept(ModBlocks.REDWOOD_SLAB);
-                        output.accept(ModBlocks.REDWOOD_FENCE);
-                        output.accept(ModBlocks.REDWOOD_LEAVES);
-                        output.accept(ModBlocks.REDWOOD_SAPLING);
-                        output.accept(ModBlocks.DEEP_REDWOOD_LEAVES);
-                        output.accept(ModItems.BANANA_SLUG_SPAWN_EGG);
+                        output.accept(Items.REDWOOD_BARK);
+                        output.accept(Items.CHARRED_REDWOOD_BARK);
+                        output.accept(Blocks.REDWOOD_PLANKS);
+                        output.accept(Blocks.REDWOOD_LOG);
+                        output.accept(Blocks.STRIPPED_REDWOOD_LOG);
+                        output.accept(Blocks.REDWOOD_WOOD);
+                        output.accept(Blocks.STRIPPED_REDWOOD_WOOD);
+                        output.accept(Blocks.REDWOOD_STAIRS);
+                        output.accept(Blocks.REDWOOD_SLAB);
+                        output.accept(Blocks.REDWOOD_FENCE);
+                        output.accept(Blocks.REDWOOD_LEAVES);
+                        output.accept(Blocks.REDWOOD_SAPLING);
+                        output.accept(Blocks.DEEP_REDWOOD_LEAVES);
+                        output.accept(Items.BANANA_SLUG_SPAWN_EGG);
                     })
                     .build());
 

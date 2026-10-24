@@ -1,14 +1,20 @@
 package net.biscuits310.redwoodforests.datagen;
 
 import net.biscuits310.redwoodforests.RedwoodForests;
-import net.biscuits310.redwoodforests.block.ModBlocks;
+import net.biscuits310.redwoodforests.block.Blocks;
 import net.biscuits310.redwoodforests.datagen.custom.ModBlockModelGenerators;
-import net.biscuits310.redwoodforests.item.ModItems;
+import net.biscuits310.redwoodforests.fluid.Fluids;
+import net.biscuits310.redwoodforests.item.Items;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ModelProvider;
 import net.minecraft.client.data.models.model.ModelTemplates;
+import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.data.PackOutput;
+import net.minecraft.resources.Identifier;
+import net.neoforged.neoforge.client.model.item.DynamicFluidContainerModel;
+
+import java.util.Optional;
 
 // Applies models to items and blocks
 // Inherits the ModelProvider class
@@ -32,30 +38,32 @@ public class ModModelProvider extends ModelProvider
                 blockModels.modelOutput
         );
 
+        blockModels.createNonTemplateModelBlock(Blocks.HYDROGEL.get());
+
         // Create a flat item for items without a corresponding block
-        itemModels.generateFlatItem(ModItems.REDWOOD_BARK.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(ModItems.CHARRED_REDWOOD_BARK.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(ModItems.BANANA_SLUG_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(Items.REDWOOD_BARK.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(Items.CHARRED_REDWOOD_BARK.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(Items.BANANA_SLUG_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(Items.HYDROGEL_BUCKET.get(), ModelTemplates.FLAT_ITEM);
 
         // Create a variated log block using the custom modBlockModels function
         // 3 different side textures, so 3 is passed in as numSides
-        modBlockModels.createHorizontalVariatedLogBlock(ModBlocks.REDWOOD_LOG.get(), 3);
-        modBlockModels.createHorizontalVariatedLogBlock(ModBlocks.REDWOOD_ORIGIN_BLOCK.get(), 3);
-        modBlockModels.createVariatedWoodBlock(ModBlocks.REDWOOD_WOOD.get(), ModBlocks.REDWOOD_LOG.get(), 3);
+        modBlockModels.createHorizontalVariatedLogBlock(Blocks.REDWOOD_LOG.get(), 3);
+        modBlockModels.createHorizontalVariatedLogBlock(Blocks.REDWOOD_ORIGIN_BLOCK.get(), 3);
+        modBlockModels.createVariatedWoodBlock(Blocks.REDWOOD_WOOD.get(), Blocks.REDWOOD_LOG.get(), 3);
 
         // Create a non-variated log block using blockModels methods
-        blockModels.woodProvider(ModBlocks.STRIPPED_REDWOOD_LOG.get()).logWithHorizontal(ModBlocks.STRIPPED_REDWOOD_LOG.get()).wood(ModBlocks.STRIPPED_REDWOOD_WOOD.get());
+        blockModels.woodProvider(Blocks.STRIPPED_REDWOOD_LOG.get()).logWithHorizontal(Blocks.STRIPPED_REDWOOD_LOG.get()).wood(Blocks.STRIPPED_REDWOOD_WOOD.get());
 
         // Create all the models that use the redwood planks texture
-        blockModels.family(ModBlocks.REDWOOD_PLANKS.get())
-                .stairs(ModBlocks.REDWOOD_STAIRS.get())
-                .slab(ModBlocks.REDWOOD_SLAB.get())
-                .fence(ModBlocks.REDWOOD_FENCE.get());
+        blockModels.family(Blocks.REDWOOD_PLANKS.get())
+                .stairs(Blocks.REDWOOD_STAIRS.get())
+                .slab(Blocks.REDWOOD_SLAB.get())
+                .fence(Blocks.REDWOOD_FENCE.get());
 
         // Create standard cubes for blocks using the blockModels methods
-        blockModels.createTrivialCube(ModBlocks.REDWOOD_LEAVES.get());
-        blockModels.createTrivialCube(ModBlocks.DEEP_REDWOOD_LEAVES.get());
-        blockModels.createPlantWithDefaultItem(ModBlocks.REDWOOD_SAPLING.get(), ModBlocks.POTTED_REDWOOD_SAPLING.get(), BlockModelGenerators.PlantType.NOT_TINTED);
-
+        blockModels.createTrivialCube(Blocks.REDWOOD_LEAVES.get());
+        blockModels.createTrivialCube(Blocks.DEEP_REDWOOD_LEAVES.get());
+        blockModels.createPlantWithDefaultItem(Blocks.REDWOOD_SAPLING.get(), Blocks.POTTED_REDWOOD_SAPLING.get(), BlockModelGenerators.PlantType.NOT_TINTED);
     }
 }
