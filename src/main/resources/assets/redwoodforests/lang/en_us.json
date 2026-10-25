@@ -17,6 +17,10 @@
   "item.redwoodforests.banana_slug_spawn_egg": "Banana Slug Spawn Egg",
   "item.redwoodforests.hydrogel_bucket": "Hydrogel Bucket",
   "block.redwoodforests.redwood_fence_gate": "Redwood Fence Gate",
+  "block.redwoodforests.redwood_door": "Redwood Door",
+  "block.redwoodforests.redwood_trapdoor": "Redwood Trapdoor",
+  "block.redwoodforests.redwood_pressure_plate": "Redwood Pressure Plate",
+  "block.redwoodforests.redwood_button": "Redwood Button",
 
   "entity.redwoodforests.banana_slug": "Banana Slug",
 

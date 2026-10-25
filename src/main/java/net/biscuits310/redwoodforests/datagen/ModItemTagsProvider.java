@@ -83,6 +83,27 @@ public class ModItemTagsProvider extends ItemTagsProvider {
         tag(ItemTags.FENCE_GATES)
                 .add(Blocks.REDWOOD_FENCE_GATE.asItem());
 
+        tag(ItemTags.DOORS)
+                .add(Blocks.REDWOOD_DOOR.asItem());
+
+        tag(ItemTags.WOODEN_DOORS)
+                .add(Blocks.REDWOOD_DOOR.asItem());
+
+        tag(ItemTags.TRAPDOORS)
+                .add(Blocks.REDWOOD_TRAPDOOR.asItem());
+
+        tag(ItemTags.WOODEN_TRAPDOORS)
+                .add(Blocks.REDWOOD_TRAPDOOR.asItem());
+
+        tag(ItemTags.WOODEN_PRESSURE_PLATES)
+                .add(Blocks.REDWOOD_PRESSURE_PLATE.asItem());
+
+        tag(ItemTags.BUTTONS)
+                .add(Blocks.REDWOOD_BUTTON.asItem());
+
+        tag(ItemTags.WOODEN_BUTTONS)
+                .add(Blocks.REDWOOD_BUTTON.asItem());
+
         // Marks an item as a stripped log for crafting recipes for other mods
         tag(Tags.Items.STRIPPED_LOGS)
                 .add(Blocks.STRIPPED_REDWOOD_LOG.asItem());

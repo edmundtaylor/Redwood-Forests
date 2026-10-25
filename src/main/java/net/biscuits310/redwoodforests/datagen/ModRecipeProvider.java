@@ -116,7 +116,23 @@ public class ModRecipeProvider extends RecipeProvider {
                 .unlockedBy(getHasName(Blocks.REDWOOD_PLANKS.get()), has(Blocks.REDWOOD_PLANKS))
                 .save(output);
 
-        fenceGateBuilder(Blocks.REDWOOD_FENCE_GATE.get(), Ingredient.of(Blocks.REDWOOD_FENCE_GATE))
+        fenceGateBuilder(Blocks.REDWOOD_FENCE_GATE.get(), Ingredient.of(Blocks.REDWOOD_PLANKS))
+                .unlockedBy(getHasName(Blocks.REDWOOD_PLANKS.get()), has(Blocks.REDWOOD_PLANKS))
+                .save(output);
+
+        doorBuilder(Blocks.REDWOOD_DOOR.get(), Ingredient.of(Blocks.REDWOOD_PLANKS))
+                .unlockedBy(getHasName(Blocks.REDWOOD_PLANKS.get()), has(Blocks.REDWOOD_PLANKS))
+                .save(output);
+
+        trapdoorBuilder(Blocks.REDWOOD_TRAPDOOR.get(), Ingredient.of(Blocks.REDWOOD_PLANKS))
+                .unlockedBy(getHasName(Blocks.REDWOOD_PLANKS.get()), has(Blocks.REDWOOD_PLANKS))
+                .save(output);
+
+        pressurePlateBuilder(RecipeCategory.REDSTONE, Blocks.REDWOOD_PRESSURE_PLATE.get(), Ingredient.of(Blocks.REDWOOD_PLANKS))
+                .unlockedBy(getHasName(Blocks.REDWOOD_PLANKS.get()), has(Blocks.REDWOOD_PLANKS))
+                .save(output);
+
+        buttonBuilder(Blocks.REDWOOD_BUTTON.get(), Ingredient.of(Blocks.REDWOOD_PLANKS))
                 .unlockedBy(getHasName(Blocks.REDWOOD_PLANKS.get()), has(Blocks.REDWOOD_PLANKS))
                 .save(output);
     }

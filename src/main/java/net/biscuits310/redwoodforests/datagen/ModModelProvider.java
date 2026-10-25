@@ -54,7 +54,11 @@ public class ModModelProvider extends ModelProvider
                 .stairs(Blocks.REDWOOD_STAIRS.get())
                 .slab(Blocks.REDWOOD_SLAB.get())
                 .fence(Blocks.REDWOOD_FENCE.get())
-                .fenceGate(Blocks.REDWOOD_FENCE_GATE.get());
+                .fenceGate(Blocks.REDWOOD_FENCE_GATE.get())
+                .door(Blocks.REDWOOD_DOOR.get())
+                .pressurePlate(Blocks.REDWOOD_PRESSURE_PLATE.get())
+                .button(Blocks.REDWOOD_BUTTON.get())
+                .trapdoor(Blocks.REDWOOD_TRAPDOOR.get());
 
         // Create standard cubes for blocks using the blockModels methods
         blockModels.createTrivialCube(Blocks.REDWOOD_LEAVES.get());

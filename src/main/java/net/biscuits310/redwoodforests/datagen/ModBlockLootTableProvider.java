@@ -29,6 +29,11 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
         dropSelf(Blocks.STRIPPED_REDWOOD_WOOD.get());
         dropSelf(Blocks.REDWOOD_STAIRS.get());
         dropSelf(Blocks.REDWOOD_FENCE_GATE.get());
+        dropSelf(Blocks.REDWOOD_TRAPDOOR.get());
+        dropSelf(Blocks.REDWOOD_PRESSURE_PLATE.get());
+        dropSelf(Blocks.REDWOOD_BUTTON.get());
+
+        add(Blocks.REDWOOD_DOOR.get(), this::createDoorTable);
         // Slabs can block 1 or 2 of themselves based on their blockstate, so the createSlabItemTable loot provider is required
         add(Blocks.REDWOOD_SLAB.get(), this::createSlabItemTable);
         dropSelf(Blocks.REDWOOD_FENCE.get());

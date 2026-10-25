@@ -13,10 +13,10 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
@@ -148,12 +148,42 @@ public class Blocks
                 public int getFireSpreadSpeed(@NonNull BlockState state, @NonNull BlockGetter level, @NonNull BlockPos pos, @NonNull Direction direction) {
                     return 20;
                 }
-
-                @Override
-                protected void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean movedByPiston) {
-                    super.onPlace(state, level, pos, oldState, movedByPiston);
-                }
             });
+
+    public static final DeferredBlock<Block> REDWOOD_DOOR = registerBlock("redwood_door",
+            properties -> new DoorBlock(BlockSetType.SPRUCE, properties
+                    .mapColor(MapColor.WOOD)
+                    .instrument(NoteBlockInstrument.BASS)
+                    .strength(3.0F)
+                    .noOcclusion()
+                    .ignitedByLava()
+                    .pushReaction(PushReaction.DESTROY)
+                    ));
+
+    public static final DeferredBlock<Block> REDWOOD_TRAPDOOR = registerBlock("redwood_trapdoor",
+            properties -> new TrapDoorBlock(BlockSetType.SPRUCE, properties
+                    .mapColor(MapColor.WOOD)
+                    .instrument(NoteBlockInstrument.BASS)
+                    .strength(3.0F)
+                    .noOcclusion()
+                    .ignitedByLava()
+                    .pushReaction(PushReaction.DESTROY)));
+
+    public static final DeferredBlock<Block> REDWOOD_PRESSURE_PLATE = registerBlock("redwood_pressure_plate",
+            properties -> new PressurePlateBlock(BlockSetType.SPRUCE, properties
+                    .mapColor(MapColor.WOOD)
+                    .forceSolidOn()
+                    .instrument(NoteBlockInstrument.BASS)
+                    .noCollision()
+                    .strength(0.5F)
+                    .ignitedByLava()
+                    .pushReaction(PushReaction.DESTROY)));
+
+    public static final DeferredBlock<Block> REDWOOD_BUTTON = registerBlock("redwood_button",
+            properties -> new ButtonBlock(BlockSetType.SPRUCE, 30, properties
+                    .noCollision()
+                    .strength(0.5F)
+                    .pushReaction(PushReaction.DESTROY)));
 
     // Creates a redwood leaves block as a DeferredBlock
     public static final DeferredBlock<Block> REDWOOD_LEAVES = registerBlock("redwood_leaves",

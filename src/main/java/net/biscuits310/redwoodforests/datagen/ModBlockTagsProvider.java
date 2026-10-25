@@ -88,7 +88,11 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
                 .add(Blocks.REDWOOD_SLAB.get())
                 .add(Blocks.REDWOOD_FENCE.get())
                 .add(Blocks.REDWOOD_ORIGIN_BLOCK.get())
-                .add(Blocks.REDWOOD_FENCE_GATE.get());
+                .add(Blocks.REDWOOD_FENCE_GATE.get())
+                .add(Blocks.REDWOOD_DOOR.get())
+                .add(Blocks.REDWOOD_TRAPDOOR.get())
+                .add(Blocks.REDWOOD_PRESSURE_PLATE.get())
+                .add(Blocks.REDWOOD_BUTTON.get());
 
         // Marks the block as a plank
         tag(BlockTags.PLANKS)
@@ -150,6 +154,36 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
 
         tag(BlockTags.UNSTABLE_BOTTOM_CENTER)
                 .add(Blocks.REDWOOD_FENCE_GATE.get());
+
+        tag(BlockTags.DOORS)
+                .add(Blocks.REDWOOD_DOOR.get());
+
+        tag(BlockTags.MOB_INTERACTABLE_DOORS)
+                .add(Blocks.REDWOOD_DOOR.get());
+
+        tag(BlockTags.WOODEN_DOORS)
+                .add(Blocks.REDWOOD_DOOR.get());
+
+        tag(BlockTags.TRAPDOORS)
+                .add(Blocks.REDWOOD_TRAPDOOR.get());
+
+        tag(BlockTags.WOODEN_TRAPDOORS)
+                .add(Blocks.REDWOOD_TRAPDOOR.get());
+
+        tag(BlockTags.PRESSURE_PLATES)
+                .add(Blocks.REDWOOD_PRESSURE_PLATE.get());
+
+        tag(BlockTags.WALL_POST_OVERRIDE)
+                .add(Blocks.REDWOOD_PRESSURE_PLATE.get());
+
+        tag(BlockTags.WOODEN_PRESSURE_PLATES)
+                .add(Blocks.REDWOOD_PRESSURE_PLATE.get());
+
+        tag(BlockTags.BUTTONS)
+                .add(Blocks.REDWOOD_BUTTON.get());
+
+        tag(BlockTags.WOODEN_BUTTONS)
+                .add(Blocks.REDWOOD_BUTTON.get());
 
         // Marks the block as a stripped log for other mods
         tag(Tags.Blocks.STRIPPED_LOGS)

@@ -40,6 +40,10 @@ public class ModCreativeModeTabs
                         output.accept(Blocks.REDWOOD_SLAB);
                         output.accept(Blocks.REDWOOD_FENCE);
                         output.accept(Blocks.REDWOOD_FENCE_GATE);
+                        output.accept(Blocks.REDWOOD_DOOR);
+                        output.accept(Blocks.REDWOOD_TRAPDOOR);
+                        output.accept(Blocks.REDWOOD_PRESSURE_PLATE);
+                        output.accept(Blocks.REDWOOD_BUTTON);
                         output.accept(Items.REDWOOD_BARK);
                         output.accept(Items.CHARRED_REDWOOD_BARK);
                         output.accept(Blocks.REDWOOD_LEAVES);
