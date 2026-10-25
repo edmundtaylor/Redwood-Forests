@@ -6,6 +6,7 @@ import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.UntintedParticleLeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jspecify.annotations.NonNull;
 
 public class FlammableUntintedParticleLeavesBlock extends UntintedParticleLeavesBlock {
     int flammability;
@@ -18,19 +19,19 @@ public class FlammableUntintedParticleLeavesBlock extends UntintedParticleLeaves
 
     // Set flammability to true
     @Override
-    public boolean isFlammable(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
+    public boolean isFlammable(@NonNull BlockState state, @NonNull BlockGetter level, @NonNull BlockPos pos, @NonNull Direction direction) {
         return true;
     }
 
     // Set the flammability to the given flammability
     @Override
-    public int getFlammability(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
+    public int getFlammability(@NonNull BlockState state, @NonNull BlockGetter level, @NonNull BlockPos pos, @NonNull Direction direction) {
         return this.flammability;
     }
 
     // Set the speed fire spreads to the given fireSpreadSpeed
     @Override
-    public int getFireSpreadSpeed(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
+    public int getFireSpreadSpeed(@NonNull BlockState state, @NonNull BlockGetter level, @NonNull BlockPos pos, @NonNull Direction direction) {
         return this.fireSpreadSpeed;
     }
 }

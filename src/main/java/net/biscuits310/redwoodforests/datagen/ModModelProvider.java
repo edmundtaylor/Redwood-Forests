@@ -3,18 +3,12 @@ package net.biscuits310.redwoodforests.datagen;
 import net.biscuits310.redwoodforests.RedwoodForests;
 import net.biscuits310.redwoodforests.block.Blocks;
 import net.biscuits310.redwoodforests.datagen.custom.ModBlockModelGenerators;
-import net.biscuits310.redwoodforests.fluid.Fluids;
 import net.biscuits310.redwoodforests.item.Items;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ModelProvider;
 import net.minecraft.client.data.models.model.ModelTemplates;
-import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.Identifier;
-import net.neoforged.neoforge.client.model.item.DynamicFluidContainerModel;
-
-import java.util.Optional;
 
 // Applies models to items and blocks
 // Inherits the ModelProvider class

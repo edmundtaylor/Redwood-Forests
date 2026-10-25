@@ -8,6 +8,7 @@ import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.world.item.crafting.Ingredient;
+import org.jspecify.annotations.NonNull;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -29,13 +30,13 @@ public class ModRecipeProvider extends RecipeProvider {
         // Overrides createRecipeProvider to create a RecipeProvider with the ModRecipeProvider class
         // As opposed to the RecipeProvider class
         @Override
-        protected RecipeProvider createRecipeProvider(HolderLookup.Provider registries, RecipeOutput output) {
+        protected @NonNull RecipeProvider createRecipeProvider(HolderLookup.@NonNull Provider registries, @NonNull RecipeOutput output) {
             return new ModRecipeProvider(registries, output);
         }
 
         // Changes the name of the provider
         @Override
-        public String getName() {
+        public @NonNull String getName() {
             return "RedwoodForests Recipes";
         }
     }

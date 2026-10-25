@@ -14,6 +14,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import java.util.function.Supplier;
 
 // Creates creative mode tabs and combines them into a DeferredRegister
+@SuppressWarnings("unused")
 public class ModCreativeModeTabs
 {
     // Create a DeferredRegister with the creative mode tabs register
@@ -29,7 +30,7 @@ public class ModCreativeModeTabs
                     // Create the tab to the right of the redstone blocks tab
                     .withTabsBefore(CreativeModeTabs.REDSTONE_BLOCKS)
                     // Applies all the items and blocks that should be inside the redwood forests tab
-                    .displayItems((itemDisplayParameters, output) -> {
+                    .displayItems((ignoredItemDisplayParameters, output) -> {
                         output.accept(Items.REDWOOD_BARK);
                         output.accept(Items.CHARRED_REDWOOD_BARK);
                         output.accept(Blocks.REDWOOD_PLANKS);
@@ -44,6 +45,7 @@ public class ModCreativeModeTabs
                         output.accept(Blocks.REDWOOD_SAPLING);
                         output.accept(Blocks.DEEP_REDWOOD_LEAVES);
                         output.accept(Items.BANANA_SLUG_SPAWN_EGG);
+                        output.accept(Items.HYDROGEL_BUCKET);
                     })
                     .build());
 

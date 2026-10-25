@@ -4,7 +4,6 @@ import net.biscuits310.redwoodforests.RedwoodForests;
 import net.biscuits310.redwoodforests.entity.ModEntities;
 import net.biscuits310.redwoodforests.fluid.Fluids;
 import net.biscuits310.redwoodforests.item.custom.HydrogelBucket;
-import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.SpawnEggItem;
 import net.neoforged.bus.api.IEventBus;

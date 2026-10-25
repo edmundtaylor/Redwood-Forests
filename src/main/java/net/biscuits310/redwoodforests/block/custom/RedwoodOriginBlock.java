@@ -11,6 +11,7 @@ import net.minecraft.world.level.block.grower.TreeGrower;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import org.jspecify.annotations.NonNull;
 
 import java.util.HashMap;
 import java.util.function.Supplier;
@@ -43,7 +44,7 @@ public class RedwoodOriginBlock extends RedwoodLogBlock{
     }
 
     @Override
-    protected void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+    protected void randomTick(@NonNull BlockState state, ServerLevel level, @NonNull BlockPos pos, @NonNull RandomSource random) {
         if (!level.isAreaLoaded(pos, 1)) return;
         if (random.nextInt(7) == 0) {
             this.advanceTree(level, pos, state);
@@ -59,7 +60,7 @@ public class RedwoodOriginBlock extends RedwoodLogBlock{
     }
 
     @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.@NonNull Builder<Block, BlockState> builder) {
         builder.add(STAGE).add(GROWTH_STAGE).add(TREE_HEIGHT);
         super.createBlockStateDefinition(builder);
     }

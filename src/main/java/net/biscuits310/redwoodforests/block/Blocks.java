@@ -12,7 +12,6 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
@@ -22,11 +21,12 @@ import net.minecraft.world.level.material.PushReaction;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 import java.util.function.Function;
 
-// Creates DeferredBlocks, and combines them into a Deferredregister
+// Creates DeferredBlocks, and combines them into a DeferredRegister
 public class Blocks
 {
     // Combines DeferredBlocks into a DeferredRegister
@@ -75,7 +75,7 @@ public class Blocks
                     .strength(2.0F)
                     .sound(SoundType.WOOD)
                     .ignitedByLava()));
-                // Flammability does not need to be overriden
+                // Flammability does not need to be overridden
 
     // Creates a stripped redwood log block as a DeferredBlock
     public static final DeferredBlock<Block> STRIPPED_REDWOOD_LOG = registerBlock("stripped_redwood_log",
@@ -88,7 +88,7 @@ public class Blocks
                     .sound(SoundType.WOOD)
                     .ignitedByLava()));
 
-    // Creats a stripped redwood wood block as a DeferredBlock
+    // Creates a stripped redwood wood block as a DeferredBlock
     public static final DeferredBlock<Block> STRIPPED_REDWOOD_WOOD = registerBlock("stripped_redwood_wood",
             // Sets the properties of a stripped wood block, and creates it using the FlammableRotatedPillarBlock class
             properties -> new FlammableRotatedPillarBlock(5, 5, properties
@@ -189,7 +189,7 @@ public class Blocks
                     .sound(SoundType.EMPTY)
                     .strength(100)){
                 @Override
-                public @Nullable BlockState getStateForPlacement(BlockPlaceContext context) {
+                public @Nullable BlockState getStateForPlacement(@NonNull BlockPlaceContext context) {
                     return super.getStateForPlacement(context);
                 }
             });

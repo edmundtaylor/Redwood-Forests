@@ -14,7 +14,9 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
+import org.jspecify.annotations.NonNull;
 
+import java.util.Objects;
 import java.util.OptionalInt;
 
 import static net.biscuits310.redwoodforests.block.custom.RedwoodFenceBlock.UNBOUND_DISTANCE;
@@ -27,14 +29,14 @@ public class RedwoodLeavesBlock extends FlammableUntintedParticleLeavesBlock {
 
     // Actions to complete when the leaf block receives a tick.
     @Override
-    protected void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random){
+    protected void tick(@NonNull BlockState state, ServerLevel level, @NonNull BlockPos pos, @NonNull RandomSource random){
         // Set the new blockstate using the updateDistanceWithDiagonal function. Use 3 update flags, meaning that consecutive blocks should be updated.
         level.setBlock(pos,updateDistanceWithDiagonal(state, level, pos), 3);
     }
 
     @Override
-    protected void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean movedByPiston) {
-        LeafDecayEvent.tickDiagonalRedwoodLeavesAndFences(level.getServer().getLevel(level.dimension()), pos);
+    protected void onPlace(@NonNull BlockState state, Level level, @NonNull BlockPos pos, @NonNull BlockState oldState, boolean movedByPiston) {
+        LeafDecayEvent.tickDiagonalRedwoodLeavesAndFences(Objects.requireNonNull(level.getServer()).getLevel(level.dimension()), pos);
         super.onPlace(state, level, pos, oldState, movedByPiston);
     }
 
@@ -45,7 +47,7 @@ public class RedwoodLeavesBlock extends FlammableUntintedParticleLeavesBlock {
         // Creates a block position.
         BlockPos.MutableBlockPos neighborPos = new BlockPos.MutableBlockPos();
 
-        // These for loops loop through all of the neighbouring blocks, including the diagonal blocks. The difference in x y and z is set as dx dy and dz.
+        // These for loops loop through all the neighbouring blocks, including the diagonal blocks. The difference in x y and z is set as dx dy and dz.
         for (int dx = -1; dx <= 1; dx++){
             for (int dy = -1; dy <= 1; dy++){
                 for (int dz = -1; dz <= 1; dz++){
@@ -75,7 +77,7 @@ public class RedwoodLeavesBlock extends FlammableUntintedParticleLeavesBlock {
         return getOptionalDistanceBlockstate(state).orElse(7);
     }
 
-    // This returns an optinalint, which can be empty or an integer. If found empty, the wrapper sets to 7.
+    // This returns an OptionalInt, which can be empty or an integer. If found empty, the wrapper sets to 7.
     public static OptionalInt getOptionalDistanceBlockstate(BlockState state){
         // If the block being checked is a redwood log
         if (state.is(Blocks.REDWOOD_LOG)){
@@ -114,7 +116,7 @@ public class RedwoodLeavesBlock extends FlammableUntintedParticleLeavesBlock {
     }
 
     @Override
-    public BlockState getStateForPlacement(BlockPlaceContext context) {
+    public @NonNull BlockState getStateForPlacement(BlockPlaceContext context) {
         FluidState replacedFluidState = context.getLevel().getFluidState(context.getClickedPos());
         BlockState state = this.defaultBlockState().setValue(PERSISTENT, true).setValue(WATERLOGGED, replacedFluidState.is(Fluids.WATER));
         return updateDistanceWithDiagonal(state, context.getLevel(), context.getClickedPos());

@@ -6,6 +6,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.level.block.Block;
+import org.jspecify.annotations.NonNull;
 
 import java.util.Set;
 
@@ -39,9 +40,9 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
         dropOther(Blocks.REDWOOD_ORIGIN_BLOCK.get(), Blocks.REDWOOD_LOG.get());
     }
 
-    // Applies all of the loot tables to the BLOCKS DeferredRegister
+    // Applies all the loot tables to the BLOCKS DeferredRegister
     @Override
-    protected Iterable<Block> getKnownBlocks() {
+    protected @NonNull Iterable<Block> getKnownBlocks() {
         return Blocks.BLOCKS.getEntries().stream().map(Holder::value)::iterator;
     }
 }

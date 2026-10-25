@@ -32,8 +32,6 @@ public class BananaSlug extends Animal {
     public final AnimationState idleAnimationState = new AnimationState();
     private int idleAnimationTimeout = 0;
     private static final EntityDataAccessor<Byte> DATA_FLAGS_ID = SynchedEntityData.defineId(BananaSlug.class, EntityDataSerializers.BYTE);
-    public boolean verticalCollisionAbove;
-    private float climbingSpeed;
 
     public BananaSlug(EntityType<? extends Animal> type, Level level) {
         super(type, level);

@@ -5,6 +5,7 @@ import net.biscuits310.redwoodforests.fluid.Fluids;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.FluidTags;
+import org.jspecify.annotations.NonNull;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -14,7 +15,7 @@ public class FluidTagsProvider extends net.minecraft.data.tags.FluidTagsProvider
     }
 
     @Override
-    protected void addTags(HolderLookup.Provider registries) {
+    protected void addTags(HolderLookup.@NonNull Provider registries) {
 
         tag(FluidTags.WATER)
                 .add(Fluids.HYDROGEL.get())

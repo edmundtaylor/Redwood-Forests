@@ -1,7 +1,6 @@
 package net.biscuits310.redwoodforests;
 
 import net.biscuits310.redwoodforests.datagen.*;
-import net.biscuits310.redwoodforests.worldgen.ModConfiguredFeatures;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.loot.LootTableProvider;

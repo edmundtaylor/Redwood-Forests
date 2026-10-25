@@ -2,18 +2,17 @@ package net.biscuits310.redwoodforests.block.custom;
 
 import net.biscuits310.redwoodforests.block.BlockStateProperties;
 import net.biscuits310.redwoodforests.event.LeafDecayEvent;
-import net.biscuits310.redwoodforests.tags.ModTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import org.jspecify.annotations.NonNull;
 
-import java.util.Set;
+import java.util.Objects;
 import java.util.function.Supplier;
 
 public class RedwoodLogBlock extends StrippableFlammableRotatedPillarBlock{
@@ -26,37 +25,19 @@ public class RedwoodLogBlock extends StrippableFlammableRotatedPillarBlock{
     }
 
     @Override
-    public BlockState getStateForPlacement(BlockPlaceContext context) {
+    public @NonNull BlockState getStateForPlacement(@NonNull BlockPlaceContext context) {
         return super.getStateForPlacement(context).setValue(NATURAL_LOG, false);
     }
 
     @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.@NonNull Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
         builder.add(PREVENTS_NEARBY_LEAF_DECAY).add(NATURAL_LOG);
     }
 
     @Override
-    protected void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean movedByPiston) {
-        LeafDecayEvent.tickDiagonalRedwoodLeavesAndFences(level.getServer().getLevel(level.dimension()), pos);
+    protected void onPlace(@NonNull BlockState state, Level level, @NonNull BlockPos pos, @NonNull BlockState oldState, boolean movedByPiston) {
+        LeafDecayEvent.tickDiagonalRedwoodLeavesAndFences(Objects.requireNonNull(level.getServer()).getLevel(level.dimension()), pos);
         super.onPlace(state, level, pos, oldState, movedByPiston);
     }
-
-    private static void updateConnectedLeafDecay(ServerLevel level, BlockPos rootPos, Set<BlockPos> checkedBlocks){
-        BlockPos.MutableBlockPos neighbourPos = new BlockPos.MutableBlockPos();
-        for (Direction direction : Direction.values()){
-            neighbourPos.setWithOffset(rootPos, direction);
-            BlockState neighbourState = level.getBlockState(neighbourPos);
-
-            if (!checkedBlocks.contains(neighbourPos) && (neighbourState.is(ModTags.Blocks.REDWOOD_LOGS))) {
-                checkedBlocks.add(neighbourPos);
-                if (neighbourState.getValue(NATURAL_LOG) && neighbourState.getValue(PREVENTS_NEARBY_LEAF_DECAY)){
-                    level.setBlock(neighbourPos, neighbourState.setValue(PREVENTS_NEARBY_LEAF_DECAY, false), 3);
-                    LeafDecayEvent.tickDiagonalRedwoodLeavesAndFences(level, neighbourPos);
-                    updateConnectedLeafDecay(level, neighbourPos, checkedBlocks);
-                }
-            }
-        }
-    }
-
 }

@@ -26,27 +26,6 @@ public class ModBlockModelGenerators extends BlockModelGenerators {
         return variants(variants);
     }
 
-    // UNUSED - Creates a variated log block model without horizontal variant consideration
-    // Takes the block, and the number of variated textures in as parameters
-    public void createVariatedLogBLock(Block block, int numSides) {
-        // Initialises an array of variants that is the length of the number of variated sides
-        Variant[] variants = new Variant[numSides];
-        // Executes the number of variated textures inputted
-        for (int i = 1; i <= numSides; i++){
-            // The ith - 1 variant in the array is equal to a model created with the CUBE_COLUMN template
-            variants[i-1] = plainModel(ModelTemplates.CUBE_COLUMN.create(
-                    // Create the model JSON file in the RedwoodForests block package, using the name blockname_i
-                    Identifier.fromNamespaceAndPath(RedwoodForests.MODID, "block/" + BuiltInRegistries.BLOCK.getKey(block).getPath() + "_" + i),
-                    // Use the custom texture mapping to assign the texture png to the model
-                    ModTextureMapping.randomLogColumn(block, i),
-                    ModBlockModelGenerators.this.modelOutput));
-        }
-        // Create the blockstate by combining the variants in the variants array
-        this.blockStateOutput.accept(createAxisAlignedPillarBlock(block, createRandomVariants(variants)));
-        // Create an item model using the block model
-        this.registerSimpleItemModel(block, Identifier.fromNamespaceAndPath(RedwoodForests.MODID, "block/" + BuiltInRegistries.BLOCK.getKey(block).getPath() + "_1"));
-    }
-
     // Creates a variated log block model with horizontal variant consideration
     // Takes the block, and the number of variated texture in as parameters
     public void createHorizontalVariatedLogBlock(Block block, int numSides){

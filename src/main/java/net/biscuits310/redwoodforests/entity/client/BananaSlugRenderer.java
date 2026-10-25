@@ -5,6 +5,7 @@ import net.biscuits310.redwoodforests.entity.custom.BananaSlug;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.Identifier;
+import org.jspecify.annotations.NonNull;
 
 public class BananaSlugRenderer extends MobRenderer<BananaSlug, BananaSlugRenderState, BananaSlugModel> {
     public BananaSlugRenderer(EntityRendererProvider.Context context) {
@@ -12,17 +13,17 @@ public class BananaSlugRenderer extends MobRenderer<BananaSlug, BananaSlugRender
     }
 
     @Override
-    public Identifier getTextureLocation(BananaSlugRenderState state) {
+    public @NonNull Identifier getTextureLocation(@NonNull BananaSlugRenderState state) {
         return Identifier.fromNamespaceAndPath(RedwoodForests.MODID, "textures/entity/banana_slug/banana_slug.png");
     }
 
     @Override
-    public BananaSlugRenderState createRenderState() {
+    public @NonNull BananaSlugRenderState createRenderState() {
         return new BananaSlugRenderState();
     }
 
     @Override
-    public void extractRenderState(BananaSlug entity, BananaSlugRenderState state, float partialTicks) {
+    public void extractRenderState(@NonNull BananaSlug entity, @NonNull BananaSlugRenderState state, float partialTicks) {
         super.extractRenderState(entity, state, partialTicks);
 
         state.idleAnimationState.copyFrom(entity.idleAnimationState);

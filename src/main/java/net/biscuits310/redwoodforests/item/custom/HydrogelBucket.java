@@ -1,12 +1,6 @@
 package net.biscuits310.redwoodforests.item.custom;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.tags.FluidTags;
-import net.minecraft.util.RandomSource;
-import net.minecraft.world.attribute.EnvironmentAttributes;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
@@ -36,7 +30,6 @@ public class HydrogelBucket extends BucketItem {
             boolean shiftKeyDown = user != null && user.isShiftKeyDown();
             boolean placeLiquid = mayReplace
                     || block instanceof LiquidBlockContainer container && container.canPlaceLiquid(user, level, pos, blockState, this.content);
-            // TODO: The stack is only used as a parameter in the vaporization check. What if the fluidType is different? And should the rest of the method be made stack-aware as well?
             var containedFluidStack = containerItem != null ? net.neoforged.neoforge.transfer.fluid.FluidUtil.getFirstStackContained(containerItem) : net.neoforged.neoforge.fluids.FluidStack.EMPTY;
             boolean canPlaceFluidInsideBlock = blockState.isAir() || placeLiquid && (!shiftKeyDown || hitResult == null);
             if (!canPlaceFluidInsideBlock) {
@@ -49,7 +42,7 @@ public class HydrogelBucket extends BucketItem {
                 this.playEmptySound(user, level, pos);
                 return true;
             } else {
-                if (!level.isClientSide() && mayReplace && !blockState.liquid()) {
+                if (!level.isClientSide() && mayReplace && !blockState.getFluidState().isEmpty()) {
                     level.destroyBlock(pos, true);
                 }
 
