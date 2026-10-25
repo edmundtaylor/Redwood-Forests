@@ -53,7 +53,8 @@ public class ModModelProvider extends ModelProvider
         blockModels.family(Blocks.REDWOOD_PLANKS.get())
                 .stairs(Blocks.REDWOOD_STAIRS.get())
                 .slab(Blocks.REDWOOD_SLAB.get())
-                .fence(Blocks.REDWOOD_FENCE.get());
+                .fence(Blocks.REDWOOD_FENCE.get())
+                .fenceGate(Blocks.REDWOOD_FENCE_GATE.get());
 
         // Create standard cubes for blocks using the blockModels methods
         blockModels.createTrivialCube(Blocks.REDWOOD_LEAVES.get());

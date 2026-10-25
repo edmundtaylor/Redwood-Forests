@@ -80,6 +80,9 @@ public class ModItemTagsProvider extends ItemTagsProvider {
                 .add(Blocks.REDWOOD_LEAVES.asItem())
                 .add(Blocks.DEEP_REDWOOD_LEAVES.asItem());
 
+        tag(ItemTags.FENCE_GATES)
+                .add(Blocks.REDWOOD_FENCE_GATE.asItem());
+
         // Marks an item as a stripped log for crafting recipes for other mods
         tag(Tags.Items.STRIPPED_LOGS)
                 .add(Blocks.STRIPPED_REDWOOD_LOG.asItem());
@@ -95,6 +98,12 @@ public class ModItemTagsProvider extends ItemTagsProvider {
         // Marks an item as a wooden fence for crafting recipes for other mods
         tag(Tags.Items.FENCES_WOODEN)
                 .add(Blocks.REDWOOD_FENCE.asItem());
+
+        tag(Tags.Items.FENCE_GATES)
+                .add(Blocks.REDWOOD_FENCE_GATE.asItem());
+
+        tag(Tags.Items.FENCE_GATES_WOODEN)
+                .add(Blocks.REDWOOD_FENCE_GATE.asItem());
 
         // Marks an item as a redwood log for the redwood planks recipe
         tag(ModTags.Items.REDWOOD_LOGS)

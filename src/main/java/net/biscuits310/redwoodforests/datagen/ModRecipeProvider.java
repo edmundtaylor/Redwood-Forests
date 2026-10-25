@@ -115,5 +115,9 @@ public class ModRecipeProvider extends RecipeProvider {
                 // Unlock in the recipe book like this
                 .unlockedBy(getHasName(Blocks.REDWOOD_PLANKS.get()), has(Blocks.REDWOOD_PLANKS))
                 .save(output);
+
+        fenceGateBuilder(Blocks.REDWOOD_FENCE_GATE.get(), Ingredient.of(Blocks.REDWOOD_FENCE_GATE))
+                .unlockedBy(getHasName(Blocks.REDWOOD_PLANKS.get()), has(Blocks.REDWOOD_PLANKS))
+                .save(output);
     }
 }

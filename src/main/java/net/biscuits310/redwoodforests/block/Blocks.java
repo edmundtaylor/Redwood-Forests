@@ -9,9 +9,11 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ColorParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
@@ -129,6 +131,29 @@ public class Blocks
                     .sound(SoundType.WOOD)
                     .ignitedByLava())
 );
+
+    public static final DeferredBlock<Block> REDWOOD_FENCE_GATE = registerBlock("redwood_fence_gate",
+            properties -> new FenceGateBlock(properties
+                    .mapColor(MapColor.WOOD)
+                    .forceSolidOn()
+                    .instrument(NoteBlockInstrument.BASS)
+                    .strength(2.0F, 3.0F)
+                    .sound(SoundType.WOOD)
+                    .ignitedByLava(), SoundEvents.FENCE_GATE_OPEN, SoundEvents.FENCE_GATE_CLOSE){
+                @Override
+                public int getFlammability(@NonNull BlockState state, @NonNull BlockGetter level, @NonNull BlockPos pos, @NonNull Direction direction) {
+                    return 5;
+                }
+                @Override
+                public int getFireSpreadSpeed(@NonNull BlockState state, @NonNull BlockGetter level, @NonNull BlockPos pos, @NonNull Direction direction) {
+                    return 20;
+                }
+
+                @Override
+                protected void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean movedByPiston) {
+                    super.onPlace(state, level, pos, oldState, movedByPiston);
+                }
+            });
 
     // Creates a redwood leaves block as a DeferredBlock
     public static final DeferredBlock<Block> REDWOOD_LEAVES = registerBlock("redwood_leaves",

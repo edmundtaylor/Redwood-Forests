@@ -31,16 +31,17 @@ public class ModCreativeModeTabs
                     .withTabsBefore(CreativeModeTabs.REDSTONE_BLOCKS)
                     // Applies all the items and blocks that should be inside the redwood forests tab
                     .displayItems((ignoredItemDisplayParameters, output) -> {
-                        output.accept(Items.REDWOOD_BARK);
-                        output.accept(Items.CHARRED_REDWOOD_BARK);
-                        output.accept(Blocks.REDWOOD_PLANKS);
                         output.accept(Blocks.REDWOOD_LOG);
-                        output.accept(Blocks.STRIPPED_REDWOOD_LOG);
                         output.accept(Blocks.REDWOOD_WOOD);
+                        output.accept(Blocks.STRIPPED_REDWOOD_LOG);
                         output.accept(Blocks.STRIPPED_REDWOOD_WOOD);
+                        output.accept(Blocks.REDWOOD_PLANKS);
                         output.accept(Blocks.REDWOOD_STAIRS);
                         output.accept(Blocks.REDWOOD_SLAB);
                         output.accept(Blocks.REDWOOD_FENCE);
+                        output.accept(Blocks.REDWOOD_FENCE_GATE);
+                        output.accept(Items.REDWOOD_BARK);
+                        output.accept(Items.CHARRED_REDWOOD_BARK);
                         output.accept(Blocks.REDWOOD_LEAVES);
                         output.accept(Blocks.REDWOOD_SAPLING);
                         output.accept(Blocks.DEEP_REDWOOD_LEAVES);

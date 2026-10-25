@@ -87,7 +87,8 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
                 .add(Blocks.REDWOOD_STAIRS.get())
                 .add(Blocks.REDWOOD_SLAB.get())
                 .add(Blocks.REDWOOD_FENCE.get())
-                .add(Blocks.REDWOOD_ORIGIN_BLOCK.get());
+                .add(Blocks.REDWOOD_ORIGIN_BLOCK.get())
+                .add(Blocks.REDWOOD_FENCE_GATE.get());
 
         // Marks the block as a plank
         tag(BlockTags.PLANKS)
@@ -141,6 +142,15 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
         tag(BlockTags.REPLACEABLE_BY_MUSHROOMS)
                 .add(Blocks.REDWOOD_LEAVES.get());
 
+        tag(BlockTags.FENCE_GATES)
+                .add(Blocks.REDWOOD_FENCE_GATE.get());
+
+        tag(BlockTags.MAINTAINS_FARMLAND)
+                .add(Blocks.REDWOOD_FENCE_GATE.get());
+
+        tag(BlockTags.UNSTABLE_BOTTOM_CENTER)
+                .add(Blocks.REDWOOD_FENCE_GATE.get());
+
         // Marks the block as a stripped log for other mods
         tag(Tags.Blocks.STRIPPED_LOGS)
                 .add(Blocks.STRIPPED_REDWOOD_LOG.get());
@@ -163,6 +173,12 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
         // Marks the block as a wooden fence for other mods
         tag(Tags.Blocks.FENCES_WOODEN)
                 .add(Blocks.REDWOOD_FENCE.get());
+
+        tag(Tags.Blocks.FENCE_GATES)
+                .add(Blocks.REDWOOD_FENCE_GATE.get());
+
+        tag(Tags.Blocks.FENCE_GATES_WOODEN)
+                .add(Blocks.REDWOOD_FENCE_GATE.get());
 
         tag(ModTags.Blocks.REDWOOD_GROWERS)
                 .add(Blocks.REDWOOD_SAPLING.get())
