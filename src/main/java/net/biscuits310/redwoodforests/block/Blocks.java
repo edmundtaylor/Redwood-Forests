@@ -226,9 +226,51 @@ public class Blocks
                     .instabreak()
                     .sound(SoundType.GRASS).pushReaction(PushReaction.DESTROY)));
 
+    public static final DeferredBlock<Block> REDWOOD_1_PLACEMENT_SAPLING = registerBlock("redwood_1_placement_sapling",
+            properties -> new SaplingBlock(ModTreeGrowers.REDWOOD_1_PLACEMENT, properties
+                    .mapColor(MapColor.PLANT)
+                    .noCollision()
+                    .randomTicks()
+                    .instabreak()
+                    .sound(SoundType.GRASS).pushReaction(PushReaction.DESTROY)));
+
+    public static final DeferredBlock<Block> REDWOOD_2_PLACEMENT_SAPLING = registerBlock("redwood_2_placement_sapling",
+            properties -> new SaplingBlock(ModTreeGrowers.REDWOOD_2_PLACEMENT, properties
+                    .mapColor(MapColor.PLANT)
+                    .noCollision()
+                    .randomTicks()
+                    .instabreak()
+                    .sound(SoundType.GRASS).pushReaction(PushReaction.DESTROY)));
+
+    public static final DeferredBlock<Block> REDWOOD_3_PLACEMENT_SAPLING = registerBlock("redwood_3_placement_sapling",
+            properties -> new SaplingBlock(ModTreeGrowers.REDWOOD_3_PLACEMENT, properties
+                    .mapColor(MapColor.PLANT)
+                    .noCollision()
+                    .randomTicks()
+                    .instabreak()
+                    .sound(SoundType.GRASS).pushReaction(PushReaction.DESTROY)));
+
     // Creates a potted redwood sapling block for use in a flower pot
     public static final DeferredBlock<Block> POTTED_REDWOOD_SAPLING = registerBlock("potted_redwood_sapling",
             // Sets the properties of a potted plant block, and creates it using the FlowerPotBlock class
+            properties -> new FlowerPotBlock(() -> (FlowerPotBlock) net.minecraft.world.level.block.Blocks.FLOWER_POT, Blocks.REDWOOD_SAPLING, properties
+                    .instabreak()
+                    .noOcclusion()
+                    .pushReaction(PushReaction.DESTROY)));
+
+    public static final DeferredBlock<Block> POTTED_REDWOOD_1_PLACEMENT_SAPLING = registerBlock("potted_redwood_1_placement_sapling",
+            properties -> new FlowerPotBlock(() -> (FlowerPotBlock) net.minecraft.world.level.block.Blocks.FLOWER_POT, Blocks.REDWOOD_SAPLING, properties
+                    .instabreak()
+                    .noOcclusion()
+                    .pushReaction(PushReaction.DESTROY)));
+
+    public static final DeferredBlock<Block> POTTED_REDWOOD_2_PLACEMENT_SAPLING = registerBlock("potted_redwood_2_placement_sapling",
+            properties -> new FlowerPotBlock(() -> (FlowerPotBlock) net.minecraft.world.level.block.Blocks.FLOWER_POT, Blocks.REDWOOD_SAPLING, properties
+                    .instabreak()
+                    .noOcclusion()
+                    .pushReaction(PushReaction.DESTROY)));
+
+    public static final DeferredBlock<Block> POTTED_REDWOOD_3_PLACEMENT_SAPLING = registerBlock("potted_redwood_3_placement_sapling",
             properties -> new FlowerPotBlock(() -> (FlowerPotBlock) net.minecraft.world.level.block.Blocks.FLOWER_POT, Blocks.REDWOOD_SAPLING, properties
                     .instabreak()
                     .noOcclusion()

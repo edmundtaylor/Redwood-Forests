@@ -216,6 +216,9 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
 
         tag(ModTags.Blocks.REDWOOD_GROWERS)
                 .add(Blocks.REDWOOD_SAPLING.get())
+                .add(Blocks.REDWOOD_1_PLACEMENT_SAPLING.get())
+                .add(Blocks.REDWOOD_2_PLACEMENT_SAPLING.get())
+                .add(Blocks.REDWOOD_3_PLACEMENT_SAPLING.get())
                 .add(Blocks.REDWOOD_ORIGIN_BLOCK.get());
 
         tag(ModTags.Blocks.REDWOOD_FOLIAGE_REMOVABLE)

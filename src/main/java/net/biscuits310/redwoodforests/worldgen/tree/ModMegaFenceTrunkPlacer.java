@@ -16,7 +16,7 @@ public class ModMegaFenceTrunkPlacer extends ModGiantFenceTrunkPlacer{
             .and(BuiltInRegistries.BLOCK.byNameCodec().fieldOf("origin_block").forGetter(p -> p.originBlock.get()))
             .and(Codec.floatRange(0F, 1F).fieldOf("fenceProportion").forGetter(p -> p.fenceProportion))
             .and(Codec.floatRange(0F, 1F).fieldOf("progressChance").forGetter(p -> p.progressChance))
-            .and(Codec.intRange(0, 3).fieldOf("growth_stage").forGetter(p -> p.growthStage))
+            .and(Codec.intRange(-3, 3).fieldOf("growth_stage").forGetter(p -> p.growthStage))
             .apply(i, (baseHeight, heightRandA, heightRandB, fenceBlock, originBlock, fenceProportion, progressChance, growthStage) ->
                     new ModMegaFenceTrunkPlacer(
                             baseHeight,

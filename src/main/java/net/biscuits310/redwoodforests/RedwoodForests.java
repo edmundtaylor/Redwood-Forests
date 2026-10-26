@@ -6,6 +6,8 @@ import net.biscuits310.redwoodforests.entity.ModEntities;
 import net.biscuits310.redwoodforests.fluid.Fluids;
 import net.biscuits310.redwoodforests.item.Items;
 import net.biscuits310.redwoodforests.worldgen.ModFeatures;
+import net.biscuits310.redwoodforests.worldgen.biome.Terrablender;
+import net.biscuits310.redwoodforests.worldgen.biome.surface.CustomSurfaceRules;
 import net.biscuits310.redwoodforests.worldgen.tree.ModFoliagePlacerType;
 import net.biscuits310.redwoodforests.worldgen.tree.ModTrunkPlacerType;
 import net.minecraft.world.level.block.DispenserBlock;
@@ -23,6 +25,7 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
+import terrablender.api.SurfaceRuleManager;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
 @Mod(RedwoodForests.MODID)
@@ -55,8 +58,7 @@ public class RedwoodForests {
 
         ModFeatures.FEATURES.register(modEventBus);
 
-
-
+        Terrablender.registerBiomes();
         // Register ourselves for server and other game events we are interested in.
         // Note that this is necessary if and only if we want *this* class (RedwoodForests) to respond directly to events.
         // Do not add this line if there are no @SubscribeEvent-annotated functions in this class, like onServerStarting() below.
@@ -74,6 +76,7 @@ public class RedwoodForests {
     // common setup
     private void commonSetup(FMLCommonSetupEvent event) {
         event.enqueueWork(() -> DispenserBlock.registerBehavior(Items.HYDROGEL_BUCKET, DispenseFluidContainer.getInstance()));
+        SurfaceRuleManager.addSurfaceRules(SurfaceRuleManager.RuleCategory.OVERWORLD, MODID, CustomSurfaceRules.makeRules());
     }
 
     // UNUSED for adding items to vanilla creative mode tabs

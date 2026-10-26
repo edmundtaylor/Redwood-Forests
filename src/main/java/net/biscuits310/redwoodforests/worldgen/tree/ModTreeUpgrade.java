@@ -181,8 +181,6 @@ public class ModTreeUpgrade extends TreeFeature {
         else
             return config;
         switch (growthStage) {
-            case 0:
-                return null;
             case 1:
                 return new TreeConfiguration.TreeConfigurationBuilder(
                         BlockStateProvider.simple(Blocks.REDWOOD_LOG.get()),
@@ -205,7 +203,7 @@ public class ModTreeUpgrade extends TreeFeature {
                         new ModConeFoliageRemover(ConstantInt.of(4), ConstantInt.of(4), ConstantInt.of(18), Blocks.DEEP_REDWOOD_LEAVES, Blocks.REDWOOD_FENCE, ConstantInt.of(3), ConstantInt.of(0)),
                         new TwoLayersFeatureSize(1, 1, 2)).build();
             default:
-                return config;
+                return null;
         }
     }
 

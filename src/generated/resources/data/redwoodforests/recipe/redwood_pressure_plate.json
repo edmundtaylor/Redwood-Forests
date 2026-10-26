@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "#": "redwoodforests:redwood_planks"
+  },
+  "pattern": [
+    "##"
+  ],
+  "result": {
+    "id": "redwoodforests:redwood_pressure_plate"
+  }
+}

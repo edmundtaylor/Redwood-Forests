@@ -32,6 +32,10 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
         dropSelf(Blocks.REDWOOD_TRAPDOOR.get());
         dropSelf(Blocks.REDWOOD_PRESSURE_PLATE.get());
         dropSelf(Blocks.REDWOOD_BUTTON.get());
+        dropSelf(Blocks.REDWOOD_SAPLING.get());
+        dropSelf(Blocks.REDWOOD_1_PLACEMENT_SAPLING.get());
+        dropSelf(Blocks.REDWOOD_2_PLACEMENT_SAPLING.get());
+        dropSelf(Blocks.REDWOOD_3_PLACEMENT_SAPLING.get());
 
         add(Blocks.REDWOOD_DOOR.get(), this::createDoorTable);
         // Slabs can block 1 or 2 of themselves based on their blockstate, so the createSlabItemTable loot provider is required
@@ -40,9 +44,12 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
         // Leaves do not drop themselves without unique circumstances, but do drop saplings, so require a createLeavesDrop loot provider
         add(Blocks.REDWOOD_LEAVES.get(), createLeavesDrops(Blocks.REDWOOD_LEAVES.get(), Blocks.REDWOOD_SAPLING.get(), NORMAL_LEAVES_SAPLING_CHANCES));
         add(Blocks.DEEP_REDWOOD_LEAVES.get(), createLeavesDrops(Blocks.REDWOOD_LEAVES.get(), Blocks.REDWOOD_SAPLING.get(), NORMAL_LEAVES_SAPLING_CHANCES));
-        dropSelf(Blocks.REDWOOD_SAPLING.get());
         // Potted plants drop both the held plant, and the pot, so require the dropPottedContents provider
         dropPottedContents(Blocks.POTTED_REDWOOD_SAPLING.get());
+        dropPottedContents(Blocks.POTTED_REDWOOD_1_PLACEMENT_SAPLING.get());
+        dropPottedContents(Blocks.POTTED_REDWOOD_2_PLACEMENT_SAPLING.get());
+        dropPottedContents(Blocks.POTTED_REDWOOD_3_PLACEMENT_SAPLING.get());
+
         dropOther(Blocks.REDWOOD_ORIGIN_BLOCK.get(), Blocks.REDWOOD_LOG.get());
     }
 

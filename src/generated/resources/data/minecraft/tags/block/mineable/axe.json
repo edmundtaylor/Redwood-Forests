@@ -1,0 +1,18 @@
+{
+  "values": [
+    "redwoodforests:redwood_log",
+    "redwoodforests:redwood_planks",
+    "redwoodforests:stripped_redwood_log",
+    "redwoodforests:redwood_wood",
+    "redwoodforests:stripped_redwood_wood",
+    "redwoodforests:redwood_stairs",
+    "redwoodforests:redwood_slab",
+    "redwoodforests:redwood_fence",
+    "redwoodforests:redwood_origin_block",
+    "redwoodforests:redwood_fence_gate",
+    "redwoodforests:redwood_door",
+    "redwoodforests:redwood_trapdoor",
+    "redwoodforests:redwood_pressure_plate",
+    "redwoodforests:redwood_button"
+  ]
+}

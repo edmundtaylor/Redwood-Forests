@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "group": "redwood_planks",
+  "ingredients": [
+    "#redwoodforests:redwood_logs"
+  ],
+  "result": {
+    "count": 4,
+    "id": "redwoodforests:redwood_planks"
+  }
+}

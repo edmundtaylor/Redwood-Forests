@@ -1,0 +1,46 @@
+{
+  "variants": {
+    "axis=x": [
+      {
+        "model": "redwoodforests:block/redwood_wood_1",
+        "x": 90,
+        "y": 90
+      },
+      {
+        "model": "redwoodforests:block/redwood_wood_2",
+        "x": 90,
+        "y": 90
+      },
+      {
+        "model": "redwoodforests:block/redwood_wood_3",
+        "x": 90,
+        "y": 90
+      }
+    ],
+    "axis=y": [
+      {
+        "model": "redwoodforests:block/redwood_wood_1"
+      },
+      {
+        "model": "redwoodforests:block/redwood_wood_2"
+      },
+      {
+        "model": "redwoodforests:block/redwood_wood_3"
+      }
+    ],
+    "axis=z": [
+      {
+        "model": "redwoodforests:block/redwood_wood_1",
+        "x": 90
+      },
+      {
+        "model": "redwoodforests:block/redwood_wood_2",
+        "x": 90
+      },
+      {
+        "model": "redwoodforests:block/redwood_wood_3",
+        "x": 90
+      }
+    ]
+  }
+}

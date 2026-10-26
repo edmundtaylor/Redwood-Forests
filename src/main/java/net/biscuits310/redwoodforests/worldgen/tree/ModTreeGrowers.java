@@ -1,7 +1,7 @@
 package net.biscuits310.redwoodforests.worldgen.tree;
 
 import net.biscuits310.redwoodforests.RedwoodForests;
-import net.biscuits310.redwoodforests.worldgen.ModConfiguredFeatures;
+import net.biscuits310.redwoodforests.worldgen.ConfiguredFeatures;
 import net.minecraft.world.level.block.grower.TreeGrower;
 
 import java.util.Optional;
@@ -22,7 +22,7 @@ public class ModTreeGrowers {
             Optional.empty(),
             // The ConfiguredFeature for the main tree
             // Using the REDWOOD_KEY as that is the ConfiguredFeature for my tree
-            Optional.of(ModConfiguredFeatures.REDWOOD_KEY),
+            Optional.of(ConfiguredFeatures.REDWOOD_KEY),
             // The ConfiguredFeature for the secondary tree
             Optional.empty(),
             // Defines the flowers required to spawn a bee nest on the tree
@@ -34,7 +34,17 @@ public class ModTreeGrowers {
             0.0F,
             Optional.empty(),
             Optional.empty(),
-            Optional.of(ModConfiguredFeatures.REDWOOD_1_KEY),
+            Optional.of(ConfiguredFeatures.REDWOOD_1_KEY),
+            Optional.empty(),
+            Optional.empty(),
+            Optional.empty());
+
+    public static final TreeGrower REDWOOD_1_PLACEMENT = new TreeGrower(
+            RedwoodForests.MODID + "redwood_1_placement",
+            0.0F,
+            Optional.empty(),
+            Optional.empty(),
+            Optional.of(ConfiguredFeatures.REDWOOD_1_PLACEMENT_KEY),
             Optional.empty(),
             Optional.empty(),
             Optional.empty());
@@ -44,7 +54,17 @@ public class ModTreeGrowers {
             0.0F,
             Optional.empty(),
             Optional.empty(),
-            Optional.of(ModConfiguredFeatures.REDWOOD_2_KEY),
+            Optional.of(ConfiguredFeatures.REDWOOD_2_KEY),
+            Optional.empty(),
+            Optional.empty(),
+            Optional.empty());
+
+    public static final TreeGrower REDWOOD_2_PLACEMENT = new TreeGrower(
+            RedwoodForests.MODID + "redwood_2_placement",
+            0.0F,
+            Optional.empty(),
+            Optional.empty(),
+            Optional.of(ConfiguredFeatures.REDWOOD_2_PLACEMENT_KEY),
             Optional.empty(),
             Optional.empty(),
             Optional.empty());
@@ -54,7 +74,17 @@ public class ModTreeGrowers {
             0.0F,
             Optional.empty(),
             Optional.empty(),
-            Optional.of(ModConfiguredFeatures.REDWOOD_3_KEY),
+            Optional.of(ConfiguredFeatures.REDWOOD_3_KEY),
+            Optional.empty(),
+            Optional.empty(),
+            Optional.empty());
+
+    public static final TreeGrower REDWOOD_3_PLACEMENT = new TreeGrower(
+            RedwoodForests.MODID + "redwood_3_placement",
+            0.0F,
+            Optional.empty(),
+            Optional.empty(),
+            Optional.of(ConfiguredFeatures.REDWOOD_3_PLACEMENT_KEY),
             Optional.empty(),
             Optional.empty(),
             Optional.empty());

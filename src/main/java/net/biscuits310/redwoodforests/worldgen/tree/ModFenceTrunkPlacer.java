@@ -7,6 +7,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.biscuits310.redwoodforests.block.BlockStateProperties;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
@@ -25,7 +26,7 @@ public class ModFenceTrunkPlacer extends TrunkPlacer {
             .and(BuiltInRegistries.BLOCK.byNameCodec().fieldOf("fence_block").forGetter(p -> p.fenceBlock.get()))
             .and(BuiltInRegistries.BLOCK.byNameCodec().fieldOf("origin_block").forGetter(p -> p.originBlock.get()))
             .and(Codec.floatRange(0F, 1F).fieldOf("fenceProportion").forGetter(p -> p.fenceProportion))
-            .and(Codec.intRange(0, 3).fieldOf("growth_stage").forGetter(p -> p.growthStage))
+            .and(Codec.intRange(-3, 3).fieldOf("growth_stage").forGetter(p -> p.growthStage))
             .apply(i, (baseHeight, heightRandA, heightRandB, fenceBlock, originBlock, fenceProportion, growthStage) ->
                     new ModFenceTrunkPlacer(
                             baseHeight,
@@ -68,7 +69,7 @@ public class ModFenceTrunkPlacer extends TrunkPlacer {
 
         BiConsumer<BlockPos, BlockState> originBlockSetter =
                     (blockPos, state) -> trunkSetter.accept(blockPos, this.originBlock.get().defaultBlockState()
-                            .trySetValue(BlockStateProperties.GROWTH_STAGE, this.growthStage + 1)
+                            .trySetValue(BlockStateProperties.GROWTH_STAGE, Mth.abs(this.growthStage) + 1)
                             .trySetValue(BlockStateProperties.TREE_HEIGHT, treeHeight));
 
 

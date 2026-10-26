@@ -1,0 +1,46 @@
+{
+  "variants": {
+    "axis=x": [
+      {
+        "model": "redwoodforests:block/redwood_log_horizontal_1",
+        "x": 90,
+        "y": 90
+      },
+      {
+        "model": "redwoodforests:block/redwood_log_horizontal_2",
+        "x": 90,
+        "y": 90
+      },
+      {
+        "model": "redwoodforests:block/redwood_log_horizontal_3",
+        "x": 90,
+        "y": 90
+      }
+    ],
+    "axis=y": [
+      {
+        "model": "redwoodforests:block/redwood_log_1"
+      },
+      {
+        "model": "redwoodforests:block/redwood_log_2"
+      },
+      {
+        "model": "redwoodforests:block/redwood_log_3"
+      }
+    ],
+    "axis=z": [
+      {
+        "model": "redwoodforests:block/redwood_log_horizontal_1",
+        "x": 90
+      },
+      {
+        "model": "redwoodforests:block/redwood_log_horizontal_2",
+        "x": 90
+      },
+      {
+        "model": "redwoodforests:block/redwood_log_horizontal_3",
+        "x": 90
+      }
+    ]
+  }
+}

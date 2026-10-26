@@ -64,5 +64,8 @@ public class ModModelProvider extends ModelProvider
         blockModels.createTrivialCube(Blocks.REDWOOD_LEAVES.get());
         blockModels.createTrivialCube(Blocks.DEEP_REDWOOD_LEAVES.get());
         blockModels.createPlantWithDefaultItem(Blocks.REDWOOD_SAPLING.get(), Blocks.POTTED_REDWOOD_SAPLING.get(), BlockModelGenerators.PlantType.NOT_TINTED);
+        blockModels.createPlantWithDefaultItem(Blocks.REDWOOD_1_PLACEMENT_SAPLING.get(), Blocks.POTTED_REDWOOD_1_PLACEMENT_SAPLING.get(), BlockModelGenerators.PlantType.NOT_TINTED);
+        blockModels.createPlantWithDefaultItem(Blocks.REDWOOD_2_PLACEMENT_SAPLING.get(), Blocks.POTTED_REDWOOD_2_PLACEMENT_SAPLING.get(), BlockModelGenerators.PlantType.NOT_TINTED);
+        blockModels.createPlantWithDefaultItem(Blocks.REDWOOD_3_PLACEMENT_SAPLING.get(), Blocks.POTTED_REDWOOD_3_PLACEMENT_SAPLING.get(), BlockModelGenerators.PlantType.NOT_TINTED);
     }
 }

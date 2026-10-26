@@ -10,7 +10,7 @@ import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
 // UNUSED - Creates BiomeModifiers
 // BiomeModifiers edit existing biomes to include custom PlacedFeatures
-public class ModBiomeModifiers {
+public class BiomeModifiers {
 
     // Actions to be executed
     public static void boostrap(BootstrapContext<BiomeModifier> context) {
