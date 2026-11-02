@@ -7,6 +7,7 @@ import net.minecraft.core.Vec3i;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType;
+import org.jspecify.annotations.NonNull;
 
 import java.util.function.Supplier;
 
@@ -37,7 +38,7 @@ public class ModMegaFenceTrunkPlacer extends ModGiantFenceTrunkPlacer{
     }
 
     @Override
-    protected TrunkPlacerType<?> type() {
+    protected @NonNull TrunkPlacerType<?> type() {
         return ModTrunkPlacerType.MEGA_FENCE_TRUNK_PLACER.get();
     }
 

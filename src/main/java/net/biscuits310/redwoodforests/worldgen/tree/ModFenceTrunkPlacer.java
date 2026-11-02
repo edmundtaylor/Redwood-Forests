@@ -16,6 +16,7 @@ import net.minecraft.world.level.levelgen.feature.configurations.TreeConfigurati
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacer;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType;
+import org.jspecify.annotations.NonNull;
 
 import java.util.List;
 import java.util.function.BiConsumer;
@@ -55,12 +56,12 @@ public class ModFenceTrunkPlacer extends TrunkPlacer {
     }
 
     @Override
-    protected TrunkPlacerType type() {
+    protected @NonNull TrunkPlacerType<?> type() {
         return ModTrunkPlacerType.FENCE_TRUNK_PLACER.get();
     }
 
     @Override
-    public List<FoliagePlacer.FoliageAttachment> placeTrunk(WorldGenLevel level, BiConsumer<BlockPos, BlockState> trunkSetter, RandomSource random, int treeHeight, BlockPos origin, TreeConfiguration config) {
+    public @NonNull List<FoliagePlacer.FoliageAttachment> placeTrunk(@NonNull WorldGenLevel level, @NonNull BiConsumer<BlockPos, BlockState> trunkSetter, @NonNull RandomSource random, int treeHeight, BlockPos origin, @NonNull TreeConfiguration config) {
         placeBelowTrunkBlock(level, trunkSetter, random, origin.below(), config);
         BlockPos.MutableBlockPos trunkPos = new BlockPos.MutableBlockPos();
 

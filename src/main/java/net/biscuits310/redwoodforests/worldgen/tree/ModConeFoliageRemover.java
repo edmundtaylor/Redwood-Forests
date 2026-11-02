@@ -9,10 +9,9 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
+import org.jspecify.annotations.NonNull;
 
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 import java.util.function.Supplier;
 
@@ -24,7 +23,7 @@ public class ModConeFoliageRemover extends ModConeFoliagePlacer {
     private final Set<BlockPos> trunkMap = new HashSet<>();
 
     @Override
-    protected void createFoliage(WorldGenLevel level, FoliageSetter foliageSetter, RandomSource random, TreeConfiguration config, int treeHeight, FoliageAttachment foliageAttachment, int foliageHeight, int leafRadius, int offset) {
+    protected void createFoliage(@NonNull WorldGenLevel level, @NonNull FoliageSetter foliageSetter, @NonNull RandomSource random, @NonNull TreeConfiguration config, int treeHeight, FoliageAttachment foliageAttachment, int foliageHeight, int leafRadius, int offset) {
         trunkMap.clear();
         BlockPos foliagePos = foliageAttachment.pos();
         BlockPos.MutableBlockPos tempTrunkPos = new BlockPos.MutableBlockPos();
@@ -54,23 +53,20 @@ public class ModConeFoliageRemover extends ModConeFoliagePlacer {
     }
 
     @Override
-    protected boolean tryPlaceDeepLeaf(WorldGenLevel level, FoliageSetter foliageSetter, RandomSource random, TreeConfiguration config, BlockPos pos) {
-        return this.tryUpgradeLeaf(level, foliageSetter, random, config, pos);
+    protected void tryPlaceDeepLeaf(WorldGenLevel level, FoliageSetter foliageSetter, RandomSource random, TreeConfiguration config, BlockPos pos) {
+        this.tryUpgradeLeaf(level, foliageSetter, pos);
     }
 
     @Override
-    protected boolean tryPlaceFenceBlock(WorldGenLevel level, FoliageSetter foliageSetter, RandomSource random, TreeConfiguration config, BlockPos pos) {
-        return this.tryUpgradeLeaf(level, foliageSetter, random, config, pos);
+    protected void tryPlaceFenceBlock(WorldGenLevel level, FoliageSetter foliageSetter, RandomSource random, TreeConfiguration config, BlockPos pos) {
+        this.tryUpgradeLeaf(level, foliageSetter, pos);
     }
 
-    protected boolean tryUpgradeLeaf(WorldGenLevel level, FoliageSetter foliageSetter, RandomSource random, TreeConfiguration config, BlockPos pos){
+    protected void tryUpgradeLeaf(WorldGenLevel level, FoliageSetter foliageSetter, BlockPos pos){
         boolean isPersistent = level.isStateAtPosition(pos, state -> state.getValueOrElse(BlockStateProperties.PERSISTENT, false));
         if (!isPersistent && ModTreeUpgrade.validFoliageUpgradePos(level, pos) && !trunkMap.contains(pos)) {
             BlockState foliageState = Blocks.AIR.defaultBlockState();
             foliageSetter.set(pos, foliageState);
-            return true;
-        } else {
-            return false;
         }
     }
 
@@ -91,7 +87,7 @@ public class ModConeFoliageRemover extends ModConeFoliagePlacer {
                     if (shouldSkipLocationLight == 1){
                         leafBlocks.add(rootPos);
                         pos.setWithOffset(origin, dx, y, dz);
-                        tryUpgradeLeaf(level, foliageSetter, random, config, pos);
+                        tryUpgradeLeaf(level, foliageSetter, pos);
                     }
                     if (shouldSkipLocationLight == 2) {
                         leafBlocks.add(rootPos);

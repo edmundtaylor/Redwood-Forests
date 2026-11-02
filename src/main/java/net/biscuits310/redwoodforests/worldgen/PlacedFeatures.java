@@ -1,7 +1,6 @@
 package net.biscuits310.redwoodforests.worldgen;
 
 import net.biscuits310.redwoodforests.RedwoodForests;
-import net.biscuits310.redwoodforests.block.BlockStateProperties;
 import net.biscuits310.redwoodforests.block.Blocks;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;

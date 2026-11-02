@@ -30,6 +30,7 @@ import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraft.world.phys.shapes.BitSetDiscreteVoxelShape;
 import net.minecraft.world.phys.shapes.DiscreteVoxelShape;
+import org.jspecify.annotations.NonNull;
 
 import java.util.*;
 import java.util.function.BiConsumer;
@@ -44,8 +45,8 @@ public class ModTreeUpgrade extends TreeFeature {
     }
 
     @Override
-    public boolean place(TreeConfiguration config, WorldGenLevel level, ChunkGenerator chunkGenerator, RandomSource random, BlockPos origin) {
-        return level.ensureCanWrite(origin) ? this.upgrade(new FeaturePlaceContext<>(Optional.empty(), level, chunkGenerator, random, origin, config)) : false;
+    public boolean place(@NonNull TreeConfiguration config, WorldGenLevel level, @NonNull ChunkGenerator chunkGenerator, @NonNull RandomSource random, @NonNull BlockPos origin) {
+        return level.ensureCanWrite(origin) && this.upgrade(new FeaturePlaceContext<>(Optional.empty(), level, chunkGenerator, random, origin, config));
     }
 
 
@@ -62,13 +63,13 @@ public class ModTreeUpgrade extends TreeFeature {
         int foliageHeight = config.foliagePlacer.foliageHeight(random, treeHeight, config);
         int trunkHeight = treeHeight - foliageHeight;
         int leafRadius = config.foliagePlacer.foliageRadius(random, trunkHeight);
-        BlockPos trunkOrigin = config.rootPlacer.<BlockPos>map(rootPlacer -> rootPlacer.getTrunkOrigin(origin, random)).orElse(origin);
+        BlockPos trunkOrigin = config.rootPlacer.map(rootPlacer -> rootPlacer.getTrunkOrigin(origin, random)).orElse(origin);
         int minY = Math.min(origin.getY(), trunkOrigin.getY());
         int maxY = Math.max(origin.getY(), trunkOrigin.getY()) + treeHeight + 1;
         if (minY >= level.getMinY() + 1 && maxY <= level.getMaxY() + 1) {
             OptionalInt minClippedHeight = config.minimumSize.minClippedHeight();
             int clippedTreeHeight = this.getMaxFreeTreeHeight(level, treeHeight, trunkOrigin, config);
-            if (clippedTreeHeight >= treeHeight || !minClippedHeight.isEmpty() && clippedTreeHeight >= minClippedHeight.getAsInt()) {
+            if (clippedTreeHeight >= treeHeight || minClippedHeight.isPresent() && clippedTreeHeight >= minClippedHeight.getAsInt()) {
                 if (config.rootPlacer.isPresent() && !config.rootPlacer.get().placeRoots(level, rootSetter, random, origin, trunkOrigin, config)) {
                     return false;
                 } else {
@@ -106,7 +107,7 @@ public class ModTreeUpgrade extends TreeFeature {
         int foliageHeight = config.foliagePlacer.foliageHeight(random, treeHeight, config);
         int trunkHeight = treeHeight - foliageHeight;
         int leafRadius = config.foliagePlacer.foliageRadius(random, trunkHeight);
-        BlockPos trunkOrigin = config.rootPlacer.<BlockPos>map(rootPlacer -> rootPlacer.getTrunkOrigin(origin, random)).orElse(origin);
+        BlockPos trunkOrigin = config.rootPlacer.map(rootPlacer -> rootPlacer.getTrunkOrigin(origin, random)).orElse(origin);
         int minY = Math.min(origin.getY(), trunkOrigin.getY());
         int maxY = Math.max(origin.getY(), trunkOrigin.getY()) + treeHeight + 1;
 
@@ -121,7 +122,7 @@ public class ModTreeUpgrade extends TreeFeature {
             int clippedTreeHeight = this.getMaxFreeTreeHeight(level, treeHeight, trunkOrigin, removerConfig);
             int clippedTreeHeightDestructor = ModTreeGrowthData.TEMPORARY_TREE_HEIGHTS.remove(origin);
 
-            if (clippedTreeHeight >= treeHeight || !minClippedHeight.isEmpty() && clippedTreeHeight >= minClippedHeight.getAsInt()) {
+            if (clippedTreeHeight >= treeHeight || minClippedHeight.isPresent() && clippedTreeHeight >= minClippedHeight.getAsInt()) {
                 if (removerConfig.rootPlacer.isPresent() && !removerConfig.rootPlacer.get().placeRoots(level, rootDestructor, destructorRandom, origin, trunkOriginDestructor, removerConfig)){
                     return  false;
                 } else {
@@ -180,31 +181,27 @@ public class ModTreeUpgrade extends TreeFeature {
             growthStage = giantFenceTrunkPlacer.getGrowthStage();
         else
             return config;
-        switch (growthStage) {
-            case 1:
-                return new TreeConfiguration.TreeConfigurationBuilder(
-                        BlockStateProvider.simple(Blocks.REDWOOD_LOG.get()),
-                        new ModFenceTrunkRemover( 7, 1, 2, Blocks.REDWOOD_FENCE, Blocks.REDWOOD_ORIGIN_BLOCK, 0.4F, 0),
-                        BlockStateProvider.simple(Blocks.REDWOOD_LEAVES.get()),
-                        new ModConeFoliageRemover(ConstantInt.of(2), ConstantInt.of(1), ConstantInt.of(7), Blocks.DEEP_REDWOOD_LEAVES, Blocks.REDWOOD_FENCE, ConstantInt.of(1), ConstantInt.of(0)),
-                        new TwoLayersFeatureSize(1, 1 , 2)).build();
-            case 2:
-                return new TreeConfiguration.TreeConfigurationBuilder(
-                        BlockStateProvider.simple(Blocks.REDWOOD_LOG.get()),
-                        new ModFenceTrunkRemover(13, 1, 2, Blocks.REDWOOD_FENCE, Blocks.REDWOOD_ORIGIN_BLOCK, 0.25F, 1),
-                        BlockStateProvider.simple(Blocks.REDWOOD_LEAVES.get()),
-                        new ModConeFoliageRemover(ConstantInt.of(3), ConstantInt.of(1), ConstantInt.of(12), Blocks.DEEP_REDWOOD_LEAVES, Blocks.REDWOOD_FENCE, ConstantInt.of(2), ConstantInt.of(0)),
-                        new TwoLayersFeatureSize(1, 1, 2)).build();
-            case 3:
-                return new TreeConfiguration.TreeConfigurationBuilder(
-                        BlockStateProvider.simple(Blocks.REDWOOD_LOG.get()),
-                        new ModGiantFenceTrunkRemover(18, 1, 2, Blocks.REDWOOD_FENCE, Blocks.REDWOOD_ORIGIN_BLOCK, 0.25F, 0.30F, 2),
-                        BlockStateProvider.simple(Blocks.REDWOOD_LEAVES.get()),
-                        new ModConeFoliageRemover(ConstantInt.of(4), ConstantInt.of(4), ConstantInt.of(18), Blocks.DEEP_REDWOOD_LEAVES, Blocks.REDWOOD_FENCE, ConstantInt.of(3), ConstantInt.of(0)),
-                        new TwoLayersFeatureSize(1, 1, 2)).build();
-            default:
-                return null;
-        }
+        return switch (growthStage) {
+            case 1 -> new TreeConfiguration.TreeConfigurationBuilder(
+                    BlockStateProvider.simple(Blocks.REDWOOD_LOG.get()),
+                    new ModFenceTrunkRemover(7, 1, 2, Blocks.REDWOOD_FENCE, Blocks.REDWOOD_ORIGIN_BLOCK, 0.4F, 0),
+                    BlockStateProvider.simple(Blocks.REDWOOD_LEAVES.get()),
+                    new ModConeFoliageRemover(ConstantInt.of(2), ConstantInt.of(1), ConstantInt.of(7), Blocks.DEEP_REDWOOD_LEAVES, Blocks.REDWOOD_FENCE, ConstantInt.of(1), ConstantInt.of(0)),
+                    new TwoLayersFeatureSize(1, 1, 2)).build();
+            case 2 -> new TreeConfiguration.TreeConfigurationBuilder(
+                    BlockStateProvider.simple(Blocks.REDWOOD_LOG.get()),
+                    new ModFenceTrunkRemover(13, 1, 2, Blocks.REDWOOD_FENCE, Blocks.REDWOOD_ORIGIN_BLOCK, 0.25F, 1),
+                    BlockStateProvider.simple(Blocks.REDWOOD_LEAVES.get()),
+                    new ModConeFoliageRemover(ConstantInt.of(3), ConstantInt.of(1), ConstantInt.of(12), Blocks.DEEP_REDWOOD_LEAVES, Blocks.REDWOOD_FENCE, ConstantInt.of(2), ConstantInt.of(0)),
+                    new TwoLayersFeatureSize(1, 1, 2)).build();
+            case 3 -> new TreeConfiguration.TreeConfigurationBuilder(
+                    BlockStateProvider.simple(Blocks.REDWOOD_LOG.get()),
+                    new ModGiantFenceTrunkRemover(18, 1, 2, Blocks.REDWOOD_FENCE, Blocks.REDWOOD_ORIGIN_BLOCK, 0.25F, 0.30F, 2),
+                    BlockStateProvider.simple(Blocks.REDWOOD_LEAVES.get()),
+                    new ModConeFoliageRemover(ConstantInt.of(4), ConstantInt.of(4), ConstantInt.of(18), Blocks.DEEP_REDWOOD_LEAVES, Blocks.REDWOOD_FENCE, ConstantInt.of(3), ConstantInt.of(0)),
+                    new TwoLayersFeatureSize(1, 1, 2)).build();
+            default -> null;
+        };
     }
 
     public final boolean upgrade(FeaturePlaceContext<TreeConfiguration> context){
@@ -231,18 +228,13 @@ public class ModTreeUpgrade extends TreeFeature {
             level.setBlock(pos, state, 19);
         };
         FoliagePlacer.FoliageSetter foliageSetter = new FoliagePlacer.FoliageSetter() {
-            {
-                Objects.requireNonNull(ModTreeUpgrade.this);
-            }
-
             @Override
-            public void set(BlockPos pos, BlockState state) {
+            public void set(BlockPos pos, @NonNull BlockState state) {
                 removedFoliage.add(pos.immutable());
                 level.setBlock(pos, state, 19);
             }
-
             @Override
-            public boolean isSet(BlockPos pos) {
+            public boolean isSet(@NonNull BlockPos pos) {
                 return foliage.contains(pos);
             }
         };
@@ -251,33 +243,27 @@ public class ModTreeUpgrade extends TreeFeature {
             level.setBlock(pos, state, 19);
         };
 
-        BiConsumer<BlockPos, BlockState> rootDestructor = (pos, state) -> {
+        BiConsumer<BlockPos, BlockState> rootDestructor = (pos, ignoreState) -> {
             removedFoliage.add(pos.immutable());
             BlockState rootReplacement = level.getBlockState(pos.above()).isAir()
                     ? net.minecraft.world.level.block.Blocks.GRASS_BLOCK.defaultBlockState()
                     : net.minecraft.world.level.block.Blocks.DIRT.defaultBlockState();
             level.setBlock(pos, rootReplacement, 19);
         };
-        BiConsumer<BlockPos, BlockState> trunkDestructor = (pos, state) -> {
-            level.setBlock(pos, net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(), 19);
-        };
+        BiConsumer<BlockPos, BlockState> trunkDestructor = (pos, ignoreState) -> level.setBlock(pos, net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(), 19);
         FoliagePlacer.FoliageSetter foliageDestructor = new FoliagePlacer.FoliageSetter() {
-            {
-                Objects.requireNonNull(ModTreeUpgrade.this);
-            }
-
             @Override
-            public void set(BlockPos pos, BlockState state) {
+            public void set(@NonNull BlockPos pos, @NonNull BlockState state) {
                 level.setBlock(pos, net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(), 19);
             }
 
             @Override
-            public boolean isSet(BlockPos pos) {
+            public boolean isSet(@NonNull BlockPos pos) {
                 return removedFoliage.contains(pos);
             }
         };
 
-        boolean result = false;
+        boolean result;
         TreeConfiguration removerConfig = removerConfigPicker(config);
         if (removerConfig == null)
             result = this.doPlace(level, random, origin, rootSetter, trunkSetter, foliageSetter, config);
@@ -303,7 +289,6 @@ public class ModTreeUpgrade extends TreeFeature {
             LevelAccessor level, BoundingBox bounds, Set<BlockPos> logs, Set<BlockPos> decorationSet, Set<BlockPos> rootPositions
     ) {
         DiscreteVoxelShape shape = new BitSetDiscreteVoxelShape(bounds.getXSpan(), bounds.getYSpan(), bounds.getZSpan());
-        int maxDistance = 7;
         List<Set<BlockPos>> toCheck = Lists.newArrayList();
 
         for (int i = 0; i < 7; i++) {
@@ -318,7 +303,7 @@ public class ModTreeUpgrade extends TreeFeature {
 
         BlockPos.MutableBlockPos neighborPos = new BlockPos.MutableBlockPos();
         int smallestDistance = 0;
-        toCheck.get(0).addAll(logs);
+        toCheck.getFirst().addAll(logs);
 
         while (true) {
             while (smallestDistance >= 7 || !toCheck.get(smallestDistance).isEmpty()) {
@@ -327,18 +312,18 @@ public class ModTreeUpgrade extends TreeFeature {
                 }
 
                 Iterator<BlockPos> iterator = toCheck.get(smallestDistance).iterator();
-                BlockPos posx = iterator.next();
+                BlockPos posX = iterator.next();
                 iterator.remove();
-                if (bounds.isInside(posx)) {
+                if (bounds.isInside(posX)) {
                     if (smallestDistance != 0) {
-                        BlockState state = level.getBlockState(posx);
-                        setBlockKnownShape(level, posx, state.setValue(BlockStateProperties.DISTANCE, smallestDistance));
+                        BlockState state = level.getBlockState(posX);
+                        setBlockKnownShape(level, posX, state.setValue(BlockStateProperties.DISTANCE, smallestDistance));
                     }
 
-                    shape.fill(posx.getX() - bounds.minX(), posx.getY() - bounds.minY(), posx.getZ() - bounds.minZ());
+                    shape.fill(posX.getX() - bounds.minX(), posX.getY() - bounds.minY(), posX.getZ() - bounds.minZ());
 
                     for (Direction direction : Direction.values()) {
-                        neighborPos.setWithOffset(posx, direction);
+                        neighborPos.setWithOffset(posX, direction);
                         if (bounds.isInside(neighborPos)) {
                             int xInShape = neighborPos.getX() - bounds.minX();
                             int yInShape = neighborPos.getY() - bounds.minY();
@@ -346,7 +331,7 @@ public class ModTreeUpgrade extends TreeFeature {
                             if (!shape.isFull(xInShape, yInShape, zinShape)) {
                                 BlockState currentState = level.getBlockState(neighborPos);
                                 OptionalInt distance = LeavesBlock.getOptionalDistanceAt(currentState);
-                                if (!distance.isEmpty()) {
+                                if (distance.isPresent()) {
                                     int newDistance = Math.min(distance.getAsInt(), smallestDistance + 1);
                                     if (newDistance < 7) {
                                         toCheck.get(newDistance).add(neighborPos.immutable());

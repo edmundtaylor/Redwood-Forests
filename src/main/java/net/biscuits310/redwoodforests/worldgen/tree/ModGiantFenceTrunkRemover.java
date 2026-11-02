@@ -2,15 +2,10 @@ package net.biscuits310.redwoodforests.worldgen.tree;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
-import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer;
+import org.jspecify.annotations.NonNull;
 
-import java.util.List;
-import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 
 public class ModGiantFenceTrunkRemover extends ModGiantFenceTrunkPlacer{
@@ -19,12 +14,12 @@ public class ModGiantFenceTrunkRemover extends ModGiantFenceTrunkPlacer{
     }
 
     @Override
-    protected boolean validTreePos(WorldGenLevel level, BlockPos pos) {
+    protected boolean validTreePos(@NonNull WorldGenLevel level, @NonNull BlockPos pos) {
         return ModTreeUpgrade.validTrunkUpgradePos(level, pos);
     }
 
     @Override
-    public boolean isFree(WorldGenLevel level, BlockPos pos) {
+    public boolean isFree(@NonNull WorldGenLevel level, @NonNull BlockPos pos) {
         return ModTreeUpgrade.validTrunkUpgradeAndPlacementPos(level, pos) || level.isStateAtPosition(pos, state -> state.is(BlockTags.LOGS));
     }
 }

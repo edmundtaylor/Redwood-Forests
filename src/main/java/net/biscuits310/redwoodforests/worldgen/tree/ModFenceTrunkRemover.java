@@ -6,10 +6,10 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer;
+import org.jspecify.annotations.NonNull;
 
 import java.util.List;
 import java.util.function.BiConsumer;
@@ -21,7 +21,7 @@ public class ModFenceTrunkRemover extends ModFenceTrunkPlacer{
     }
 
     @Override
-    public List<FoliagePlacer.FoliageAttachment> placeTrunk(WorldGenLevel level, BiConsumer<BlockPos, BlockState> trunkSetter, RandomSource random, int treeHeight, BlockPos origin, TreeConfiguration config) {
+    public @NonNull List<FoliagePlacer.FoliageAttachment> placeTrunk(@NonNull WorldGenLevel level, @NonNull BiConsumer<BlockPos, BlockState> trunkSetter, @NonNull RandomSource random, int treeHeight, BlockPos origin, @NonNull TreeConfiguration config) {
         BlockPos.MutableBlockPos trunkPos = new BlockPos.MutableBlockPos();
 
         for (int hh = 0; hh < treeHeight; hh++){
@@ -32,12 +32,12 @@ public class ModFenceTrunkRemover extends ModFenceTrunkPlacer{
     }
 
     @Override
-    protected boolean validTreePos(WorldGenLevel level, BlockPos pos) {
+    protected boolean validTreePos(@NonNull WorldGenLevel level, @NonNull BlockPos pos) {
         return ModTreeUpgrade.validTrunkUpgradePos(level, pos);
     }
 
     @Override
-    public boolean isFree(WorldGenLevel level, BlockPos pos) {
+    public boolean isFree(@NonNull WorldGenLevel level, @NonNull BlockPos pos) {
         return ModTreeUpgrade.validTrunkUpgradeAndPlacementPos(level, pos) || level.isStateAtPosition(pos, state -> state.is(BlockTags.LOGS));
     }
 }

@@ -17,6 +17,7 @@ import net.minecraft.world.level.levelgen.feature.configurations.TreeConfigurati
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacer;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType;
+import org.jspecify.annotations.NonNull;
 
 import java.util.List;
 import java.util.function.BiConsumer;
@@ -71,20 +72,20 @@ public class ModGiantFenceTrunkPlacer extends TrunkPlacer {
     }
 
     @Override
-    protected TrunkPlacerType<?> type() {
+    protected @NonNull TrunkPlacerType<?> type() {
         return ModTrunkPlacerType.GIANT_FENCE_TRUNK_PLACER.get();
     }
 
     @Override
-    public List<FoliagePlacer.FoliageAttachment> placeTrunk(WorldGenLevel level, BiConsumer<BlockPos, BlockState> trunkSetter, RandomSource random, int treeHeight, BlockPos origin, TreeConfiguration config) {
+    public @NonNull List<FoliagePlacer.FoliageAttachment> placeTrunk(@NonNull WorldGenLevel level, @NonNull BiConsumer<BlockPos, BlockState> trunkSetter, @NonNull RandomSource random, int treeHeight, @NonNull BlockPos origin, @NonNull TreeConfiguration config) {
         placeBelowTrunkBlocks(level, trunkSetter, random, origin, config);
         BlockPos.MutableBlockPos trunkPos = new BlockPos.MutableBlockPos();
 
         BiConsumer<BlockPos, BlockState> fenceSetter =
-                (blockPos, state) -> trunkSetter.accept(blockPos, this.fenceBlock.get().defaultBlockState());
+                (blockPos, ignoreState) -> trunkSetter.accept(blockPos, this.fenceBlock.get().defaultBlockState());
 
         BiConsumer<BlockPos, BlockState> originBlockSetter =
-                (blockPos, state) -> trunkSetter.accept(blockPos, this.originBlock.get().defaultBlockState()
+                (blockPos, ignoreState) -> trunkSetter.accept(blockPos, this.originBlock.get().defaultBlockState()
                         .trySetValue(BlockStateProperties.GROWTH_STAGE, Mth.abs(this.growthStage) + 1)
                         .trySetValue(BlockStateProperties.TREE_HEIGHT, treeHeight));
 
@@ -155,7 +156,7 @@ public class ModGiantFenceTrunkPlacer extends TrunkPlacer {
     }
 
     @Override
-    protected void placeLogIfFree(WorldGenLevel level, BiConsumer<BlockPos, BlockState> trunkSetter, RandomSource random, BlockPos.MutableBlockPos pos, TreeConfiguration config) {
+    protected void placeLogIfFree(@NonNull WorldGenLevel level, @NonNull BiConsumer<BlockPos, BlockState> trunkSetter, @NonNull RandomSource random, BlockPos.@NonNull MutableBlockPos pos, @NonNull TreeConfiguration config) {
         if (this.isFree(level, pos)) {
             this.placeLog(level, trunkSetter, random, pos, config);
             level.updateNeighborsAt(pos, level.getBlockState(pos).getBlock());

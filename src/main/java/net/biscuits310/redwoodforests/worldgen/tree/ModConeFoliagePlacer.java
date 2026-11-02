@@ -17,6 +17,7 @@ import net.minecraft.world.level.levelgen.feature.configurations.TreeConfigurati
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacerType;
 import net.minecraft.world.level.material.Fluids;
+import org.jspecify.annotations.NonNull;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -56,16 +57,16 @@ public class ModConeFoliagePlacer extends FoliagePlacer {
     }
 
     @Override
-    protected FoliagePlacerType type(){
+    protected @NonNull FoliagePlacerType<?> type(){
         return ModFoliagePlacerType.CONE_FOLIAGE_PLACER.get();
     }
 
     @Override
     protected void createFoliage(
-            WorldGenLevel level,
-            FoliageSetter foliageSetter,
-            RandomSource random,
-            TreeConfiguration config,
+            @NonNull WorldGenLevel level,
+            @NonNull FoliageSetter foliageSetter,
+            @NonNull RandomSource random,
+            @NonNull TreeConfiguration config,
             int treeHeight,
             FoliageAttachment foliageAttachment,
             int foliageHeight,
@@ -94,7 +95,7 @@ public class ModConeFoliagePlacer extends FoliagePlacer {
     }
 
     @Override
-    public int foliageHeight(RandomSource random, int treeHeight, TreeConfiguration config) {
+    public int foliageHeight(@NonNull RandomSource random, int treeHeight, @NonNull TreeConfiguration config) {
         return this.crownHeight.sample(random);
     }
 
@@ -137,13 +138,13 @@ public class ModConeFoliagePlacer extends FoliagePlacer {
         float branchChance = 0.2f;
 
         float distance = Mth.sqrt(dx*dx + dz*dz);
-        skipChance += distance / currentRadius * 0.4;
-        branchChance -= distance/currentRadius * 0.2;
+        skipChance += (float) (distance / currentRadius * 0.4);
+        branchChance -= (float) (distance/currentRadius * 0.2);
 
 
-        if (leafBlocks.contains(rootPos.west())) {skipChance+=0.3;}
-        if (leafBlocks.contains(rootPos.above())) {skipChance+=0.37;}
-        if (leafBlocks.contains(rootPos.north())) {skipChance+=0.3;}
+        if (leafBlocks.contains(rootPos.west())) {skipChance+=0.3f;}
+        if (leafBlocks.contains(rootPos.above())) {skipChance+=0.37f;}
+        if (leafBlocks.contains(rootPos.north())) {skipChance+=0.3f;}
 
         if (skipChance > 1){skipChance = 1;}
         if (skipChance < 0){skipChance = 0;}
@@ -163,11 +164,11 @@ public class ModConeFoliagePlacer extends FoliagePlacer {
     }
 
     @Override
-    protected boolean shouldSkipLocation(RandomSource random, int dx, int y, int dz, int currentRadius, boolean doubleTrunk) {
+    protected boolean shouldSkipLocation(@NonNull RandomSource random, int dx, int y, int dz, int currentRadius, boolean doubleTrunk) {
         return dx*dx + dz*dz > currentRadius*currentRadius;
     }
 
-    protected boolean tryPlaceDeepLeaf(
+    protected void tryPlaceDeepLeaf(
             WorldGenLevel level, FoliagePlacer.FoliageSetter foliageSetter, RandomSource random, TreeConfiguration config, BlockPos pos
     ) {
         boolean isPersistent = level.isStateAtPosition(pos, state -> state.getValueOrElse(BlockStateProperties.PERSISTENT, false));
@@ -180,14 +181,11 @@ public class ModConeFoliagePlacer extends FoliagePlacer {
             }
 
             foliageSetter.set(pos, foliageState);
-            return true;
-        } else {
-            return false;
         }
     }
 
-    protected boolean tryPlaceFenceBlock(
-            WorldGenLevel level, FoliagePlacer.FoliageSetter foliageSetter, RandomSource random, TreeConfiguration config, BlockPos pos
+    protected void tryPlaceFenceBlock(
+            WorldGenLevel level, FoliageSetter foliageSetter, RandomSource random, TreeConfiguration config, BlockPos pos
     ) {
         boolean isPersistent = level.isStateAtPosition(pos, state -> state.getValueOrElse(BlockStateProperties.PERSISTENT, false));
         if (!isPersistent && TreeFeature.validTreePos(level, pos)) {
@@ -199,9 +197,6 @@ public class ModConeFoliagePlacer extends FoliagePlacer {
             }
 
             foliageSetter.set(pos, foliageState);
-            return true;
-        } else {
-            return false;
         }
     }
 }

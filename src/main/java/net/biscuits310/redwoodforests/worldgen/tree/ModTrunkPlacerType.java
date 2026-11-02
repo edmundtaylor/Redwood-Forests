@@ -1,9 +1,7 @@
 package net.biscuits310.redwoodforests.worldgen.tree;
 
-import com.mojang.serialization.MapCodec;
 import net.biscuits310.redwoodforests.RedwoodForests;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacer;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;

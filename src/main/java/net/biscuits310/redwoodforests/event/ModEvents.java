@@ -5,7 +5,6 @@ import net.biscuits310.redwoodforests.entity.ModEntities;
 import net.biscuits310.redwoodforests.entity.custom.BananaSlug;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.SpawnPlacementTypes;
-import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -25,7 +24,7 @@ public class ModEvents {
                 ModEntities.BANANA_SLUG.get(),
                 SpawnPlacementTypes.ON_GROUND,
                 Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
-                (entityType, level, spawnType, pos, random) -> {
+                (ignoredEntityType, level, ignoredSpawnType, pos, ignoredRandom) -> {
                     boolean validSurface = level.getBlockState(pos.below()).is(BlockTags.VALID_SPAWN);
                     boolean brightEnough = level.getRawBrightness(pos, 0) >= 4;
                     return validSurface && brightEnough;

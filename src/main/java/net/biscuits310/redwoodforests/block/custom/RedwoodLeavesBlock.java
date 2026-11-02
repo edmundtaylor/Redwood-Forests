@@ -60,7 +60,7 @@ public class RedwoodLeavesBlock extends FlammableUntintedParticleLeavesBlock {
                     neighborPos.setWithOffset(pos, dx, dy, dz);
                     // The new distance is the smaller of the current distance and the distance stored by the neighbouring block + 1.
                     newDistance = Math.min(newDistance, getBlockStateDistanceAt(level.getBlockState(neighborPos)) + 1);
-                    // If the new distance is 1, it cannot be smaller, so therefore the loop can stop. Easy optimisation!
+                    // If the new distance is 1, it cannot be smaller, so the loop can stop. Easy optimisation!
                     if (newDistance == 1){
                         // Return the state by updating the block's current state, but changing the distance to 1.
                         return state.setValue(DISTANCE, 1);
